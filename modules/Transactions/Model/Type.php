@@ -45,6 +45,23 @@ class Type extends Model
         'description',
     ];
 
+
+    /**
+     * @param integer|float $amount
+     *
+     * @return float
+     */
+    public function calculateComission($amount)
+    {
+        floatval($amount);
+
+        if ($this->comission_percent > 0) {
+            return ($this->comission_percent / 100) * $amount;
+        }
+
+        return $this->comission;
+    }
+
     /**********************************************************************
      * Relations
      **********************************************************************/

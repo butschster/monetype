@@ -1,9 +1,10 @@
 <?php
 
-namespace Modules\Articles\Model;
+namespace Modules\Articles\Jobs;
 
 use DB;
 use Modules\Users\Model\User;
+use Modules\Articles\Model\Article;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Modules\Transactions\Model\Transaction;
 
@@ -47,11 +48,11 @@ class PurchaseArticle implements SelfHandling
 
             $transaction->save();
 
-            $this->article->count_payments += 1;
-            $this->article->amount += $transaction->amount;
-            $this->article->save();
-
-            $transaction->setStatus('completed')->save();
+            $transaction->complete(function(Transaction $t) {
+                $this->article->count_payments += 1;
+                $this->article->amount += $t->amount;
+                $this->article->save();
+            });
 
             return $transaction;
         });

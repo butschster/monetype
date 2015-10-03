@@ -19,15 +19,15 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('debit')->index();
             $table->unsignedInteger('credit')->index();
 
+            $table->string('type_id');
+            $table->string('status_id');
+            $table->string('payment_method_id');
             $table->unsignedInteger('article_id')->nullable();
 
             $table->decimal('amount', 10, 2)->default(0);
+            $table->decimal('comission', 10, 2)->default(0);
 
             $table->text('details')->nullable();
-
-            $table->unsignedInteger('type_id');
-            $table->unsignedInteger('status_id');
-            $table->unsignedInteger('payment_method_id');
 
             $table->timestamps();
             $table->softDeletes();

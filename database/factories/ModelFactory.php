@@ -30,7 +30,7 @@ $factory->defineAs(Tag::class, 'tag', function (Faker\Generator $faker) {
 });
 
 $factory->defineAs(Article::class, 'article', function (Faker\Generator $faker) {
-    $users = User::lists('id', 'id')->all();
+    $users = User::where('id', '>', 3)->get()->lists('id', 'id')->all();
 
     return [
         'title' => $faker->sentence(6),

@@ -18,6 +18,9 @@ class CreateTransactionTypesTable extends Migration
             $table->string('title');
             $table->text('description')->default('');
 
+            $table->decimal('comission', 10, 2)->default(0);
+            $table->unsignedInteger('comission_percent')->default(0);
+
             $table->primary('name');
         });
     }

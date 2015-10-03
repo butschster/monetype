@@ -2,8 +2,9 @@
 
 namespace Modules\Transactions\Model;
 
-use Modules\Articles\Model\Article;
+use Closure;
 use Modules\Users\Model\User;
+use Modules\Articles\Model\Article;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +13,8 @@ class Transaction extends Model
 
     use SoftDeletes;
 
-    const DEFAULT_ACCOUNT = 1;
+    const ACCOUNT_CREDIT = 2;
+    const ACCOUNT_DEBIT  = 3;
 
     /**
      * The table associated with the model.
@@ -38,12 +40,44 @@ class Transaction extends Model
      */
     protected $dates = ['deleted_at'];
 
+
+    /**
+     * @param Closure $callback
+     */
+    public function complete(Closure $callback = null)
+    {
+        $amount = $this->amount;
+        $comission = $this->type->calculateComission($amount);
+
+        if ($comission > 0) {
+            $this->comission = $comission;
+        }
+
+        $debitAccount = $this->debitAccount->account;
+        $debitAccount->balance -= $amount;
+        $debitAccount->save();
+
+        $creditAccount = $this->creditAccount->account;
+        $creditAccount->balance += $amount;
+        $creditAccount->save();
+
+        $this->setStatus('completed')->save();
+
+        if (is_callable($callback)) {
+            $callback($this);
+        }
+    }
+
     /**
      * @param string|Type $type
      * @return $this
      */
     public function setType($type)
     {
+        if (is_string($type)) {
+            $type = Type::find($type);
+        }
+
         return $this->type()->associate($type);
     }
 
@@ -54,6 +88,10 @@ class Transaction extends Model
      */
     public function setStatus($status)
     {
+        if (is_string($status)) {
+            $status = Status::find($status);
+        }
+
         return $this->status()->associate($status);
     }
 
@@ -64,6 +102,10 @@ class Transaction extends Model
      */
     public function setPaymentMethod($method)
     {
+        if (is_string($method)) {
+            $method = PaymentMethod::find($method);
+        }
+
         return $this->paymentMethod()->associate($method);
     }
 

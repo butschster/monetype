@@ -5,8 +5,8 @@ use Illuminate\Database\Seeder;
 use Modules\Articles\Model\Article;
 use Modules\Transactions\Model\Type;
 use Modules\Transactions\Model\Status;
+use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Transactions\Model\Transaction;
-use Modules\Articles\Model\PurchaseArticle;
 
 class TransactionsTableSeeder extends Seeder
 {
@@ -33,13 +33,15 @@ class TransactionsTableSeeder extends Seeder
         ]);
 
         Type::create([
-            'name'  => 'payment',
-            'title' => 'Платеж',
+            'name'              => 'payment',
+            'title'             => 'Платеж',
+            'comission_percent' => 1,
         ]);
 
         Type::create([
-            'name'  => 'transfer',
-            'title' => 'Перевод',
+            'name'      => 'transfer',
+            'title'     => 'Перевод',
+            'comission' => 5,
         ]);
 
         Type::create([
@@ -53,14 +55,15 @@ class TransactionsTableSeeder extends Seeder
         ]);
 
         Type::create([
-            'name'  => 'cashout',
-            'title' => 'Вывод средств',
+            'name'              => 'cashout',
+            'title'             => 'Вывод средств',
+            'comission_percent' => 10,
         ]);
 
-        $users    = User::all();
+        $users    = User::where('id', '>', 3)->get();
         $articles = Article::all();
 
-        $faker    = \Faker\Factory::create();
+        $faker = \Faker\Factory::create();
 
         foreach (range(1, 500) as $i) {
             $user    = $faker->randomElement($users->all());
