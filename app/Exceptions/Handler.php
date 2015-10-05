@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use KodiCMS\API\Http\Response as APIResponse;
+use Modules\Core\Http\Controllers\ErrorController;
+use KodiCMS\API\Exceptions\Exception as APIException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -10,6 +13,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -20,12 +24,14 @@ class Handler extends ExceptionHandler
         ModelNotFoundException::class,
     ];
 
+
     /**
      * Report or log an exception.
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
+     * @param  \Exception $e
+     *
      * @return void
      */
     public function report(Exception $e)
@@ -33,19 +39,84 @@ class Handler extends ExceptionHandler
         return parent::report($e);
     }
 
+
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception               $e
+     *
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
     {
+        if ($request->ajax() OR ( $e instanceof APIException )) {
+            return $this->renderApiException($e);
+        }
+
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
 
-        return parent::render($request, $e);
+        return $this->renderHttpException($e);
+    }
+
+
+    /**
+     * @param Exception $e
+     *
+     * @return APIResponse
+     */
+    protected function renderApiException(Exception $e)
+    {
+        return (new APIResponse(config('app.debug')))->createExceptionResponse($e);
+    }
+
+
+    /**
+     * Render the given HttpException.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException $e
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function renderHttpException(HttpException $e)
+    {
+        return $this->renderControllerException($e, $e->getStatusCode());
+    }
+
+
+    /**
+     * @param  Exception $e
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function renderException(Exception $e)
+    {
+        return $this->renderControllerException($e, 500);
+    }
+
+
+    /**
+     * Render an exception using ErrorController
+     *
+     * @param  Exception $e
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function renderControllerException(Exception $e, $code = 500)
+    {
+        try {
+            $controller = app()->make(ErrorController::class);
+            if (method_exists($controller, 'error' . $code)) {
+                $action = 'error' . $code;
+            } else {
+                $action = 'error500';
+            }
+
+            return $controller->callAction($action, [$e]);
+        } catch (Exception $ex) {
+            return $this->toIlluminateResponse($this->convertExceptionToResponse($ex), $ex);
+        }
     }
 }

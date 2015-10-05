@@ -3,7 +3,7 @@
 return [
 
     'modules' => [
-        'Articles', 'Transactions', 'Users'
+        'Core', 'Articles', 'Transactions', 'Users'
     ],
 
     /*
@@ -158,6 +158,7 @@ return [
         KodiCMS\ModulesLoader\Providers\ConfigServiceProvider::class,
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Modules\Support\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -209,6 +210,10 @@ return [
 
         'ModulesLoader'     => KodiCMS\ModulesLoader\ModulesLoaderFacade::class,
         'ModulesFileSystem' => KodiCMS\ModulesLoader\ModulesFileSystemFacade::class,
+        'RouteAPI'          => KodiCMS\API\RouteApiFacade::class,
+        'Assets'            => Modules\Support\Facades\Assets::class,
+        'Package'           => Modules\Support\Facades\Package::class,
+        'HTML'              => Illuminate\Html\HtmlFacade::class,
+        'Form'              => Illuminate\Html\FormFacade::class,
     ],
-
 ];
