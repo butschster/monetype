@@ -1,0 +1,63 @@
+.headline {
+  display: block;
+  margin: 20px 0 25px 0;
+
+  &:first-child {
+	margin-top: 0;
+  }
+
+  &.headline-border {
+	border-bottom: 1px dotted #e4e9f0;
+
+	h2,
+	h3,
+	h4,
+	h5 {
+	  border-bottom: 2px solid #d6941e;
+	}
+  }
+
+  h2,
+  h3,
+  h4,
+  h5 {
+	margin: 0 0 -2px 0;
+	padding-bottom: 5px;
+	display: inline-block;
+  }
+
+  h2 {
+	font-size: 22px;
+  }
+
+  h4,
+  h5 {
+	text-transform: uppercase;
+	font-weight: bold;
+  }
+
+  &.headline-md {
+	margin-bottom: 15px;
+
+	h2 {
+	  font-size: 21px;
+	}
+  }
+
+  &.headline-sm {
+	margin-bottom: 10px;
+  }
+
+  &.headline-xs {
+	margin-bottom: 5px;
+  }
+}
+
+.well {
+  .headline h2,
+  .headline h3,
+  .headline h4,
+  .headline h5 {
+	color: #555;
+  }
+}
