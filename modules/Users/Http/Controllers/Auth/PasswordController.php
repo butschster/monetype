@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Modules\Users\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Modules\Core\Http\Controllers\System\FrontController;
 
-class PasswordController extends Controller
+class PasswordController extends FrontController
 {
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -20,13 +21,25 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+
     /**
-     * Create a new password controller instance.
+     * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function boot()
     {
         $this->middleware('guest');
+    }
+
+
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return Response
+     */
+    public function getEmail()
+    {
+        return $this->setLayout('auth.password');
     }
 }
