@@ -6,6 +6,7 @@ use DB;
 use Modules\Users\Model\User;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Modules\Transactions\Model\Transaction;
+use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 
 class CashOut implements SelfHandling
 {
@@ -16,7 +17,7 @@ class CashOut implements SelfHandling
     protected $user;
 
     /**
-     * @var integer
+     * @var float
      */
     protected $amount;
 
@@ -29,18 +30,27 @@ class CashOut implements SelfHandling
     /**
      * @param User          $user
      * @param PaymentMethod $method
-     * @param integer       $amount
+     * @param float         $amount
      */
     public function __construct(User $user, PaymentMethod $method, $amount)
     {
+        floatval($amount);
         $this->user          = $user;
         $this->amount        = $amount;
         $this->paymentMethod = $method;
     }
 
 
+    /**
+     * @return Transaction
+     * @throws NotEnoughMoneyException
+     */
     public function handle()
     {
+        if ($this->user->account->balance < $this->amount) {
+            throw new NotEnoughMoneyException;
+        }
+
         return DB::transaction(function () {
             $transaction = new Transaction;
 
@@ -55,6 +65,8 @@ class CashOut implements SelfHandling
             $transaction->save();
 
             $transaction->complete();
+
+            return $transaction;
         });
     }
 }

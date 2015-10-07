@@ -40,6 +40,9 @@ class CashIn implements SelfHandling
     }
 
 
+    /**
+     * @return Transaction
+     */
     public function handle()
     {
         return DB::transaction(function () {
@@ -56,6 +59,8 @@ class CashIn implements SelfHandling
             $transaction->save();
 
             $transaction->complete();
+
+            return $transaction;
         });
     }
 }
