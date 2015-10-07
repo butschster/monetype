@@ -3,11 +3,10 @@
 namespace Modules\Users\Jobs;
 
 use DB;
-use Carbon\Carbon;
 use Modules\Users\Model\User;
 use Modules\Users\Model\Coupon;
 use Illuminate\Contracts\Bus\SelfHandling;
-use Modules\Transactions\Model\Transaction;
+use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 
 class CreateCoupon implements SelfHandling
 {
@@ -22,50 +21,36 @@ class CreateCoupon implements SelfHandling
      */
     protected $amount;
 
-    /**
-     * @var string|Carbon
-     */
-    protected $expiredAt;
-
 
     /**
-     * @param User          $user
-     * @param integer       $amount
-     * @param string|Carbon $expiredAt
+     * @param User    $user
+     * @param integer $amount
      */
-    public function __construct(User $user, $amount, $expiredAt = null)
+    public function __construct(User $user, $amount)
     {
-        $this->user      = $user;
-        $this->amount    = $amount;
-
-        $this->expiredAt = ( $expiredAt instanceof Carbon )
-            ? $expiredAt
-            : Carbon::parse($expiredAt);
+        $this->user   = $user;
+        $this->amount = $amount;
     }
 
 
+    /**
+     * @return Coupon
+     * @throws NotEnoughMoneyException
+     */
     public function handle()
     {
+        if ($this->user->account->balance < $this->amount) {
+            throw new NotEnoughMoneyException;
+        }
+
         return DB::transaction(function () {
-            $transaction         = new Transaction;
-            $transaction->amount = $this->amount;
+            $coupon         = new Coupon;
+            $coupon->amount = $this->amount;
+            $coupon->assignUser($this->user);
 
-            $transaction->assignPurchaser($this->user);
-            $transaction->assignRecipient(User::find(Transaction::ACCOUNT_CREDIT));
-            $transaction->setType('coupon');
-            $transaction->setStatus('new');
-            $transaction->setPaymentMethod('account');
+            $coupon->save();
 
-            $transaction->save();
-
-            $transaction->complete(function (Transaction $t) {
-                $coupon             = new Coupon;
-                $coupon->amount    = $t->amount;
-                $coupon->expired_at = $this->expiredAt;
-                $coupon->create();
-            });
-
-            return $transaction;
+            return $coupon;
         });
     }
 }
