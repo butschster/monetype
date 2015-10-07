@@ -7,6 +7,7 @@ use Modules\Users\Model\User;
 use Modules\Articles\Model\Article;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Modules\Transactions\Model\Transaction;
+use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 
 class PurchaseArticle implements SelfHandling
 {
