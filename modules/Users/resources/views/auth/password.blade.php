@@ -11,7 +11,7 @@
 		{!! Form::open(['url' => 'password/email', 'class' => 'form']) !!}
 
 		<fieldset>
-			<h2 class="m-t-n">Reset Password</h2>
+			<h2 class="m-t-n">@lang('users::user.title.reset_password')</h2>
 
 			@if (session('status'))
 			<div class="alert alert-success">
