@@ -3,7 +3,14 @@
 namespace Modules\Transactions\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property string     $name
+ * @property string     $title
+ *
+ * @property Collection $transactions
+ */
 class PaymentMethod extends Model
 {
 

@@ -8,13 +8,34 @@ use Modules\Articles\Model\Article;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property integer        $id
+ * @property integer        $type_id
+ * @property integer        $status_id
+ * @property integer        $payment_method_id
+ * @property integer        $article_id
+ * @property float          $amount
+ * @property float          $comission
+ * @property string         $details
+ *
+ * @property Article        $article
+ * @property Type           $type
+ * @property Status         $status
+ * @property PaymentMethod  $paymentMethod
+ * @property User           $debitAccount
+ * @property User           $creditAccount
+ *
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ */
 class Transaction extends Model
 {
 
     use SoftDeletes;
 
     const ACCOUNT_CREDIT = 2;
-    const ACCOUNT_DEBIT  = 3;
+    const ACCOUNT_DEBIT = 3;
 
     /**
      * The table associated with the model.
@@ -38,7 +59,7 @@ class Transaction extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = [ 'deleted_at' ];
 
 
     /**
@@ -46,7 +67,7 @@ class Transaction extends Model
      */
     public function complete(Closure $callback = null)
     {
-        $amount = $this->amount;
+        $amount    = $this->amount;
         $comission = $this->type->calculateComission($amount);
 
         if ($comission > 0) {
@@ -68,8 +89,10 @@ class Transaction extends Model
         }
     }
 
+
     /**
      * @param string|Type $type
+     *
      * @return $this
      */
     public function setType($type)
@@ -84,6 +107,7 @@ class Transaction extends Model
 
     /**
      * @param string|Status $status
+     *
      * @return $this
      */
     public function setStatus($status)
@@ -98,6 +122,7 @@ class Transaction extends Model
 
     /**
      * @param string|PaymentMethod $method
+     *
      * @return $this
      */
     public function setPaymentMethod($method)

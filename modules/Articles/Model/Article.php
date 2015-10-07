@@ -8,9 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Articles\Traits\TaggableTrait;
 use Modules\Transactions\Contracts\Buyable;
 use Modules\Transactions\Model\Transaction;
+use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property integer        $id
+ * @property integer        $author_id
+ * @property string         $title
+ * @property string         $text_source
+ * @property string         $text_intro_source
+ * @property string         $text
+ * @property string         $text_intro
+ * @property string         $image
+ * @property boolean        $forbid_comment
+ * @property string         $status
+ * @property string         $block_reason
+ * @property integer        $count_payments
+ * @property float          $amount
+ *
+ * @property User           $author
+ * @property Collection     $tags
+ *
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $published_at
+ */
 class Article extends Model implements Buyable
 {
+
     use TaggableTrait;
 
     const STATUS_PUBLISHED = 'published';
@@ -53,13 +77,14 @@ class Article extends Model implements Buyable
      *
      * @var array
      */
-    protected $dates = ['published_at'];
+    protected $dates = [ 'published_at' ];
 
 
     public function getCost()
     {
         return 1;
     }
+
 
     /**
      * @param $author
@@ -97,17 +122,17 @@ class Article extends Model implements Buyable
         $this->save();
     }
 
+
     /**********************************************************************
      * Scopes
      **********************************************************************/
 
     public function scopePublished($query)
     {
-        return $query
-             ->whereIn('status', [static::STATUS_PUBLISHED, static::STATUS_APPROVED])
-             ->whereHas('author', function ($q) {
-                 $q->where('status', '!=', User::STATUS_BLOCKED);
-             });
+        return $query->whereIn('status', [ static::STATUS_PUBLISHED, static::STATUS_APPROVED ])->whereHas('author',
+            function ($q) {
+                $q->where('status', '!=', User::STATUS_BLOCKED);
+            });
     }
 
 
@@ -127,6 +152,7 @@ class Article extends Model implements Buyable
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

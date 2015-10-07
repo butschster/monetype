@@ -3,7 +3,18 @@
 namespace Modules\Users\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property integer        $id
+ * @property string         $name
+ * @property string         $description
+ *
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ *
+ * @property Collection     $roles
+ */
 class Permission extends Model
 {
 

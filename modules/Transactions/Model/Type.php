@@ -3,7 +3,17 @@
 namespace Modules\Transactions\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property string     $name
+ * @property string     $title
+ * @property string     $description
+ * @property float      $comission
+ * @property integer    $comission_percent
+ *
+ * @property Collection $transactions
+ */
 class Type extends Model
 {
 
@@ -56,7 +66,7 @@ class Type extends Model
         floatval($amount);
 
         if ($this->comission_percent > 0) {
-            return ($this->comission_percent / 100) * $amount;
+            return ( $this->comission_percent / 100 ) * $amount;
         }
 
         return $this->comission;

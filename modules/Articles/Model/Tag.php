@@ -4,6 +4,13 @@ namespace Modules\Articles\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property integer        $id
+ * @property integer        $count
+ * @property string         $name
+ *
+ * @property Collection     $articles
+ */
 class Tag extends Model
 {
 
