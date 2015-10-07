@@ -3,6 +3,7 @@
 namespace Modules\Articles\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @property integer        $id

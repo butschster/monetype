@@ -5,6 +5,7 @@ namespace Modules\Users\Model;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Transactions\Model\Account;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
