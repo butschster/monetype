@@ -39,6 +39,8 @@ class UsersTableSeeder extends Seeder
             'status'   => User::STATUS_APPROVED,
         ]);
 
-        factory(User::class, 'user', 100)->create();
+        factory(User::class, 'user', 100)->create()->each(function(User $user) {
+            $user->account->update(['balance' => 100]);
+        });
     }
 }
