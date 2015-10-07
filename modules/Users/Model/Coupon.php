@@ -57,7 +57,7 @@ class Coupon extends Model
      */
     public function isExpired()
     {
-        return $this->expired_at->lt(Carbon::now());
+        return ($this->expired_at instanceof Carbon) and $this->expired_at->lt(Carbon::now());
     }
 
     /**********************************************************************

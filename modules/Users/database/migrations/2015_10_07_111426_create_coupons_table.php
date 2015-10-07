@@ -20,7 +20,7 @@ class CreateCouponsTable extends Migration
             $table->decimal('amount', 10, 2);
 
             $table->timestamps();
-            $table->date('expired_at');
+            $table->date('expired_at')->nullable();
             $table->softDeletes();
 
             $table->unique('id');
