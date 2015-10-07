@@ -55,11 +55,20 @@ class Transaction extends Model
     ];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'details' => 'array'
+    ];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = [ 'deleted_at' ];
+    protected $dates = ['deleted_at'];
 
 
     /**

@@ -27,7 +27,7 @@ class CreateTransactionsTable extends Migration
             $table->decimal('amount', 10, 2)->default(0);
             $table->decimal('comission', 10, 2)->default(0);
 
-            $table->text('details')->nullable();
+            $table->json('details')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
