@@ -60,6 +60,12 @@ class TransactionsTableSeeder extends Seeder
             'comission_percent' => 10,
         ]);
 
+        Type::create([
+            'name'      => 'coupon',
+            'title'     => 'Создание купона',
+            'comission' => 5,
+        ]);
+
         $users    = User::where('id', '>', 3)->get();
         $articles = Article::all();
 
