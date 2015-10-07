@@ -9,6 +9,7 @@ use Modules\Articles\Traits\TaggableTrait;
 use Modules\Transactions\Contracts\Buyable;
 use Modules\Transactions\Model\Transaction;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer        $id
@@ -35,7 +36,7 @@ use Illuminate\Database\Eloquent\Collection;
 class Article extends Model implements Buyable
 {
 
-    use TaggableTrait;
+    use TaggableTrait, SoftDeletes;
 
     const STATUS_PUBLISHED = 'published';
     const STATUS_DRAFT = 'draft';
@@ -60,7 +61,7 @@ class Article extends Model implements Buyable
         'text_intro_source',
         'tags',
         'image',
-        'forbid_comment'
+        'forbid_comment',
     ];
 
     /**
@@ -69,7 +70,7 @@ class Article extends Model implements Buyable
      * @var array
      */
     protected $casts = [
-        'forbid_comment' => 'boolean'
+        'forbid_comment' => 'boolean',
     ];
 
     /**
@@ -77,7 +78,7 @@ class Article extends Model implements Buyable
      *
      * @var array
      */
-    protected $dates = [ 'published_at' ];
+    protected $dates = ['published_at', 'deleted_at'];
 
 
     public function getCost()
@@ -129,10 +130,12 @@ class Article extends Model implements Buyable
 
     public function scopePublished($query)
     {
-        return $query->whereIn('status', [ static::STATUS_PUBLISHED, static::STATUS_APPROVED ])->whereHas('author',
-            function ($q) {
-                $q->where('status', '!=', User::STATUS_BLOCKED);
-            });
+        return $query->whereIn('status', [
+            static::STATUS_PUBLISHED,
+            static::STATUS_APPROVED,
+        ])->whereHas('author', function ($q) {
+            $q->where('status', '!=', User::STATUS_BLOCKED);
+        });
     }
 
 

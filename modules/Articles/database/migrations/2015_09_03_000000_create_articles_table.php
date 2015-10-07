@@ -40,7 +40,8 @@ class CreateArticlesTable extends Migration {
 			$table->text('block_reason');
 
 			$table->timestamps();
-			$table->dateTime('published_at')->index();
+			$table->softDeletes();
+			$table->dateTime('published_at')->nullable()->index();
 		});
 	}
 
