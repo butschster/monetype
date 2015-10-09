@@ -19,6 +19,11 @@ class CreateAccountsTable extends Migration
 			$table->timestamps();
 
 			$table->primary('user_id');
+
+			$table->foreign('user_id')
+				->references('id')
+				->on('users')
+				->onDelete('cascade');
 		});
 	}
 

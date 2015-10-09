@@ -42,6 +42,10 @@ class CreateArticlesTable extends Migration {
 			$table->timestamps();
 			$table->softDeletes();
 			$table->dateTime('published_at')->nullable()->index();
+
+			$table->foreign('author_id')
+				->references('id')
+				->on('users');
 		});
 	}
 

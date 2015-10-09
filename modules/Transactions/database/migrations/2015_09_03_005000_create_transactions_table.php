@@ -31,6 +31,30 @@ class CreateTransactionsTable extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('debit')
+                ->references('id')
+                ->on('users');
+
+            $table->foreign('credit')
+                ->references('id')
+                ->on('users');
+
+            $table->foreign('type_id')
+                ->references('name')
+                ->on('transaction_types');
+
+            $table->foreign('status_id')
+                ->references('name')
+                ->on('transaction_statuses');
+
+            $table->foreign('payment_method_id')
+                ->references('name')
+                ->on('payment_methods');
+
+            $table->foreign('article_id')
+                ->references('id')
+                ->on('articles');
         });
     }
 

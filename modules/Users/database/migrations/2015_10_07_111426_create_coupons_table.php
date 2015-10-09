@@ -24,6 +24,11 @@ class CreateCouponsTable extends Migration
             $table->softDeletes();
 
             $table->unique('id');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
