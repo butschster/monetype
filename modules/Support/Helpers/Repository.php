@@ -2,19 +2,12 @@
 
 namespace Modules\Support\Helpers;
 
-use App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Bosnadev\Repositories\Contracts\RepositoryInterface;
 
 abstract class Repository implements RepositoryInterface
 {
-
-    /**
-     * @var App
-     */
-    private $app;
-
     /**
      * @var Model
      */
@@ -22,13 +15,10 @@ abstract class Repository implements RepositoryInterface
 
 
     /**
-     * @param App $app
-     *
      * @throws \Bosnadev\Repositories\Exceptions\RepositoryException
      */
-    public function __construct(App $app)
+    public function __construct()
     {
-        $this->app   = $app;
         $this->model = $this->makeModel();
     }
 
@@ -46,7 +36,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function getModel()
     {
-        return $this->getModel();
+        return $this->model;
     }
 
 
@@ -85,7 +75,7 @@ abstract class Repository implements RepositoryInterface
      *
      * @return mixed
      */
-    public function paginate($perPage = 1, $columns = ['*'])
+    public function paginate($perPage = 15, $columns = ['*'])
     {
         return $this->getModel()->paginate($perPage, $columns);
     }
@@ -178,12 +168,46 @@ abstract class Repository implements RepositoryInterface
 
 
     /**
+     * Find a collection of models by the given query conditions.
+     *
+     * @param array $where
+     * @param array $columns
+     * @param bool  $or
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|null
+     */
+    public function findWhere($where, $columns = ['*'], $or = false)
+    {
+        $model = $this->getModel();
+
+        foreach ($where as $field => $value) {
+            if ($value instanceof \Closure) {
+                $model = ( ! $or ) ? $model->where($value) : $model->orWhere($value);
+            } elseif (is_array($value)) {
+                if (count($value) === 3) {
+                    list( $field, $operator, $search ) = $value;
+                    $model = ( ! $or ) ? $model->where($field, $operator, $search) : $model->orWhere($field, $operator,
+                        $search);
+                } elseif (count($value) === 2) {
+                    list( $field, $search ) = $value;
+                    $model = ( ! $or ) ? $model->where($field, '=', $search) : $model->orWhere($field, '=', $search);
+                }
+            } else {
+                $model = ( ! $or ) ? $model->where($field, '=', $value) : $model->orWhere($field, '=', $value);
+            }
+        }
+
+        return $model->get($columns);
+    }
+
+
+    /**
      * @return Model
      * @throws RepositoryException
      */
     public function makeModel()
     {
-        $model = $this->app->make($this->model());
+        $model = app()->make($this->model());
 
         if ( ! $model instanceof Model) {
             throw new RepositoryException("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
