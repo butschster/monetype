@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
         $this->call(PermissionsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(TagsTableSeeder::class);
@@ -23,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionsTableSeeder::class);
         $this->call(CouponsTableSeeder::class);
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
         Model::reguard();
     }
