@@ -2,15 +2,20 @@
 
 namespace Modules\Transactions\Providers;
 
+use Modules\Core\Providers\ServiceProvider;
 use Modules\Transactions\Model\Transaction;
 use Modules\Transactions\Observers\TransactionObserver;
-use KodiCMS\ModulesLoader\Providers\ModuleServiceProvider as BaseServiceProvider;
 
-class ModuleServiceProvider extends BaseServiceProvider
+class ModuleServiceProvider extends ServiceProvider
 {
 
     public function boot()
     {
         Transaction::observe(new TransactionObserver);
+    }
+
+    public function register()
+    {
+
     }
 }
