@@ -5,6 +5,7 @@ namespace Modules\Articles\Model;
 use Carbon\Carbon;
 use Modules\Users\Model\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Articles\Traits\TaggableTrait;
 use Modules\Transactions\Contracts\Buyable;
 use Modules\Transactions\Model\Transaction;
@@ -128,7 +129,12 @@ class Article extends Model implements Buyable
      * Scopes
      **********************************************************************/
 
-    public function scopePublished($query)
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopePublished(Builder $query)
     {
         return $query->whereIn('status', [
             static::STATUS_PUBLISHED,
@@ -139,7 +145,13 @@ class Article extends Model implements Buyable
     }
 
 
-    public function scopeOrderByDate($query, $column = 'published_at')
+    /**
+     * @param Builder $query
+     * @param string  $column
+     *
+     * @return Builder
+     */
+    public function scopeOrderByDate(Builder $query, $column = 'published_at')
     {
         return $query->orderBy($column, 'desc');
     }
