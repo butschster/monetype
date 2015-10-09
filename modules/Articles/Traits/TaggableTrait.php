@@ -3,6 +3,7 @@
 namespace Modules\Articles\Traits;
 
 use Modules\Articles\Model\Tag;
+use Illuminate\Database\Eloquent\Builder;
 
 trait TaggableTrait
 {
