@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property User           $author
  * @property Collection     $tags
+ * @property Collection     $categories
  *
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -125,6 +126,56 @@ class Article extends Model implements Buyable
     }
 
 
+    /**
+     * @param array $ids
+     *
+     * @return array
+     */
+    public function attachCategories(array $ids)
+    {
+        $attachedCategories = [];
+        $categories         = Category::whereIn('id', $ids)->get();
+        foreach ($categories as $category) {
+            if ($category->attachArticle($this)) {
+                $attachedCategories[] = $category->id;
+            }
+        }
+
+        return $attachedCategories;
+    }
+
+
+    /**
+     * @param array $ids
+     *
+     * @return array
+     */
+    public function updateCategories(array $ids)
+    {
+        $categories        = Category::whereIn('id', $ids)->get();
+        $ids               = $categories->lists('id');
+        $currentCategories = $this->categories()->get()->lists('id');
+        $updatedCategories = [];
+
+        $deletions = array_diff($currentCategories, $ids);
+        $additions = array_diff($ids, $currentCategories);
+
+        foreach (Category::whereIn('id', $deletions)->get() as $category) {
+            if ($category->detachArticle($this)) {
+                $updatedCategories[] = $category->id;
+            }
+        }
+
+        foreach (Category::whereIn('id', $additions)->get() as $category) {
+            if ($category->attachArticle($this)) {
+                $updatedCategories[] = $category->id;
+            }
+        }
+
+        return $updatedCategories;
+    }
+
+
     /**********************************************************************
      * Scopes
      **********************************************************************/
@@ -175,5 +226,14 @@ class Article extends Model implements Buyable
     public function recipients()
     {
         return $this->hasMany(Transaction::class, 'article_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
     }
 }
