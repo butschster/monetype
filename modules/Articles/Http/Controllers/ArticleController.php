@@ -2,14 +2,36 @@
 
 namespace Modules\Articles\Http\Controllers;
 
+use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Core\Http\Controllers\System\FrontController;
 
 class ArticleController extends FrontController
 {
 
-    public function index()
+    /**
+     * @param ArticleRepository $articleRepository
+     *
+     * @return \View
+     */
+    public function index(ArticleRepository $articleRepository)
     {
+        $articles = $articleRepository->paginate();
 
+        return $this->setLayout('article.index', compact('articles'));
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param string            $tag
+     *
+     * @return \View
+     */
+    public function indexByTag(ArticleRepository $articleRepository, $tag)
+    {
+        $articles = $articleRepository->paginateByTag($tag);
+
+        return $this->setLayout('article.index', compact('articles'));
     }
 
 
@@ -50,12 +72,6 @@ class ArticleController extends FrontController
 
 
     public function money($articleId)
-    {
-
-    }
-
-
-    public function byTag($tag)
     {
 
     }
