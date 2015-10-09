@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * @property integer        $id
- * @property integer        $count
- * @property string         $name
+ * @property integer    $id
+ * @property integer    $count
+ * @property string     $name
  *
- * @property Collection     $articles
+ * @property Collection $articles
  */
 class Tag extends Model
 {
@@ -29,17 +29,15 @@ class Tag extends Model
      */
     public $timestamps = false;
 
+    /**********************************************************************
+     * Relations
+     **********************************************************************/
 
     /**
-     *
-     * @return HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function articles()
     {
-        return $this->belongsToMany(Article::class)
-            ->OrderByDate()
-            ->withFavorite()
-            ->published()
-            ->with('categories', 'author');
+        return $this->belongsToMany(Article::class);
     }
 }
