@@ -8,43 +8,6 @@ trait TaggableTrait
 {
 
     /**
-     * @param array $tags
-     */
-    public function setTagsAttribute(array $tags)
-    {
-        $tags                     = $this->_filterTags($tags);
-        $this->attributes['tags'] = implode(',', $tags);
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getTagsArrayAttribute()
-    {
-        return explode(',', $this->attributes['tags']);
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getTagListAttribute()
-    {
-        return $this->tags->lists('name', 'id')->all();
-    }
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
-
-
-    /**
      * Добавление тегов по имени
      *
      * @param array $tags
@@ -203,4 +166,69 @@ trait TaggableTrait
     {
         return array_unique(array_map('trim', $tags));
     }
+
+    /**********************************************************************
+     * Scopes
+     **********************************************************************/
+
+    /**
+     * @param Builder      $query
+     * @param string|array $tag
+     *
+     * @return Builder
+     */
+    public function scopeFilterByTag(Builder $query, $tag)
+    {
+        return $query->whereHas('tags', function ($query) use ($tag) {
+            if (is_array($tag)) {
+                $query->whereIn('name', $tag);
+            } else {
+                $query->where('name', $tag);
+            }
+        });
+    }
+
+    /**********************************************************************
+     * Mutatotrs
+     **********************************************************************/
+
+    /**
+     * @return array
+     */
+    public function getTagsListAttribute()
+    {
+        return $this->tags->lists('name', 'id')->all();
+    }
+
+
+    /**
+     * @param array $tags
+     */
+    public function setTagsAttribute(array $tags)
+    {
+        $tags                     = $this->_filterTags($tags);
+        $this->attributes['tags'] = implode(',', $tags);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getTagsArrayAttribute()
+    {
+        return explode(',', $this->attributes['tags']);
+    }
+
+    /**********************************************************************
+     * Relations
+     **********************************************************************/
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 }
