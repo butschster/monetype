@@ -1,31 +1,47 @@
-var elixir = require('laravel-elixir');
+var gulp = require('gulp'),
+    elixir = require('laravel-elixir');
 
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
- */
+var paths = {
+    'assets': elixir.config.assetsPath,
+    'assetsCss': elixir.config.assetsPath + '/css/',
+    'assetsSass': elixir.config.assetsPath + '/sass/',
+    'assetsJs': elixir.config.assetsPath + '/js/',
+    'bootstrap':    './node_modules/bootstrap-sass/assets/',
+    'jquery':       './bower_components/jquery/',
+    'underscore':   './bower_components/underscore/',
+    'datetimepicker':'./bower_components/datetimepicker/',
+    'fontawesome':'./bower_components/fontawesome/',
+    'jqueryvalidation':'./bower_components/jquery-validation/',
+    'jquerytagsinput': './bower_components/jquery.tagsinput/',
+    'noty':'./bower_components/noty/',
+    'select2':'./bower_components/select2/'
+};
 
 elixir(function(mix) {
+
     mix
-        .less('app.less')
+        //SaSS
+        .sass('bootstrap.scss', paths.assetsCss)
+        .sass('app.scss', paths.assetsCss)
+        //CSS
+        .styles([
+            paths.assetsCss + 'bootstrap.css',
+            paths.select2 + "dist/css/select2.css",
+            paths.datetimepicker + "jquery.datetimepicker.css",
+            paths.jquerytagsinput + "src/jquery.tagsinput.css",
+            paths.assetsCss + 'app.css'
+        ])
+        .version('public/css/all.css');
+        //Fonts
+    mix
+        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts')
+        .copy(paths.fontawesome + 'fonts/**', 'public/fonts')
+
+        //JavaScript
         .scripts([
-            'jquery/js/jquery.min.js',
-            'bootstrap/js/bootstrap.js',
-            'noty/js/jquery.noty.packaged.js',
-            'select2/js/select2.full.js',
-            'jquery.tagsinput/js/jquery.tagsinput.js',
-            'jquery-validation/js/jquery.validate.js',
-            'jquery-validation/js/additional-methods.js',
-            'underscore/js/underscore-min.js',
-            'jStorage/js/jstorage.js',
-            'datetimepicker/js/jquery.datetimepicker.js'
-        ], 'public/js/libraries.js', 'public/libs/')
+            paths.jquery + 'dist/jquery.js',
+            paths.bootstrap + "javascripts/bootstrap.js"
+        ], 'public/js/lib.js')
         .scripts([
             'core/app.js',
             'core/form.js',
