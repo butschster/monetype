@@ -6,6 +6,7 @@ use Closure;
 use Modules\Users\Model\User;
 use Modules\Articles\Model\Article;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -51,7 +52,7 @@ class Transaction extends Model
      */
     protected $fillable = [
         'amount',
-        'details'
+        'details',
     ];
 
     /**
@@ -60,7 +61,7 @@ class Transaction extends Model
      * @var array
      */
     protected $casts = [
-        'details' => 'array'
+        'details' => 'array',
     ];
 
     /**
@@ -174,6 +175,52 @@ class Transaction extends Model
     public function assignArticle(Article $article)
     {
         return $this->article()->associate($article);
+    }
+
+    /**********************************************************************
+     * Scopes
+     **********************************************************************/
+
+    /**
+     * @param Builder  $query
+     * @param User|int $userId
+     *
+     * @return $this
+     */
+    public function scopeByUser(Builder $query, $userId)
+    {
+        if ($userId instanceof User) {
+            $userId = $userId->getKey();
+        }
+
+        return $query->where('debit', $userId);
+    }
+
+
+    /**
+     * @param Builder     $query
+     * @param Article|int $articleId
+     *
+     * @return $this
+     */
+    public function scopeByArticle(Builder $query, $articleId)
+    {
+        if ($articleId instanceof Article) {
+            $articleId = $articleId->getKey();
+        }
+
+        return $query->where('article_id', $articleId);
+    }
+
+
+    /**
+     * @param Builder     $query
+     *
+     * @return $this
+     */
+    public function scopeOnlyPayments(Builder $query)
+    {
+        return $query->where('type_id', 'payment');
     }
 
     /**********************************************************************

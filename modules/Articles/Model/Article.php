@@ -46,6 +46,11 @@ class Article extends Model implements Buyable
     const STATUS_APPROVED = 'approved';
 
     /**
+     * @var bool
+     */
+    private $isPurchased;
+
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -86,6 +91,21 @@ class Article extends Model implements Buyable
     public function getCost()
     {
         return 1;
+    }
+
+
+    /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function isPurchasedByUser(User $user)
+    {
+        if (is_bool($this->isPurchased)) {
+            return $this->isPurchased;
+        }
+
+        return $this->isPurchased = ! is_null(Transaction::byUser($user)->byArticle($this)->onlyPayments()->first());
     }
 
 

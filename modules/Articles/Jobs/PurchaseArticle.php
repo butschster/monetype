@@ -40,8 +40,12 @@ class PurchaseArticle implements SelfHandling
      */
     public function handle()
     {
+        if ($this->article->isPurchasedByUser($this->user)) {
+            return true;
+        }
+
         if ($this->user->account->balance < $this->article->getCost()) {
-            throw new NotEnoughMoneyException;
+            throw new NotEnoughMoneyException(trans('articles::article.message.not_enough_money'));
         }
 
         return DB::transaction(function () {
