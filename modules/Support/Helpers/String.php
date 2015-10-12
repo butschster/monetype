@@ -22,4 +22,15 @@ class String
                 . '-'
                 . substr($uniqId, 20);
     }
+
+
+    /**
+     * @param string $amount
+     *
+     * @return string
+     */
+    public static function formatAmount($amount)
+    {
+        return number_format($amount, 2, '.', ' ');
+    }
 }
