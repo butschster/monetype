@@ -156,6 +156,7 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Modules\Support\Html\HtmlServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -204,10 +205,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'RouteAPI'          => KodiCMS\API\RouteApiFacade::class,
-        'Assets'            => Modules\Support\Facades\Assets::class,
-        'Package'           => Modules\Support\Facades\Package::class,
-        'HTML'              => Illuminate\Html\HtmlFacade::class,
-        'Form'              => Illuminate\Html\FormFacade::class,
+        'RouteAPI'  => KodiCMS\API\RouteApiFacade::class,
+        'Assets'    => Modules\Support\Facades\Assets::class,
+        'Package'   => Modules\Support\Facades\Package::class,
+        'HTML'      => Illuminate\Html\HtmlFacade::class,
+        'Form'      => Illuminate\Html\FormFacade::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
     ],
 ];
