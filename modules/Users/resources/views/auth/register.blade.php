@@ -23,7 +23,7 @@
 					<div class="form-group">
 						<div class="input-icon-append">
 							<i class="icon-append fa fa-user"></i>
-							{!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('users::user.field.name')]) !!}
+							{!! Form::text('username', null, ['class' => 'form-control', 'placeholder' => trans('users::user.field.username')]) !!}
 						</div>
 					</div>
 					<div class="form-group">

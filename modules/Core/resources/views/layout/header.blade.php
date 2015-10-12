@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default m-b-none">
+<nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -10,20 +10,42 @@
             </button>
 
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="/img/logo-sm.png" alt="@lang('app.title')">
+                {!! HTML::image('img/logo-sm.png', trans('app.title')) !!}
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse m-r-n-md">
             <ul class="nav navbar-nav">
-                <li><a href="/">Главная</a></li>
 
             </ul>
 
             <ul class="nav nav-profile navbar-nav pull-right">
                 @if(Auth::check())
-                    <li><a href="/auth/logout"><i class="fa fa-power-off"></i> @lang('auth.menu.logout')</a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            @lang('users::user.label.balance', ['amount' => $currentUser->getBalance()])
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                {!! link_to_route('front.user.account.add', trans('users::user.menu.cashin')) !!}
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                {!! link_to_route('front.user.activate_coupon', trans('users::user.menu.activate_coupon')) !!}
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown @if(Request::is('profile')) active @endif">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 5px 15px;">
+                            {!! $currentUser->getAvatar(40) !!}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>{!! $currentUser->getProfileLink(trans('users::user.menu.profile')) !!}</li>
+                            <li role="separator" class="divider"></li>
+                            <li>{!! link_to('auth/logout', trans('users::user.menu.logout')) !!}</li>
+                        </ul>
+                    </li>
                 @else
-                    <li><a href="/auth/login">@lang('auth.menu.login')</a></li>
+                    <li>{!! link_to('auth/login', trans('users::user.menu.login')) !!}</li>
                 @endif
             </ul>
         </div>

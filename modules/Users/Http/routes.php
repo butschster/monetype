@@ -1,6 +1,16 @@
 <?php
 
-Route::get('/profile/{id?}', ['as' => 'profile.show', 'uses' => 'User\ProfileController@show']);
+Route::group(['as' => 'front.'], function () {
+    Route::get('profile/{id?}', ['as' => 'profile.showById', 'uses' => 'ProfileController@showById']);
+    Route::get('@{username}', ['as' => 'profile.showByUsername', 'uses' => 'ProfileController@showByUsername']);
+
+    Route::group(['middleware' => 'auth', 'prefix' => 'me'], function () {
+        Route::get('settings', ['as' => 'profile.settings', 'uses' => 'ProfileController@settings']);
+
+        Route::get('coupon', ['as' => 'user.activate_coupon', 'uses' => 'AccountController@coupon']);
+        Route::get('account/add', ['as' => 'user.account.add', 'uses' => 'AccountController@add']);
+    });
+});
 
 Route::controllers([
     'auth'     => 'Auth\AuthController',
