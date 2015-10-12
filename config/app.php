@@ -153,9 +153,6 @@ return [
          * KodiCMS Service Providers...
          */
         KodiCMS\ModulesLoader\Providers\ModuleServiceProvider::class,
-        KodiCMS\ModulesLoader\Providers\RouteServiceProvider::class,
-        KodiCMS\ModulesLoader\Providers\AppServiceProvider::class,
-        KodiCMS\ModulesLoader\Providers\ConfigServiceProvider::class,
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Modules\Support\Html\HtmlServiceProvider::class,
@@ -173,7 +170,6 @@ return [
     */
 
     'aliases' => [
-
         'App'       => Illuminate\Support\Facades\App::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
@@ -208,8 +204,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'ModulesLoader'     => KodiCMS\ModulesLoader\ModulesLoaderFacade::class,
-        'ModulesFileSystem' => KodiCMS\ModulesLoader\ModulesFileSystemFacade::class,
         'RouteAPI'          => KodiCMS\API\RouteApiFacade::class,
         'Assets'            => Modules\Support\Facades\Assets::class,
         'Package'           => Modules\Support\Facades\Package::class,

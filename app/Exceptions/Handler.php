@@ -54,6 +54,10 @@ class Handler extends ExceptionHandler
             return $this->renderApiException($e);
         }
 
+        if (config('app.debug') and ! app()->runningInConsole()) {
+            return $this->renderExceptionWithWhoops($e);
+        }
+
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
@@ -118,5 +122,21 @@ class Handler extends ExceptionHandler
         } catch (Exception $ex) {
             return $this->toIlluminateResponse($this->convertExceptionToResponse($ex), $ex);
         }
+    }
+
+
+    /**
+     * Render an exception using Whoops.
+     *
+     * @param  Exception $e
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function renderExceptionWithWhoops(Exception $e)
+    {
+        $whoops = new \Whoops\Run;
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
+
+        return $this->toIlluminateResponse($whoops->handleException($e), $e);
     }
 }
