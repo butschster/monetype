@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ App::getLocale() }}">
 <head>
-	<title>{{ $title or Lang::get('app.title') }}</title>
+	<title>{{ $title or trans('core::core.title.app') }}</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<meta name="csrf-token" content="{{ csrf_token() }}" />

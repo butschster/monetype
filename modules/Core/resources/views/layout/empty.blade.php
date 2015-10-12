@@ -1,4 +1,4 @@
-@include('core::layout.meta')
+@include('core::layout.partials.meta')
 <body id="body.{{ $bodyId }}">
 @yield('content')
 </body>
