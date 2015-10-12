@@ -34,7 +34,7 @@ class ArticleController extends FrontController
     {
         $articles = $articleRepository->paginateByTag($tag);
 
-        return $this->setLayout('article.index', compact('articles'));
+        return $this->setLayout('article.byTag', compact('articles', 'tag'));
     }
 
 

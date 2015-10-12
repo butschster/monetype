@@ -1,4 +1,5 @@
-@forelse($articles as $article)
+@if($articles->count() > 0)
+@foreach($articles as $article)
 <div class="panel">
     <div class="panel-heading">
         @include('articles::article.partials.heading')
@@ -12,19 +13,24 @@
 
                 <div class="media-content m-t-md">
                     {!! $article->text_intro !!}
+
+                    @include('articles::article.partials.tags', ['tags' => $article->tagsArray])
                 </div>
             </div>
         </div>
-        <hr class="panel-wide"/>
+        <hr class="panel-wide m-t-sm m-b-sm" />
         @include('articles::article.partials.meta')
     </div>
 
-    @include('articles::article.partials.tags', ['tags' => $article->tagsArray])
+
 </div>
-@empty
+@endforeach
+
+{!! $articles->render() !!}
+@else
 <div class="panel">
     <div class="panel-body">
-        <h2 class="m-t-none">@lang('article.messages.not_found')</h2>
+        <h2 class="m-t-none">@lang('articles::article.message.empty_list')</h2>
     </div>
 </div>
-@endforelse
+@endif

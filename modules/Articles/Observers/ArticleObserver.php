@@ -16,6 +16,8 @@ class ArticleObserver
         if (is_null($article->author_id)) {
             $article->assignAuthor(auth()->user());
         }
+
+        $article->status = Article::STATUS_DRAFT;
     }
 
 

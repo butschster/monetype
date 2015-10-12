@@ -4,6 +4,7 @@ namespace Modules\Articles\Model;
 
 use Carbon\Carbon;
 use Modules\Users\Model\User;
+use Modules\Support\Helpers\Date;
 use Modules\Support\Helpers\String;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,6 +13,7 @@ use Modules\Transactions\Contracts\Buyable;
 use Modules\Transactions\Model\Transaction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Articles\Exceptions\ArticleException;
 
 /**
  * @property integer        $id
@@ -27,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string         $block_reason
  * @property integer        $count_payments
  * @property float          $amount
+ * @property float          $cost
  *
  * @property User           $author
  * @property Collection     $tags
@@ -123,10 +126,13 @@ class Article extends Model implements Buyable
     }
 
 
+    /**
+     * @throws ArticleException
+     */
     public function setPublished()
     {
-        if ($this->status !== static::STATUS_DRAFT) {
-            throw new \Exception('Можно опубликовать только черновик');
+        if ($this->status != static::STATUS_DRAFT) {
+            throw new ArticleException(trans('articles::article.message.can_publish_only_draft'));
         }
 
         $this->status       = static::STATUS_PUBLISHED;
@@ -143,8 +149,15 @@ class Article extends Model implements Buyable
     }
 
 
+    /**
+     * @throws ArticleException
+     */
     public function setApproved()
     {
+        if ($this->status != static::STATUS_PUBLISHED) {
+            throw new ArticleException(trans('articles::article.message.can_approve_ony_published'));
+        }
+
         $this->status = static::STATUS_APPROVED;
         $this->save();
     }
@@ -204,6 +217,24 @@ class Article extends Model implements Buyable
      **********************************************************************/
 
     /**
+     * @return string|null
+     */
+    public function getPublishedAttribute()
+    {
+        if ($this->published_at instanceof Carbon) {
+            if ($this->published_at->gt(new Carbon('-2 days'))) {
+                return $this->published_at->diffForHumans();
+            } else {
+                return Date::format($this->published_at);
+            }
+
+        }
+
+        return null;
+    }
+
+
+    /**
      * @return string
      */
     public function getAmountAttribute()
@@ -211,9 +242,63 @@ class Article extends Model implements Buyable
         return String::formatAmount(array_get($this->attributes, 'amount'));
     }
 
+
+    /**
+     * @return string
+     */
+    public function getCostAttribute()
+    {
+        return String::formatAmount($this->getCost());
+    }
+
     /**********************************************************************
      * Scopes
      **********************************************************************/
+
+    /**
+     * @param Builder    $query
+     * @param User|null  $user
+     *
+     * @return Builder
+     */
+    public function scopeIsPurchased(Builder $query, User $user = null)
+    {
+        if(is_null($user)) {
+            $userId = 0;
+        } else {
+            $userId = $user->id;
+        }
+
+        return $query
+            ->selectSub('select `id` from `transactions` where `transactions`.`deleted_at` is null and `debit` = ? and `article_id` = ? limit 1', 'is_published')
+            ->addBinding([$userId, $this->id], 'select');
+    }
+
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeNotApproved(Builder $query)
+    {
+        return $query->where('status', static::STATUS_PUBLISHED)
+            ->whereHas('author', function (Builder $q) {
+                $q->where('status', '!=', User::STATUS_BLOCKED);
+            });
+    }
+
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeBlocked(Builder $query)
+    {
+        return $query->where('status', static::STATUS_BLOCKED);
+    }
+
 
     /**
      * @param Builder $query
