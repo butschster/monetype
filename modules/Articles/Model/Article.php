@@ -4,6 +4,7 @@ namespace Modules\Articles\Model;
 
 use Carbon\Carbon;
 use Modules\Users\Model\User;
+use Modules\Support\Helpers\String;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Articles\Traits\TaggableTrait;
@@ -88,6 +89,9 @@ class Article extends Model implements Buyable
     protected $dates = ['published_at', 'deleted_at'];
 
 
+    /**
+     * @return int
+     */
     public function getCost()
     {
         return 1;
@@ -195,6 +199,17 @@ class Article extends Model implements Buyable
         return $updatedCategories;
     }
 
+    /**********************************************************************
+     * Mutators
+     **********************************************************************/
+
+    /**
+     * @return string
+     */
+    public function getAmountAttribute()
+    {
+        return String::formatAmount(array_get($this->attributes, 'amount'));
+    }
 
     /**********************************************************************
      * Scopes

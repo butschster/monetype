@@ -2,8 +2,11 @@
 
 namespace Modules\Articles\Http\Controllers;
 
+use Bus;
+use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Core\Http\Controllers\System\FrontController;
+use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 
 class ArticleController extends FrontController
 {
@@ -35,9 +38,22 @@ class ArticleController extends FrontController
     }
 
 
-    public function show($articleId)
+    public function show(ArticleRepository $articleRepository, $articleId)
     {
+        $article = $articleRepository->findOrFail($articleId);
 
+        try {
+            $isPurchased = Bus::dispatch(new PurchaseArticle($article, $this->user));
+        } catch (NotEnoughMoneyException $e) {
+            $isPurchased = false;
+        }
+
+        return $this->setLayout('article.show', [
+            'article'     => $article,
+            'isPurchased' => $isPurchased,
+            'author'      => $article->author,
+            'tags'        => $article->tagList,
+        ]);
     }
 
 
