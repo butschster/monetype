@@ -2,13 +2,17 @@
 
 namespace Modules\Users\Model;
 
+use HTML;
+use Modules\Support\Helpers\String;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
+use Modules\Support\Helpers\Gravatar;
 use Modules\Transactions\Model\Account;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -16,9 +20,12 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 /**
  * @property integer        $id
  * @property string         $name
+ * @property string         $username
  * @property string         $email
  * @property string         $gender
  * @property string         $status
+ * @property string         $avatar
+ * @property float          $balance
  *
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -51,7 +58,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'name',
         'email',
         'password',
-        'gender'
+        'gender',
     ];
 
     /**
@@ -61,7 +68,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
     ];
 
     /**
@@ -82,12 +89,140 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 
     /**
-     * Determine if the user has the given role.
-     *
-     * @param  mixed $role
-     *
-     * @return boolean
+     * @return string
      */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getBalance()
+    {
+        return String::formatAmount($this->account->balance);
+    }
+
+
+    /**
+     * @param array $attributes
+     *
+     * @return string
+     */
+    public function getProfileLink($title = null, array $attributes = [])
+    {
+        if (is_null($title)) {
+            $title = $this->getName();
+        }
+
+        if ( ! empty( $this->username )) {
+            return link_to_route('front.profile.showByUsername', $title, $this->username, $attributes);
+        } else {
+            return link_to_route('front.profile.showById', $title, $this->id, $attributes);
+        }
+    }
+
+    /**********************************************************************
+     * Avatar
+     **********************************************************************/
+
+    /**
+     * @param int $size
+     *
+     * @return string
+     */
+    public function getAvatar($size = 50)
+    {
+        if ( ! empty($this->avatar)) {
+            return $this->getAvatarHtml(['width' => $size . 'px', 'class' => 'img-circle']);
+        }
+
+        return $this->getGravatarHTML($size);
+    }
+
+
+    /**
+     * @param array $attributes
+     *
+     * @return string
+     */
+    public function getAvatarHtml(array $attributes = [])
+    {
+        return HTML::image("avatar/{$this->avatar}", $this->getName(), $attributes);
+    }
+
+
+    /**
+     * @param int $size
+     *
+     * @return string
+     */
+    public function getGravatarHTML($size = 50)
+    {
+        return Gravatar::load($this->email, $size, null, ['class' => 'img-circle']);
+    }
+
+
+    /**
+     * @param UploadedFile $file
+     *
+     * @return bool
+     */
+    public function attachAvatar(UploadedFile $file)
+    {
+        $extension = $file->getClientOriginalExtension();
+        $fileName  = uniqid() . '.' . $extension;
+        $path      = $this->getPhotoDitectory();
+
+        if ($file->move($path, $fileName)) {
+            $this->deletePhoto();
+            $image = Image::make($path . $fileName);
+
+            $image->resize(null, 200, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            $image->orientate();
+
+            $image->save(null, 100);
+
+            $this->avatar = $fileName;
+            $this->save();
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function deletePhoto()
+    {
+        if ( ! is_null($this->avatar) and file_exists($oldPhoto = $this->getPhotoDitectory() . $this->avatar)) {
+            @unlink($oldPhoto);
+            $this->avatar = null;
+
+            $this->save();
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getPhotoDitectory()
+    {
+        return public_path('avatars' . DIRECTORY_SEPARATOR);
+    }
 
     /**********************************************************************
      * Permissions
@@ -142,6 +277,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     /**********************************************************************
+     * Mutators
+     **********************************************************************/
+
+    /**
+     * @return string
+     */
+    public function getBalanceAttribute()
+    {
+        return $this->getBalance();
+    }
+
+    /**********************************************************************
      * Relations
      **********************************************************************/
 
@@ -178,8 +325,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         });
 
         static::created(function (User $user) {
-            $user->account()
-                 ->create([]);
+            $user->account()->create([]);
         });
     }
 }
