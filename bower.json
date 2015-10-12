@@ -1,16 +1,17 @@
 {
-	"name" : "Monetype",
-	"version": "0.1",
-	"dependencies" : {
-		"bootstrap": "latest",
-		"datetimepicker": "latest",
-		"fontawesome": "latest",
-		"jquery": "latest",
-		"jquery-validation": "latest",
-		"jquery.tagsinput": "latest",
-		"noty": "latest",
-		"select2": "latest",
-		"underscore": "latest",
-	  	"jStorage": "latest"
-	}
+  "name": "Monetype",
+  "version": "0.1",
+  "dependencies": {
+    "bootstrap": "latest",
+    "i18next": "latest",
+    "datetimepicker": "latest",
+    "fontawesome": "latest",
+    "jquery": "latest",
+    "jquery-validation": "latest",
+    "jquery.tagsinput": "latest",
+    "noty": "latest",
+    "select2": "latest",
+    "underscore": "latest",
+    "jStorage": "latest"
+  }
 }

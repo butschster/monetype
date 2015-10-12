@@ -1,4 +1,4 @@
-App.form = {
+App.Form = {
     extend: function (key, data) {
         if (!data) var data = {};
 
