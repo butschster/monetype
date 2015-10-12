@@ -3,6 +3,6 @@
         <i class="fa fa-fw fa-eye"></i> {{ $article->count_payments }}
     </li>
     <li>
-        {{ $article->amount }}
+        @lang('articles::article.label.balance', ['amount' => $article->amount])
     </li>
 </ul>

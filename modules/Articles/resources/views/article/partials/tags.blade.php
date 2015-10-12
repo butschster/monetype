@@ -7,7 +7,7 @@
         @endif
         <ul class="blog-tags list-unstyled list-inline">
             @foreach($tags as $tag)
-                <li>{!! link_to_route('articles.byTag', $tag, ['tag' => $tag], ['class' => 'label']) !!}</li>
+                <li>{!! link_to_route('front.articles.byTag', $tag, ['tag' => $tag], ['class' => 'label']) !!}</li>
             @endforeach
         </ul>
     </div>

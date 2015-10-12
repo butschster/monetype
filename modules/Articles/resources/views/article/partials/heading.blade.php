@@ -1,7 +1,7 @@
 <div class="media">
     <div class="media-body">
         <small>
-            @lang('articles::article.field.author'): {{ $article->author->name }}
+            {!! $article->author->getAvatar(30) !!}  {!! $article->author->getProfileLink() !!}
         </small>
         <br>
         <small class="text-muted">{{ $article->published }}</small>
