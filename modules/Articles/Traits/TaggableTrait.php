@@ -227,7 +227,7 @@ trait TaggableTrait
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tags()
+    public function tagList()
     {
         return $this->belongsToMany(Tag::class);
     }

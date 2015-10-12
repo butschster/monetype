@@ -8,13 +8,13 @@
         <div class="media">
             <div class="media-body">
                 <h3 class="media-heading">
-                    {!! HTML::linkRoute('article.show', $article->title, ['id' => $article->id]) !!}
+                    {!! link_to_route('article.show', $article->title, ['id' => $article->id]) !!}
                 </h3>
 
                 <div class="media-content m-t-md">
                     {!! $article->text_intro !!}
 
-                    @include('articles::article.partials.tags', ['tags' => $article->tagsArray])
+                    @include('articles::article.partials.tags', ['tags' => $article->tagList])
                 </div>
             </div>
         </div>
@@ -25,7 +25,6 @@
 
 </div>
 @endforeach
-
 {!! $articles->render() !!}
 @else
 <div class="panel">

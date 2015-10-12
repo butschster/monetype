@@ -26,7 +26,7 @@ class ArticleRepository extends Repository
     public function paginate($perPage = 15, $columns = ['*'])
     {
         return $this->getModel()
-            ->with('author')
+            ->with('author', 'tagList')
             ->orderByDate()
             ->paginate($perPage, $columns);
     }
@@ -44,7 +44,7 @@ class ArticleRepository extends Repository
         $tag = explode(',', $tag);
 
         return $this->getModel()
-            ->with('author')
+            ->with('author', 'tagList')
             ->filterByTag($tag)
             ->orderByDate()
             ->paginate($perPage, $columns);

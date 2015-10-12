@@ -7,6 +7,7 @@ return [
     ],
     'field'   => [
         'author' => 'Автор',
+        'tags'   => 'Теги',
     ],
     'label'   => [
         'balance' => 'Собрано денег: :amount р.',

@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="panel">
-
         <div class="panel-heading">
             @include('articles::article.partials.heading')
         </div>
@@ -31,6 +30,8 @@
             </div>
         </div>
 
-        @include('articles::article.partials.tags', ['tags' => $tags, 'showTagsTitle' => true])
+        <div class="panel-footer">
+            @include('articles::article.partials.tags', ['tags' => $tags, 'showTagsTitle' => true])
+        </div>
     </div>
 @endsection
