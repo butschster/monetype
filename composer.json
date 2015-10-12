@@ -14,6 +14,7 @@
         "kodicms/laravel-api": "^1.0",
         "bosnadev/repositories": " 0.*",
         "caouecs/laravel4-lang": "~2.0",
+        "intervention/image": "^2.3",
         "filp/whoops": "^1.1"
     },
     "require-dev": {
