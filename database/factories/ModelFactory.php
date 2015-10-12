@@ -36,7 +36,7 @@ $factory->defineAs(Article::class, 'article', function (Faker\Generator $faker) 
     return [
         'title' => $faker->sentence(6),
         'text_intro_source' => $faker->sentences(1, true),
-        'text_source' => '##' . $faker->sentence . "\n\n- - -\n\n" . str_replace('.', ".\n\n", $faker->sentences(100, true)),
+        'text_source' => str_replace('e.', "e.\n\n<br />\n####$faker->sentence\n\n", $faker->sentences(100, true)),
         'forbid_comment' => $faker->boolean(),
         'author_id' => $faker->randomElement($users),
         'status' => $faker->randomElement(['new', 'published', 'approved'])
