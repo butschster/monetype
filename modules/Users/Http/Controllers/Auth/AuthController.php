@@ -25,6 +25,8 @@ class AuthController extends FrontController
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $redirectTo = '/';
+
 
     /**
      * Create a new authentication controller instance.
@@ -79,10 +81,11 @@ class AuthController extends FrontController
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => 'required|max:255',
+            'username' => 'required|alpha_dash|max:50|unique:users',
+            'name'     => 'max:255',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-        ]);
+        ], [], trans('users::user.field'));
     }
 
 
@@ -96,7 +99,8 @@ class AuthController extends FrontController
     protected function create(array $data)
     {
         return User::create([
-            'name'     => $data['name'],
+            'username' => $data['username'],
+            'name'     => array_get($data, 'name'),
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

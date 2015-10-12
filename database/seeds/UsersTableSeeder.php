@@ -14,17 +14,19 @@ class UsersTableSeeder extends Seeder
         Account::truncate();
 
         $administrator = User::create([
+            'username' => 'admin',
             'name'     => 'Administrator',
             'email'    => 'admin@site.com',
-            'password' => bcrypt('passcword'),
+            'password' => bcrypt('password'),
             'gender'   => 'male',
             'status'   => User::STATUS_APPROVED,
         ]);
 
         $administrator->assignRole(Role::ROLE_ADMIN);
+        $administrator->account->update(['balance' => 100]);
 
         User::create([
-            'name'     => 'credit',
+            'username' => bcrypt('credit'),
             'email'    => 'credit@site.com',
             'password' => bcrypt('password'),
             'gender'   => 'other',
@@ -32,14 +34,14 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'name'     => 'debit',
+            'username' => bcrypt('debit'),
             'email'    => 'debit@site.com',
             'password' => bcrypt('password'),
             'gender'   => 'other',
             'status'   => User::STATUS_APPROVED,
         ]);
 
-        factory(User::class, 'user', 100)->create()->each(function(User $user) {
+        factory(User::class, 'user', 100)->create()->each(function (User $user) {
             $user->account->update(['balance' => 100]);
         });
     }

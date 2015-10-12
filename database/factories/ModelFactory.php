@@ -16,6 +16,7 @@ use Modules\Articles\Model\Article;
 
 $factory->defineAs(User::class, 'user', function (Faker\Generator $faker) {
     return [
+        'username' => $faker->userName,
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10)),
