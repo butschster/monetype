@@ -4,8 +4,8 @@ return [
     'title'   => [
         'list'   => 'Список статей',
         'create' => 'Новая статья',
-        'by_tag' => '<small>Статьи с тегом</small> «:tag»',
-        'money' => '<small>Собраные деньги</small> «:article»'
+        'by_tag' => ':tag<br /><small>Статьи с тегом</small>',
+        'money'  => ':article<br /><small>Собраные деньги</small>',
     ],
     'field'   => [
         'author'         => 'Автор',
@@ -14,14 +14,16 @@ return [
         'text_intro'     => 'Вводный текст',
         'text'           => 'Текст',
         'forbid_comment' => 'Запретить комментирование',
-        'block_reason'   => 'Причина блокировки'
+        'block_reason'   => 'Причина блокировки',
     ],
     'button'  => [
-        'draft' => 'Сохранить черновик'
+        'draft' => 'Сохранить черновик',
     ],
     'label'   => [
-        'balance' => 'Собрано денег: :amount р.',
-        'cost'    => 'Стоимость прочтения :amount р.',
+        'balance'        => '<i class="fa fa-money"></i> :amount <i class="fa fa-rub"></i>',
+        'cost'           => ':amount <i class="fa fa-rub"></i>',
+        'total_amount'   => 'Собрано денег',
+        'count_payments' => 'Всего платежей',
     ],
     'message' => [
         'not_enough_money'          => 'У вас недостаточно денег для прочтения данной статьи',
@@ -34,6 +36,6 @@ return [
         'published'                 => 'Статья опубликована',
         'drafted'                   => 'Статья сохранена в черновики',
         'approved'                  => 'Статья помещена как проверенная',
-        'blocked'                   => 'Статья заблокирована'
+        'blocked'                   => 'Статья заблокирована',
     ],
 ];
