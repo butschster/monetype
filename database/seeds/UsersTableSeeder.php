@@ -4,6 +4,7 @@ use Modules\Users\Model\User;
 use Modules\Users\Model\Role;
 use Illuminate\Database\Seeder;
 use Modules\Transactions\Model\Account;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UsersTableSeeder extends Seeder
 {
@@ -43,6 +44,15 @@ class UsersTableSeeder extends Seeder
 
         factory(User::class, 'user', 100)->create()->each(function (User $user) {
             $user->account->update(['balance' => 100]);
+
+            if (File::copy(
+                public_path('img' . DIRECTORY_SEPARATOR . 'logo.png'),
+                public_path('img' . DIRECTORY_SEPARATOR . 'avatar.png')
+            )) {
+                $user->attachAvatar(
+                    new UploadedFile(public_path('img' . DIRECTORY_SEPARATOR . 'avatar.png'), 'avatar.png', 'image/png', 0, 0, true)
+                );
+            }
         });
     }
 }
