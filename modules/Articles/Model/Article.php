@@ -18,6 +18,8 @@ use Modules\Articles\Exceptions\ArticleException;
 /**
  * @property integer        $id
  * @property integer        $author_id
+ * @property integer        $approver_id
+ * @property integer        bocked_by_id
  * @property string         $title
  * @property string         $text_source
  * @property string         $text_intro_source
@@ -32,6 +34,8 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property float          $cost
  *
  * @property User           $author
+ * @property User           $approver
+ * @property User           $blockedBy
  * @property Collection     $tags
  * @property Collection     $categories
  *
@@ -127,6 +131,24 @@ class Article extends Model implements Buyable
 
 
     /**
+     * @return bool
+     */
+    public function isBlocked()
+    {
+        return $this->status === static::STATUS_BLOCKED;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isDrafted()
+    {
+        return $this->status === static::STATUS_DRAFT;
+    }
+
+
+    /**
      * @throws ArticleException
      */
     public function setPublished()
@@ -150,15 +172,33 @@ class Article extends Model implements Buyable
 
 
     /**
+     * @param User $user
+     *
      * @throws ArticleException
      */
-    public function setApproved()
+    public function setApproved(User $user)
     {
         if ($this->status != static::STATUS_PUBLISHED) {
             throw new ArticleException(trans('articles::article.message.can_approve_ony_published'));
         }
 
         $this->status = static::STATUS_APPROVED;
+        $this->approver()->associate($user);
+
+        $this->save();
+    }
+
+
+    /**
+     * @param User   $user
+     * @param string $reason
+     */
+    public function setBlocked(User $user, $reason)
+    {
+        $this->status = static::STATUS_BLOCKED;
+        $this->blockedBy()->associate($user);
+        $this->block_reason = $reason;
+
         $this->save();
     }
 
@@ -337,6 +377,24 @@ class Article extends Model implements Buyable
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function approver()
+    {
+        return $this->belongsTo(User::class, 'approver_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function blockedBy()
+    {
+        return $this->belongsTo(User::class, 'bocked_by_id');
     }
 
 

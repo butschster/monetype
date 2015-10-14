@@ -29,7 +29,11 @@ class ArticlePolicy
      */
     public function view(User $user, Article $article)
     {
-        return true;
+        return (
+            ! $article->isBlocked()
+        and
+            ! $article->isDrafted()
+        );
     }
 
 
@@ -58,6 +62,66 @@ class ArticlePolicy
         and
             $user->id === $article->author_id
         );
+    }
+
+
+    /**
+     * @param User    $user
+     * @param Article $article
+     *
+     * @return bool
+     */
+    public function draft(User $user, Article $article)
+    {
+        return (
+            $article->status !== Article::STATUS_DRAFT
+            and
+            $user->id === $article->author_id
+        );
+    }
+
+
+    /**
+     * @param User    $user
+     * @param Article $article
+     *
+     * @return bool
+     */
+    public function publish(User $user, Article $article)
+    {
+        return (
+            $article->status === Article::STATUS_DRAFT
+            and
+            $user->id === $article->author_id
+        );
+    }
+
+
+    /**
+     * @param User    $user
+     * @param Article $article
+     *
+     * @return bool
+     */
+    public function approve(User $user, Article $article)
+    {
+        return (
+            $article->status === Article::STATUS_PUBLISHED
+            and
+            $user->isModerator()
+        );
+    }
+
+
+    /**
+     * @param User    $user
+     * @param Article $article
+     *
+     * @return bool
+     */
+    public function block(User $user, Article $article)
+    {
+        return $user->isModerator();
     }
 
 

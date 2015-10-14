@@ -29,6 +29,8 @@ class CreateArticlesTable extends Migration {
 			$table->text('tags')->comment('tags separated by a comma');
 
 			$table->unsignedInteger('author_id')->index();
+			$table->unsignedInteger('approver_id')->index()->nullable();
+			$table->unsignedInteger('bocked_by_id')->index()->nullable();
 
 			$table->decimal('amount', 10, 2)->default(0)->index();
 			$table->unsignedInteger('count_payments')->default(0);
@@ -44,6 +46,14 @@ class CreateArticlesTable extends Migration {
 			$table->dateTime('published_at')->nullable()->index();
 
 			$table->foreign('author_id')
+				->references('id')
+				->on('users');
+
+			$table->foreign('approver_id')
+				->references('id')
+				->on('users');
+
+			$table->foreign('bocked_by_id')
 				->references('id')
 				->on('users');
 		});

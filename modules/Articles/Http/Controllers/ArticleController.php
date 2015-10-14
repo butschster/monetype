@@ -3,6 +3,8 @@
 namespace Modules\Articles\Http\Controllers;
 
 use Bus;
+use Modules\Articles\Jobs\ApproveArticle;
+use Modules\Articles\Jobs\BlockArticle;
 use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
@@ -223,6 +225,54 @@ class ArticleController extends FrontController
 
         return $this->successRedirect(
             trans('articles::article.message.drafted')
+        );
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function approve(ArticleRepository $articleRepository, $articleId)
+    {
+        $article = $articleRepository->findOrFail($articleId);
+
+        if ( ! $this->user->can('approve', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        Bus::dispatch(new ApproveArticle($this->user, $article));
+
+        return $this->successRedirect(
+            trans('articles::article.message.approved')
+        );
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function block(ArticleRepository $articleRepository, $articleId)
+    {
+        $article = $articleRepository->findOrFail($articleId);
+
+        if ( ! $this->user->can('block', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        $this->validate($this->request, [
+            'block_reason' => 'required'
+        ], [], trans('articles::article.field'));
+
+        Bus::dispatch(new BlockArticle($this->user, $article, $this->request->get('block_reason')));
+
+        return $this->successRedirect(
+            trans('articles::article.message.approved')
         );
     }
 
