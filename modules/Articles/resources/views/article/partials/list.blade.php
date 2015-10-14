@@ -8,7 +8,7 @@
         <div class="media">
             <div class="media-body">
                 <h3 class="media-heading">
-                    {!! link_to_route('article.show', $article->title, ['id' => $article->id]) !!}
+                    {!! link_to_route('front.article.show', $article->title, ['id' => $article->id]) !!}
                 </h3>
 
                 <div class="media-content m-t-md">

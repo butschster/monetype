@@ -15,13 +15,13 @@ Route::group(['as' => 'front.'], function () {
 
     Route::get('category/{slug}', ['as' => 'category.show', 'uses' => 'CategoryController@show']);
     Route::get('categories', ['as' => 'category.index', 'uses' => 'CategoryController@index']);
-});
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::resource('article', 'ArticleController', [
-        'except' => [
-            'index',
-            'destroy',
-        ],
-    ]);
+    Route::group(['middleware' => 'auth'], function () {
+        Route::resource('article', 'ArticleController', [
+            'except' => [
+                'index',
+                'destroy',
+            ],
+        ]);
+    });
 });
