@@ -3,6 +3,7 @@
 namespace Modules\Users\Model;
 
 use HTML;
+use Image;
 use Modules\Support\Helpers\String;
 use Illuminate\Auth\Authenticatable;
 use Modules\Support\Helpers\Gravatar;
@@ -202,6 +203,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $image->resize(null, 200, function ($constraint) {
                 $constraint->aspectRatio();
             });
+
+            $image->crop(200, 200);
 
             $image->orientate();
 
