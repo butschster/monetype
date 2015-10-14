@@ -170,7 +170,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function getAvatarHtml(array $attributes = [])
     {
-        return HTML::image("avatar/{$this->avatar}", $this->getName(), $attributes);
+        return HTML::image("avatars/{$this->avatar}", $this->getName(), $attributes);
     }
 
 
