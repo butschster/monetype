@@ -27,6 +27,7 @@ return [
         'send_password'   => 'Отправить пароль',
         'reset_password'  => 'Сбросить',
         'register'        => 'Регистрация',
+        'login'           => 'Войти',
     ],
     'message' => [
         'not_found' => 'Пользователь не найден',
