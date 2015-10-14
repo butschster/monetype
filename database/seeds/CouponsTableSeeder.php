@@ -20,7 +20,7 @@ class CouponsTableSeeder extends Seeder
 
         User::where('id', '>', 3)->with(['account' => function($query) {
             $query->where('balance', '>', 3);
-        }])->take(10)->orderByRaw('RAND()')->get()->each(function(User $user) {
+        }])->take(20)->orderByRaw('RAND()')->get()->each(function(User $user) {
             Bus::dispatch(new CreateCoupon($user, rand(1, 2)));
         });
 

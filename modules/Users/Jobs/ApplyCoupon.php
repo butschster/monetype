@@ -3,6 +3,7 @@
 namespace Modules\Users\Jobs;
 
 use DB;
+use Modules\Users\Exceptions\CouponException;
 use Modules\Users\Exceptions\CouponExpiredException;
 use Modules\Users\Model\User;
 use Modules\Users\Model\Coupon;
@@ -36,13 +37,18 @@ class ApplyCoupon implements SelfHandling
 
 
     /**
-     * @return Transaction
+     * @return mixed
+     * @throws CouponException
      * @throws CouponExpiredException
      * @throws NotEnoughMoneyException
      */
     public function handle()
     {
-        if ($this->coupon->user->account->balance < $this->coupon->amount) {
+        if ($this->coupon->fromUser->id < $this->user->id) {
+            throw new CouponException;
+        }
+
+        if ($this->coupon->fromUser->account->balance < $this->coupon->amount) {
             throw new NotEnoughMoneyException;
         }
 
@@ -54,7 +60,7 @@ class ApplyCoupon implements SelfHandling
             $transaction         = new Transaction;
             $transaction->amount = $this->coupon->amount;
 
-            $transaction->assignPurchaser($this->coupon->user);
+            $transaction->assignPurchaser($this->coupon->fromUser);
             $transaction->assignRecipient($this->user);
             $transaction->setType('coupon');
             $transaction->setStatus('new');
@@ -67,6 +73,7 @@ class ApplyCoupon implements SelfHandling
             $transaction->save();
 
             $transaction->complete(function (Transaction $t) {
+                $this->coupon->assignToUser($this->user);
                 $this->coupon->delete();
             });
 

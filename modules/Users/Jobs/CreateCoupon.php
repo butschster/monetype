@@ -46,7 +46,7 @@ class CreateCoupon implements SelfHandling
         return DB::transaction(function () {
             $coupon         = new Coupon;
             $coupon->amount = $this->amount;
-            $coupon->assignUser($this->user);
+            $coupon->assignFromUser($this->user);
 
             $coupon->save();
 

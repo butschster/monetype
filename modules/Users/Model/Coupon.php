@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer $id
- * @property integer $user_id
+ * @property integer $from_user_id
+ * @property integer $to_user_id
  * @property string  $code
  * @property float   $amount
  *
- * @property User    $user
+ * @property User    $fromUser
+ * @property User    $toUser
  *
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
@@ -46,9 +48,18 @@ class Coupon extends Model
     /**
      * @param User $user
      */
-    public function assignUser(User $user)
+    public function assignFromUser(User $user)
     {
-        $this->user()->associate($user);
+        $this->fromUser()->associate($user);
+    }
+
+
+    /**
+     * @param User $user
+     */
+    public function assignToUser(User $user)
+    {
+        $this->toUser()->associate($user);
     }
 
 
@@ -67,8 +78,17 @@ class Coupon extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function fromUser()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'from_user_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function toUser()
+    {
+        return $this->belongsTo(User::class, 'to_user_id');
     }
 }
