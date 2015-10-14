@@ -13,8 +13,7 @@
 
                 <div class="media-content m-t-md">
                     {!! $article->text_intro !!}
-
-                    @include('articles::article.partials.tags', ['tags' => $article->tagList])
+                    @include('articles::article.partials.tags', ['tags' => $article->tags])
                 </div>
             </div>
         </div>
