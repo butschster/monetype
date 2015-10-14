@@ -33,6 +33,7 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property float          $amount
  * @property float          $cost
  * @property string         $published
+ * @property string         $statusTitle
  *
  * @property User           $author
  * @property User           $approver
@@ -257,6 +258,14 @@ class Article extends Model implements Buyable
     /**********************************************************************
      * Mutators
      **********************************************************************/
+
+    /**
+     * @return string
+     */
+    public function getStatusTitleAttribute()
+    {
+        return trans("articles::article.status.{$this->status}");
+    }
 
     /**
      * @return string|null

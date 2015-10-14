@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Articles\Model\Article;
+
 return [
     'title'   => [
         'list'   => 'Список статей',
@@ -18,6 +20,12 @@ return [
     ],
     'button'  => [
         'draft' => 'Сохранить черновик',
+    ],
+    'status'  => [
+        Article::STATUS_DRAFT     => '<span class="label label-default">Черновик</span>',
+        Article::STATUS_PUBLISHED => '<span class="label label-success">Опубликована</span>',
+        Article::STATUS_APPROVED  => '<span class="label label-success"><i class="fa fa-check"></i> Опубликована</span>',
+        Article::STATUS_BLOCKED   => '<span class="label label-danger"><i class="fa fa-ban"></i> Заблокирована</span>',
     ],
     'label'   => [
         'balance'        => '<i class="fa fa-money"></i> :amount <i class="fa fa-rub"></i>',
