@@ -313,8 +313,9 @@ class ArticleController extends FrontController
             abort(403, trans('articles::article.message.not_allowed'));
         }
 
-        return $this->setLayout('article.viewPurchasers', [
-            'article' => $article
+        return $this->setLayout('article.money', [
+            'article'      => $article,
+            'transactions' => $article->recipients()->with('debitAccount')->paginate(),
         ]);
     }
 }

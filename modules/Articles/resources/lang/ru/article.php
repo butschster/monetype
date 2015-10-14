@@ -4,7 +4,8 @@ return [
     'title'   => [
         'list'   => 'Список статей',
         'create' => 'Новая статья',
-        'by_tag' => 'Статьи с тегом [:tag]',
+        'by_tag' => '<small>Статьи с тегом</small> «:tag»',
+        'money' => '<small>Собраные деньги</small> «:article»'
     ],
     'field'   => [
         'author'         => 'Автор',
