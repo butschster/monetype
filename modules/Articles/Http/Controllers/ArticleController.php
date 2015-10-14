@@ -3,8 +3,12 @@
 namespace Modules\Articles\Http\Controllers;
 
 use Bus;
+use Modules\Articles\Jobs\DraftArticle;
+use Modules\Articles\Jobs\PublishArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Articles\Repositories\ArticleRepository;
+use Modules\Articles\Http\Requests\StoreArticleRequest;
+use Modules\Articles\Http\Requests\UpdateArticleRequest;
 use Modules\Core\Http\Controllers\System\FrontController;
 use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 
@@ -38,9 +42,19 @@ class ArticleController extends FrontController
     }
 
 
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \View
+     */
     public function show(ArticleRepository $articleRepository, $articleId)
     {
         $article = $articleRepository->findOrFail($articleId);
+
+        if ( ! $this->user->can('view', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
 
         try {
             $isPurchased = Bus::dispatch(new PurchaseArticle($article, $this->user));
@@ -52,43 +66,205 @@ class ArticleController extends FrontController
             'article'     => $article,
             'isPurchased' => $isPurchased,
             'author'      => $article->author,
-            'tags'        => $article->tagList,
+            'tags'        => $article->tags,
         ]);
     }
 
 
-    public function create()
+    /**
+     * @param ArticleRepository $articleRepository
+     *
+     * @return \View
+     */
+    public function create(ArticleRepository $articleRepository)
     {
+        $article = $articleRepository->getModel();
 
+        if ( ! $this->user->can('create', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        return $this->setLayout('article.form', [
+            'article' => $article,
+            'action'  => 'front.article.store',
+            'tags'    => []
+        ]);
     }
 
 
-    public function store()
+    /**
+     * @param StoreArticleRequest $request
+     * @param ArticleRepository   $articleRepository
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(StoreArticleRequest $request, ArticleRepository $articleRepository)
     {
+        if ( ! $this->user->can('create', $articleRepository->getModel())) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
 
+        $article = $articleRepository->create($request->only(
+            'title', 'text_source', 'text_intro_source', 'forbid_comment', 'tags'
+        ));
+
+        return $this->successRedirect(
+            trans('articles::article.message.created'),
+            route('front.article.preview', $article->id)
+        );
     }
 
 
-    public function edit($articleId)
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \View
+     */
+    public function edit(ArticleRepository $articleRepository, $articleId)
     {
+        $article = $articleRepository->findOrFail($articleId);
 
+        if ( ! $this->user->can('update', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        return $this->setLayout('article.form', [
+            'article' => $article,
+            'action'  => 'front.article.store',
+            'tags'    => $article->tags
+        ]);
     }
 
 
-    public function update($articleId)
+    /**
+     * @param UpdateArticleRequest $request
+     * @param ArticleRepository    $articleRepository
+     * @param integer              $articleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateArticleRequest $request, ArticleRepository $articleRepository, $articleId)
     {
+        $article = $articleRepository->findOrFail($articleId);
 
+        if ( ! $this->user->can('update', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        $article = $articleRepository->update($request->only(
+            'title', 'text_source', 'text_intro_source', 'forbid_comment', 'tags'
+        ), $articleId);
+
+        return $this->successRedirect(
+            trans('articles::article.message.updated'),
+            route('front.article.preview', $article->id)
+        );
     }
 
 
-    public function destroy($articleId)
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \View
+     */
+    public function preview(ArticleRepository $articleRepository, $articleId)
     {
+        $article = $articleRepository->findOrFail($articleId);
 
+        if ( ! $this->user->can('preview', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        return $this->setLayout('article.preview', [
+            'article' => $article
+        ]);
     }
 
 
-    public function money($articleId)
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function publish(ArticleRepository $articleRepository, $articleId)
     {
+        $article = $articleRepository->findOrFail($articleId);
 
+        if ( ! $this->user->can('publish', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        Bus::dispatch(new PublishArticle($this->user, $article));
+
+        return $this->successRedirect(
+            trans('articles::article.message.published')
+        );
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function draft(ArticleRepository $articleRepository, $articleId)
+    {
+        $article = $articleRepository->findOrFail($articleId);
+
+        if ( ! $this->user->can('draft', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        Bus::dispatch(new DraftArticle($this->user, $article));
+
+        return $this->successRedirect(
+            trans('articles::article.message.drafted')
+        );
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(ArticleRepository $articleRepository, $articleId)
+    {
+        $article = $articleRepository->findOrFail($articleId);
+
+        if ( ! $this->user->can('delete', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        $articleRepository->delete($articleId);
+
+        return $this->successRedirect(
+            trans('articles::article.message.deleted')
+        );
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \View
+     */
+    public function money(ArticleRepository $articleRepository, $articleId)
+    {
+        $article = $articleRepository->findOrFail($articleId);
+
+        if ( ! $this->user->can('viewPurchasers', $article)) {
+            abort(403, trans('articles::article.message.not_allowed'));
+        }
+
+        return $this->setLayout('article.viewPurchasers', [
+            'article' => $article
+        ]);
     }
 }
