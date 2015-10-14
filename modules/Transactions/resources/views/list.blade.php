@@ -19,15 +19,6 @@
                 <td class="text-right">{{ $transaction->created }}</td>
             </tr>
         @endforeach
-        <tfoot>
-            <tr>
-                <th colspan="2" class="text-right">
-                    @lang('transactions::transaction.label.total')
-                    {{ \Modules\Support\Helpers\String::formatAmount($transactions->sum('amount')) }} р.
-                </th>
-                <td></td>
-            </tr>
-        </tfoot>
     </table>
 </div>
 
