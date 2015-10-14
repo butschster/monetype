@@ -89,7 +89,7 @@ class ArticleController extends FrontController
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => 'front.article.store',
-            'tags'    => []
+            'tags'    => ''
         ]);
     }
 
@@ -134,7 +134,7 @@ class ArticleController extends FrontController
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => 'front.article.store',
-            'tags'    => $article->tags
+            'tags'    => $article->tagsString
         ]);
     }
 
