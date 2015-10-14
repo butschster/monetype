@@ -15,7 +15,8 @@ var paths = {
     'jquerytagsinput': './bower_components/jquery.tagsinput/',
     'noty': './bower_components/noty/',
     'select2': './bower_components/select2/',
-    'i18next': './bower_components/i18next/'
+    'i18next': './bower_components/i18next/',
+    'charts': './bower_components/Chart.js/'
 };
 
 
@@ -60,6 +61,7 @@ elixir(function (mix) {
             'controllers/articles.js',
             'run.js'
         ], 'public/js/app.js')
+        .copy(paths.charts + 'Chart.min.js', 'public/js')
 
         // Versioning
         //.version(['public/css/app.css', 'public/js/app.js']);

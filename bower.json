@@ -12,6 +12,7 @@
     "noty": "latest",
     "select2": "latest",
     "underscore": "latest",
-    "jStorage": "latest"
+    "jStorage": "latest",
+    "Chart.js": "latest"
   }
 }
