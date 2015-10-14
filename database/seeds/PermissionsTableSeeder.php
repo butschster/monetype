@@ -19,5 +19,10 @@ class PermissionsTableSeeder extends Seeder
             'name'        => 'admin',
             'description' => 'Administrator role',
         ]);
+
+        Role::create([
+            'name'        => 'moderator',
+            'description' => 'Moderator role',
+        ]);
     }
 }

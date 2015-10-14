@@ -89,6 +89,25 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 
     /**
+     * @return bool
+     */
+    public function isModerator()
+    {
+        return $this->hasRole(Role::ROLE_MODERATOR);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isBlocked()
+    {
+        return $this->status === static::STATUS_BLOCKED;
+    }
+
+
+
+    /**
      * @return string
      */
     public function getName()
