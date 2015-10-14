@@ -4,7 +4,9 @@ namespace Modules\Transactions\Model;
 
 use Closure;
 use Modules\Users\Model\User;
+use Modules\Support\Helpers\Date;
 use Modules\Articles\Model\Article;
+use Modules\Support\Helpers\String;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float          $amount
  * @property float          $comission
  * @property string         $details
+ * @property string         $created
  *
  * @property Article        $article
  * @property Type           $type
@@ -176,6 +179,28 @@ class Transaction extends Model
     {
         return $this->article()->associate($article);
     }
+
+    /**********************************************************************
+     * Mutators
+     **********************************************************************/
+
+    /**
+     * @return string|null
+     */
+    public function getCreatedAttribute()
+    {
+        return Date::format($this->created_at);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getAmountAttribute()
+    {
+        return String::formatAmount(array_get($this->attributes, 'amount'));
+    }
+
 
     /**********************************************************************
      * Scopes
