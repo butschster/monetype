@@ -32,12 +32,14 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property integer        $count_payments
  * @property float          $amount
  * @property float          $cost
+ * @property string         $published
  *
  * @property User           $author
  * @property User           $approver
  * @property User           $blockedBy
  * @property Collection     $tags
  * @property Collection     $categories
+ * @property Collection     $recipients
  *
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
