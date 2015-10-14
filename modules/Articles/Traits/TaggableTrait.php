@@ -62,13 +62,11 @@ trait TaggableTrait
 
 
     /**
-     * Замена существующих тегов новыми
-     *
      * @param array $tags
      *
      * @return array
      */
-    public function replaceTags(array $tags)
+    public function updateTags(array $tags)
     {
         $tags         = $this->_filterTags($tags);
         $currentTags  = $this->tags->lists('name')->all();
@@ -227,7 +225,7 @@ trait TaggableTrait
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tagList()
+    public function tags()
     {
         return $this->belongsToMany(Tag::class);
     }
