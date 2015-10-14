@@ -218,6 +218,24 @@ trait TaggableTrait
         return explode(',', $this->attributes['tags']);
     }
 
+
+    /**
+     * @return string|null
+     */
+    public function getTagsStringAttribute()
+    {
+        return array_get($this->attributes, 'tags');
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getTagsAttribute()
+    {
+        return $this->tags()->get();
+    }
+
     /**********************************************************************
      * Relations
      **********************************************************************/
