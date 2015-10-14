@@ -16,6 +16,7 @@ var paths = {
     'noty': './bower_components/noty/',
     'select2': './bower_components/select2/',
     'i18next': './bower_components/i18next/',
+    'jStorage': './bower_components/jStorage/',
     'charts': './bower_components/Chart.js/'
 };
 
@@ -51,6 +52,8 @@ elixir(function (mix) {
             paths.noty + "js/noty/packaged/jquery.noty.packaged.js",
             paths.jqueryvalidation + "dist/jquery.validate.js",
             paths.jqueryvalidation + "dist/additional-methods.js",
+            paths.jqueryvalidation + "dist/additional-methods.js",
+            paths.jStorage + "jstorage.js",
             paths.i18next + "i18next.js"
         ], 'public/js/lib.js')
         .scripts([

@@ -200,7 +200,7 @@ App.Form = {
                 var time = new Date(data['timestamp']);
 
                 // TODO: добавить локализацию
-                this._form.prepend(_.template('<div class="alert alert-warning" id="notification_autosave">' +
+                this._form.prepend(_.template('<div class="alert alert-warning m-b-none" id="notification_autosave">' +
                     'У вас есть автосохранение от <b><%= date %> <%= time %></b>, ' +
                     '<a href="#reset" class="reset_form_from_autosave">восстановить форму</a>?' +
                     '</div>')({

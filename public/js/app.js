@@ -398,7 +398,7 @@ App.Form = {
                 var time = new Date(data['timestamp']);
 
                 // TODO: добавить локализацию
-                this._form.prepend(_.template('<div class="alert alert-warning" id="notification_autosave">' +
+                this._form.prepend(_.template('<div class="alert alert-warning m-b-none" id="notification_autosave">' +
                     'У вас есть автосохранение от <b><%= date %> <%= time %></b>, ' +
                     '<a href="#reset" class="reset_form_from_autosave">восстановить форму</a>?' +
                     '</div>')({
@@ -788,13 +788,10 @@ App.Components
     });
 App.Form.extend('articles', {
 	fields: {
-		id: 'integer',
 		title: 'string',
-		text_intro: 'textarea',
-		text: 'ckeditor',
+		text_source: 'textarea',
 		forbid_comment: 'checkbox',
-		tagsList: 'tags',
-		categories_list: 'multiple'
+		tags: 'tags'
 	},
 	messages: {
 		saved: 'Article saved'
@@ -818,7 +815,7 @@ App.Form.extend('articles', {
 	}
 });
 
-App.Controllers.add(['articles.create', 'articles.edit'], function(action) {
+App.Controllers.add(['article.create', 'article.edit'], function(action) {
 	App.Form.articles.init($('form'));
 });
 $(function () {

@@ -1,12 +1,9 @@
 App.Form.extend('articles', {
 	fields: {
-		id: 'integer',
 		title: 'string',
-		text_intro: 'textarea',
-		text: 'ckeditor',
+		text_source: 'textarea',
 		forbid_comment: 'checkbox',
-		tagsList: 'tags',
-		categories_list: 'multiple'
+		tags: 'tags'
 	},
 	messages: {
 		saved: 'Article saved'
@@ -30,6 +27,6 @@ App.Form.extend('articles', {
 	}
 });
 
-App.Controllers.add(['articles.create', 'articles.edit'], function(action) {
+App.Controllers.add(['article.create', 'article.edit'], function(action) {
 	App.Form.articles.init($('form'));
 });
