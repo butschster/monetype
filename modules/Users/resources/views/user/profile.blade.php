@@ -1,7 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-   <h2>Профиль пользователя {{ $user->getName() }}</h2>
+   <h2>@lang('users::user.title.profile', ['user' => $user->getName()])</h2>
 
    <div class="panel">
 

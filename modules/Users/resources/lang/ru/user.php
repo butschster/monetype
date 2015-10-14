@@ -3,6 +3,7 @@
 return [
     'title'   => [
         'reset_password' => 'Сброс пароля',
+        'profile'        => ':user <small>Профиль пользователя</small>',
     ],
     'field'   => [
         'username'         => 'Username',
