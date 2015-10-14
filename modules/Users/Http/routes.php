@@ -1,6 +1,7 @@
 <?php
 
 Route::group(['as' => 'front.'], function () {
+    Route::get('profile/articles', ['as' => 'user.articles', 'uses' => 'UserController@articles']);
     Route::get('profile/{id?}', ['as' => 'profile.showById', 'uses' => 'ProfileController@showById']);
     Route::get('@{username}', ['as' => 'profile.showByUsername', 'uses' => 'ProfileController@showByUsername']);
 

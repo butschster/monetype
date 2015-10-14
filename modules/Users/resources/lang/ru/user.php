@@ -2,8 +2,10 @@
 
 return [
     'title'   => [
-        'reset_password' => 'Сброс пароля',
-        'profile'        => ':user <small>Профиль пользователя</small>',
+        'reset_password'  => 'Сброс пароля',
+        'profile'         => ':user <small>Профиль пользователя</small>',
+        'articles'        => 'Мои статьи',
+        'activate_coupon' => 'Активация купона',
     ],
     'field'   => [
         'username'         => 'Username',
@@ -22,6 +24,7 @@ return [
         'logout'          => 'Выйти',
         'cashin'          => 'Пополнить счет',
         'activate_coupon' => 'Активировать купон',
+        'articles'        => 'Мои статьи',
     ],
     'button'  => [
         'forget_password' => 'Забыли пароль?',

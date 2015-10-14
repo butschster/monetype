@@ -4,6 +4,7 @@ namespace Modules\Users\Model;
 
 use HTML;
 use Image;
+use Modules\Articles\Model\Article;
 use Modules\Support\Helpers\String;
 use Illuminate\Auth\Authenticatable;
 use Modules\Support\Helpers\Gravatar;
@@ -313,6 +314,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     /**********************************************************************
      * Relations
      **********************************************************************/
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'author_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
