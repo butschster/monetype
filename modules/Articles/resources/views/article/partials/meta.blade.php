@@ -6,6 +6,6 @@
         @lang('articles::article.label.cost', ['amount' => $article->cost])
     </li>
     <li>
-        @lang('articles::article.label.balance', ['amount' => $article->amount])
+        {!! link_to_route('front.article.money', trans('articles::article.label.balance', ['amount' => $article->amount]), $article->id) !!}
     </li>
 </ul>
