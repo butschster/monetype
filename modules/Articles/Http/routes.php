@@ -4,7 +4,7 @@ Route::group(['as' => 'front.'], function () {
     Route::get('/', ['as' => 'main', 'uses' => 'ArticleController@index']);
 
     Route::get('articles', ['as' => 'articles.index', 'uses' => 'ArticleController@index']);
-    Route::get('articles/search/{tag}', ['as' => 'articles.byTag', 'uses' => 'ArticleController@indexByTag']);
+    Route::get('articles/tag/{tag}', ['as' => 'articles.byTag', 'uses' => 'ArticleController@indexByTag']);
     Route::get('article/{article}/money', ['as' => 'article.money', 'uses' => 'ArticleController@money']);
     Route::get('article/{article}/preview', ['as' => 'article.preview', 'uses' => 'ArticleController@preview']);
 
