@@ -73,7 +73,7 @@ abstract class Repository implements RepositoryInterface
      * @param int   $perPage
      * @param array $columns
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function paginate($perPage = 15, $columns = ['*'])
     {
