@@ -27,7 +27,16 @@ class ArticleObserver
     public function saving(Article $article)
     {
         $parser = new Parsedown;
-        $article->text_intro = $parser->text($article->text_intro_source);
-        $article->text = $parser->text($article->text_source);
+
+        $cut = '---read-more---';
+        if (strpos($article->text_source, $cut) !== false) {
+            list( $textIntro, $text ) = explode($cut, $article->text_source, 2);
+        } else {
+            $textIntro = '';
+            $text      = $article->text_source;
+        }
+
+        $article->text_intro = $parser->text($textIntro);
+        $article->text       = $parser->text($text);
     }
 }

@@ -21,7 +21,6 @@ class CreateArticlesTable extends Migration {
 
 			$table->text('text_intro');
 			$table->text('text');
-			$table->text('text_intro_source');
 			$table->text('text_source');
 
 			$table->boolean('forbid_comment')->default(0);
