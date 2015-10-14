@@ -73,6 +73,7 @@ class ArticleRepository extends Repository
         return $this->getModel()
             ->with('author', 'tags')
             ->orderByDate()
+            ->published()
             ->paginate($perPage, $columns);
     }
 
@@ -92,6 +93,7 @@ class ArticleRepository extends Repository
             ->with('author', 'tags')
             ->filterByTag($tag)
             ->orderByDate()
+            ->published()
             ->paginate($perPage, $columns);
     }
 }
