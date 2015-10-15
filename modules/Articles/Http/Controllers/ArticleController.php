@@ -54,9 +54,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('view', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('view', $article);
 
         try {
             $isPurchased = Bus::dispatch(new PurchaseArticle($article, $this->user));
@@ -82,9 +80,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->getModel();
 
-        if ( ! $this->user->can('create', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('create', $article);
 
         return $this->setLayout('article.form', [
             'article' => $article,
@@ -102,12 +98,10 @@ class ArticleController extends FrontController
      */
     public function store(StoreArticleRequest $request, ArticleRepository $articleRepository)
     {
-        if ( ! $this->user->can('create', $articleRepository->getModel())) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('create', $articleRepository->getModel());
 
         $article = $articleRepository->create($request->only(
-            'title', 'text_source', 'text_intro_source', 'forbid_comment', 'tags'
+            'title', 'text_source', 'forbid_comment', 'tags'
         ));
 
         return $this->successRedirect(
@@ -127,13 +121,11 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('update', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('update', $article);
 
         return $this->setLayout('article.form', [
             'article' => $article,
-            'action'  => 'front.article.store',
+            'action'  => ['front.article.update', $articleId],
             'tags'    => $article->tagsString
         ]);
     }
@@ -150,12 +142,10 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('update', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('update', $article);
 
         $article = $articleRepository->update($request->only(
-            'title', 'text_source', 'text_intro_source', 'forbid_comment', 'tags'
+            'title', 'text_source', 'forbid_comment', 'tags'
         ), $articleId);
 
         return $this->successRedirect(
@@ -175,12 +165,11 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('preview', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('preview', $article);
 
         return $this->setLayout('article.preview', [
-            'article' => $article
+            'article' => $article,
+            'tags'        => $article->tags
         ]);
     }
 
@@ -195,9 +184,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('publish', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('publish', $article);
 
         Bus::dispatch(new PublishArticle($this->user, $article));
 
@@ -217,9 +204,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('draft', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('draft', $article);
 
         Bus::dispatch(new DraftArticle($this->user, $article));
 
@@ -239,9 +224,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('approve', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('approve', $article);
 
         Bus::dispatch(new ApproveArticle($this->user, $article));
 
@@ -261,9 +244,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('block', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('block', $article);
 
         $this->validate($this->request, [
             'block_reason' => 'required'
@@ -287,9 +268,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('delete', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('delete', $article);
 
         $articleRepository->delete($articleId);
 
@@ -309,9 +288,7 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        if ( ! $this->user->can('viewPurchasers', $article)) {
-            abort(403, trans('articles::article.message.not_allowed'));
-        }
+        $this->checkPermissions('viewPurchasers', $article);
 
         return $this->setLayout('article.money', [
             'article'      => $article,

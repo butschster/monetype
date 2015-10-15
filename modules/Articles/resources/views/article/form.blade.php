@@ -16,6 +16,7 @@
     {!! Form::model($article , [
 		'route' => $action,
 		'class' => 'panel',
+		'method' => 'PUT'
     ]) !!}
 
         @if (count($errors) > 0)
@@ -51,7 +52,7 @@
         </div>
 
         <div class="panel-footer">
-            {!! Form::button(trans('articles::article.button.draft'), [
+            {!! Form::button(trans('articles::article.button.save'), [
                 'type' => 'submit',
                 'class' => 'btn btn-default btn-lg'
             ]) !!}

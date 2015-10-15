@@ -19,7 +19,12 @@ return [
         'block_reason'   => 'Причина блокировки',
     ],
     'button'  => [
-        'draft' => 'Сохранить черновик',
+        'save'    => 'Сохранить',
+        'edit'    => 'Редактировать',
+        'draft'   => 'В черновики',
+        'publish' => 'Опубликовать',
+        'approve' => 'Одобрить',
+        'block'   => 'Заблокировать',
     ],
     'status'  => [
         Article::STATUS_DRAFT     => '<span class="label label-default">Черновик</span>',
@@ -38,7 +43,6 @@ return [
         'can_publish_only_draft'    => 'Опубликовать можно только черновик',
         'can_approve_ony_published' => 'Проверить можно только опубликованную статью',
         'empty_list'                => 'На данный момент не написано ни одной статьи',
-        'not_allowed'               => 'У вас нет прав.',
         'created'                   => 'Статья добавлена',
         'updated'                   => 'Статья сохранена',
         'published'                 => 'Статья опубликована',

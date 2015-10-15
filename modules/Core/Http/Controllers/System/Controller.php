@@ -128,6 +128,23 @@ class Controller extends BaseController
 
 
     /**
+     * @param string       $ability
+     * @param string|array $arguments
+     * @param string|null  $message
+     */
+    public function checkPermissions($ability, $arguments = [], $message = null)
+    {
+        if (is_null($message)) {
+            $message = trans('core::core.message.gate_not_allowed');
+        }
+
+        if ( ! $this->user->can($ability, $arguments)) {
+            abort(403, $message);
+        }
+    }
+
+
+    /**
      * @param RedirectResponse $response
      *
      * @throws HttpResponseException
