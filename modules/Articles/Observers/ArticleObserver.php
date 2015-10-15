@@ -39,4 +39,15 @@ class ArticleObserver
         $article->text_intro = $parser->text($textIntro);
         $article->text       = $parser->text($text);
     }
+
+
+    /**
+     * @param Article $article
+     */
+    public function updating(Article $article)
+    {
+        if ($article->isDirty('text_source')) {
+            $article->need_check = true;
+        }
+    }
 }

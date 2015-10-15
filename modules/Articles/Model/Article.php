@@ -33,6 +33,7 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property float          $cost
  * @property string         $published
  * @property string         $statusTitle
+ * @property boolean        $need_check
  *
  * @property User           $author
  * @property User           $approver
@@ -87,6 +88,7 @@ class Article extends Model implements Buyable
      */
     protected $casts = [
         'forbid_comment' => 'boolean',
+        'need_check'     => 'boolean',
     ];
 
     /**
@@ -103,6 +105,31 @@ class Article extends Model implements Buyable
     public function getCost()
     {
         return 1;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isChecked()
+    {
+        return !$this->need_check;
+    }
+
+
+    public function setChecked()
+    {
+        $this->need_check = false;
+        $this->save();
+    }
+
+
+    /**
+     * @return ArticleCheck
+     */
+    public function getLastCheckResult()
+    {
+        return $this->checks()->orderBy('created_at', 'desc')->first();
     }
 
 
@@ -177,6 +204,7 @@ class Article extends Model implements Buyable
     {
         $this->status       = static::STATUS_DRAFT;
         $this->published_at = null;
+        $this->need_check   = true;
         $this->save();
     }
 
@@ -388,6 +416,13 @@ class Article extends Model implements Buyable
     /**********************************************************************
      * Relations
      **********************************************************************/
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function checks()
+    {
+        return $this->hasMany(ArticleCheck::class, 'article_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

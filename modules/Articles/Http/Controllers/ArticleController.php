@@ -8,6 +8,7 @@ use Modules\Articles\Jobs\BlockArticle;
 use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
+use Modules\Articles\Exceptions\PlagiatException;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Articles\Http\Requests\StoreArticleRequest;
 use Modules\Articles\Http\Requests\UpdateArticleRequest;
@@ -186,7 +187,14 @@ class ArticleController extends FrontController
 
         $this->checkPermissions('publish', $article);
 
-        Bus::dispatch(new PublishArticle($this->user, $article));
+        try {
+            Bus::dispatch(new PublishArticle($this->user, $article));
+        } catch (PlagiatException $e) {
+            return $this->errorRedirect(trans('articles::article.message.plagiat'));
+        } catch (CheckForPlagiatException $e) {
+            return $this->errorRedirect(trans('articles::article.message.cant_check_for_plagiat', ['error' => $e->getMessage()]));
+        }
+
 
         return $this->successRedirect(
             trans('articles::article.message.published')
