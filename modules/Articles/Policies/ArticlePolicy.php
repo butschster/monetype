@@ -15,8 +15,12 @@ class ArticlePolicy
      */
     public function before(User $user)
     {
-        if ( ! $user->isBlocked()) {
+        if ($user->isAdmin()) {
             return true;
+        }
+
+        if ($user->isBlocked()) {
+            return false;
         }
     }
 
@@ -58,7 +62,7 @@ class ArticlePolicy
     public function update(User $user, Article $article)
     {
         return (
-            $article->status === Article::STATUS_DRAFT
+            $article->isDrafted()
         and
             $user->id === $article->author_id
         );
@@ -74,7 +78,7 @@ class ArticlePolicy
     public function draft(User $user, Article $article)
     {
         return (
-            $article->status !== Article::STATUS_DRAFT
+            !$article->isDrafted()
             and
             $user->id === $article->author_id
         );
@@ -90,7 +94,7 @@ class ArticlePolicy
     public function publish(User $user, Article $article)
     {
         return (
-            $article->status === Article::STATUS_DRAFT
+            $article->isDrafted()
             and
             $user->id === $article->author_id
         );
@@ -106,7 +110,7 @@ class ArticlePolicy
     public function approve(User $user, Article $article)
     {
         return (
-            $article->status === Article::STATUS_PUBLISHED
+            $article->isPublished()
             and
             $user->isModerator()
         );
@@ -134,7 +138,7 @@ class ArticlePolicy
     public function delete(User $user, Article $article)
     {
         return (
-            $article->status === Article::STATUS_DRAFT
+            $article->isDrafted()
             and
             $user->id === $article->author_id
         ) or $user->isModerator();
@@ -150,7 +154,7 @@ class ArticlePolicy
     public function preview(User $user, Article $article)
     {
         return (
-            $article->status === Article::STATUS_DRAFT
+            $article->isDrafted()
             and
             $user->id === $article->author_id
         );
@@ -166,7 +170,7 @@ class ArticlePolicy
     public function moderate(User $user, Article $article)
     {
         return (
-            $article->status === Article::STATUS_DRAFT
+            $article->isDrafted()
         and
             $user->isModerator()
         );

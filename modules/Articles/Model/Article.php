@@ -150,6 +150,15 @@ class Article extends Model implements Buyable
 
 
     /**
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return in_array($this->status, [static::STATUS_PUBLISHED, static::STATUS_APPROVED]);
+    }
+
+
+    /**
      * @throws ArticleException
      */
     public function setPublished()
