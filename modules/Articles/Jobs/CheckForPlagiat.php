@@ -54,6 +54,8 @@ class CheckForPlagiat implements SelfHandling
 
 
     /**
+     * TODO: при отправке статьи на проверку списывать с автора стоимость проверки
+     *
      * @return array
      * @throws CheckForPlagiatException
      */
