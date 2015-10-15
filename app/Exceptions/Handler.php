@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($request->ajax() OR ( $e instanceof APIException )) {
+        if ($request->ajax() or ( $e instanceof APIException )) {
             return $this->renderApiException($e);
         }
 
@@ -62,7 +62,11 @@ class Handler extends ExceptionHandler
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
 
-        return $this->renderHttpException($e);
+        if ($e instanceof HttpException) {
+            return $this->renderHttpException($e);
+        }
+
+        return $this->renderException($e);
     }
 
 
@@ -97,7 +101,7 @@ class Handler extends ExceptionHandler
      */
     protected function renderException(Exception $e)
     {
-        return $this->renderControllerException($e, 500);
+        return $this->renderControllerException($e, 501);
     }
 
 
@@ -112,15 +116,16 @@ class Handler extends ExceptionHandler
     {
         try {
             $controller = app()->make(ErrorController::class);
+
             if (method_exists($controller, 'error' . $code)) {
                 $action = 'error' . $code;
             } else {
-                $action = 'error500';
+                $action = 'errorDefault';
             }
 
             return $controller->callAction($action, [$e]);
         } catch (Exception $ex) {
-            return $this->toIlluminateResponse($this->convertExceptionToResponse($ex), $ex);
+            return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
         }
     }
 
