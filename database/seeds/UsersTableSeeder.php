@@ -1,5 +1,6 @@
 <?php
 
+use Endroid\QrCode\QrCode;
 use Modules\Users\Model\User;
 use Modules\Users\Model\Role;
 use Illuminate\Database\Seeder;
@@ -13,6 +14,19 @@ class UsersTableSeeder extends Seeder
     {
         User::truncate();
         Account::truncate();
+
+        File::cleanDirectory(public_path('avatars'));
+        File::cleanDirectory(public_path('backgrounds'));
+
+        File::copy(
+            base_path('storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . '.gitignore'),
+            public_path('avatars' . DIRECTORY_SEPARATOR . '.gitignore')
+        );
+
+        File::copy(
+            base_path('storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . '.gitignore'),
+            public_path('backgrounds' . DIRECTORY_SEPARATOR . '.gitignore')
+        );
 
         $administrator = User::create([
             'username' => 'admin',
@@ -45,14 +59,38 @@ class UsersTableSeeder extends Seeder
         factory(User::class, 'user', 100)->create()->each(function (User $user) {
             $user->account->update(['balance' => 100]);
 
-            if (File::copy(
-                public_path('img' . DIRECTORY_SEPARATOR . 'logo.png'),
-                public_path('img' . DIRECTORY_SEPARATOR . 'avatar.png')
-            )) {
-                $user->attachAvatar(
-                    new UploadedFile(public_path('img' . DIRECTORY_SEPARATOR . 'avatar.png'), 'avatar.png', 'image/png', 0, 0, true)
-                );
-            }
+            $filename = $this->getnerateAvatar($user->email);
+            $user->attachAvatar(
+                new UploadedFile($filename, 'avatar.png', 'image/png', 0, 0, true)
+            );
         });
+    }
+
+
+    /**
+     * @param $string
+     *
+     * @return string
+     */
+    protected function getnerateAvatar($string)
+    {
+        $filename = public_path(uniqid() . '.png');
+
+        (new QrCode())
+            ->setText($string)
+            ->setSize(100)
+            ->setPadding(5)->setForegroundColor([
+                'r' => 255,
+                'g' => 255,
+                'b' => 255,
+                'a' => 0
+            ])->setBackgroundColor([
+                'r' => rand(0, 255),
+                'g' => rand(0, 255),
+                'b' => rand(0, 255),
+                'a' => 0
+            ])->save($filename);
+
+        return $filename;
     }
 }
