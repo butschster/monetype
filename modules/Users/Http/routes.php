@@ -1,11 +1,12 @@
 <?php
 
 Route::group(['as' => 'front.'], function () {
-    Route::get('profile/articles', ['as' => 'user.articles', 'uses' => 'UserController@articles']);
     Route::get('profile/{id?}', ['as' => 'profile.showById', 'uses' => 'ProfileController@showById']);
     Route::get('@{username}', ['as' => 'profile.showByUsername', 'uses' => 'ProfileController@showByUsername']);
 
     Route::group(['middleware' => 'auth', 'prefix' => 'me'], function () {
+        Route::get('articles', ['as' => 'user.articles', 'uses' => 'UserController@articles']);
+        Route::get('edit', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
         Route::get('settings', ['as' => 'profile.settings', 'uses' => 'ProfileController@settings']);
 
         Route::get('coupon', ['as' => 'coupon.index', 'uses' => 'CouponController@index']);
@@ -19,3 +20,7 @@ Route::controllers([
     'auth'     => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+Route::group(['middleware' => 'auth'], function () {
+   RouteAPI::any('profile.background', ['uses' => 'Api\ProfileController@uploadBackground']);
+});

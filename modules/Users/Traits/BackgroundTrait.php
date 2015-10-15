@@ -20,24 +20,20 @@ trait BackgroundTrait
      */
     protected $backgroundDirectoryName = 'backgrounds';
 
+    /**
+     * @return string
+     */
+    public function hasBackground()
+    {
+        return !empty($this->background);
+    }
 
     /**
      * @return string
      */
     public function getBackground()
     {
-        return $this->background;
-    }
-
-
-    /**
-     * @param array $attributes
-     *
-     * @return string
-     */
-    public function getBackgroundHtml(array $attributes = [])
-    {
-        return HTML::image("{$this->backgroundDirectoryName}/{$this->getBackground()}", $this->getName(), $attributes);
+        return url("{$this->backgroundDirectoryName}/{$this->background}");
     }
 
 
@@ -54,7 +50,7 @@ trait BackgroundTrait
 
         if ($file->move($path, $fileName)) {
 
-            $this->deletePhoto();
+            $this->deleteBackground();
 
             $this->background = $fileName;
 

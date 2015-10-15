@@ -2,6 +2,7 @@
 
 namespace Modules\Users\Http\Controllers;
 
+use Assets;
 use Modules\Users\Repositories\UserRepository;
 use Modules\Core\Http\Controllers\System\FrontController;
 
@@ -36,6 +37,8 @@ class ProfileController extends FrontController
 
         $user = $repository->findOrFail($id);
 
+        Assets::package(['backstretch']);
+
         return $this->setLayout('user.profile', compact('user'));
     }
 
@@ -54,6 +57,20 @@ class ProfileController extends FrontController
             abort(404, trans('users::user.message.not_found'));
         }
 
+        Assets::package(['backstretch']);
+
         return $this->setLayout('user.profile', compact('user'));
+    }
+
+
+    /**
+     * @return \View
+     */
+    public function edit()
+    {
+        Assets::package(['dropzone', 'backstretch']);
+        return $this->setLayout('user.edit', [
+            'user' => $this->user
+        ]);
     }
 }
