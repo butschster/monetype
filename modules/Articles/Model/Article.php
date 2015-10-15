@@ -109,6 +109,21 @@ class Article extends Model implements Buyable
 
 
     /**
+     * @param integer|User $userId
+     *
+     * @return bool
+     */
+    public function authoredBy($userId)
+    {
+        if ($userId instanceof User) {
+            $userId = $userId->id;
+        }
+
+        return $this->author_id == $userId;
+    }
+
+
+    /**
      * @return bool
      */
     public function isChecked()
