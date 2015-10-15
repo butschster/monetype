@@ -50,7 +50,7 @@ class ArticleRepository extends Repository
     {
         $tags = array_pull($data, 'tags', '');
 
-        $article = $this->getModel()->where($attribute, '=', $id)->update($data);
+        $article = parent::update($data, $id, $attribute);
 
         if (is_string($tags)) {
             $tags = explode(',', $tags);

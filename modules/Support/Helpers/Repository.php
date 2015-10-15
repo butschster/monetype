@@ -5,6 +5,7 @@ namespace Modules\Support\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Bosnadev\Repositories\Contracts\RepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -101,7 +102,15 @@ abstract class Repository implements RepositoryInterface
      */
     public function update(array $data, $id, $attribute = "id")
     {
-        return $this->getModel()->where($attribute, '=', $id)->update($data);
+        $model = $this->getModel()->where($attribute, '=', $id)->first();
+
+        if(is_null($model)) {
+            throw new ModelNotFoundException;
+        }
+
+        $model->update($data);
+
+        return $model;
     }
 
 
