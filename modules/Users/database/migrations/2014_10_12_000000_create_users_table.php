@@ -31,7 +31,8 @@ class CreateUsersTable extends Migration
 
             $table->text('block_reason');
 
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
+            $table->string('background')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
