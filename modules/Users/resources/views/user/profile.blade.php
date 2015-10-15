@@ -8,15 +8,14 @@
    })
 </script>
 
-<div class="well well-lg m-t-n-md" id="profileBackground" style="height: 300px;"></div>
+<div class="m-t-n-md" id="profileBackground"></div>
 @endif
-@endsection
-
-@section('content')
-   <div class="panel">
+<div class="panel">
+   <div class="container text-center">
       <div class="panel-body">
          {!! $user->getAvatar(70) !!}
          <h3>@lang('users::user.title.profile', ['user' => $user->getName()])</h3>
       </div>
    </div>
+</div>
 @endsection
