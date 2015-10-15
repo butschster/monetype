@@ -117,8 +117,7 @@ App.Components
                         id: tags[i],
                         text: tags[i]
                     });
-                }
-                ;
+                };
                 callback(data);
             }
         });

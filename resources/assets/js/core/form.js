@@ -33,8 +33,8 @@ App.Form = {
 
             this._fieldsData['timestamp'] = new Date().getTime();
 
-            if (this._api_url === null || !this._api_url.length) {
-                this._api_url = this._form.prop('action');
+            if ((this._api_url === null || !this._api_url.length) && this._form.attr('action').indexOf('api.') >= 0) {
+                this._api_url = this._form.attr('action');
             }
 
             if (this._api_method === null || !this._api_method.length) {
@@ -131,13 +131,7 @@ App.Form = {
             for (field in errors) {
                 if (!this.fields[field]) continue;
 
-                switch (this.fields[field]) {
-                    case 'ckeditor':
-                        var $elm = this.getField(field).parent().find('.cke');
-                        break;
-                    default:
-                        var $elm = this.getField(field)
-                }
+                var $elm = this.getField(field)
 
                 $elm.closest('.form-group')
                     .addClass('has-error')
@@ -167,11 +161,16 @@ App.Form = {
             $('#notification_autosave').remove();
         },
         onSubmit: function (e) {
-            e.preventDefault();
-
             this.clearErrors();
+
             $(':button', this._form).prop('disabled', true);
-            Api[this._api_method](this._api_url, this.getFieldsData(), $.proxy(this.onResponse, this));
+
+            if(this._api_url) {
+                e.preventDefault();
+                Api[this._api_method](this._api_url, this.getFieldsData(), $.proxy(this.onResponse, this));
+
+                return false;
+            }
         },
         onResponse: function (response) {
             $(':button', this._form).prop('disabled', false);

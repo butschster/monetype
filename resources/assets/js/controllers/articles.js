@@ -7,8 +7,8 @@ App.Form.extend('articles', {
 	},
 	messages: {
 		saved: 'Article saved'
-	},
-	onSubmit: function(e) {
+	}
+	/*onSubmit: function(e) {
 		e.preventDefault();
 		this.clearErrors();
 
@@ -24,7 +24,7 @@ App.Form.extend('articles', {
 
 		$(':button', this._form).prop('disabled', true);
 		Api[this._api_method](url, this.getFieldsData(), $.proxy(this.onResponse, this));
-	}
+	}*/
 });
 
 App.Controllers.add(['article.create', 'article.edit'], function(action) {
