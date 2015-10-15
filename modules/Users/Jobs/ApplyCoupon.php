@@ -49,7 +49,7 @@ class ApplyCoupon implements SelfHandling
             throw new CouponException;
         }
 
-        if ($this->coupon->fromUser->account->balance < $this->coupon->amount) {
+        if ( ! $this->coupon->fromUser->hasManey($this->coupon->amount)) {
             throw new NotEnoughMoneyException;
         }
 

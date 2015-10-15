@@ -109,6 +109,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 
     /**
+     * @param integer|float $amount
+     *
+     * @return bool
+     */
+    public function hasMoney($amount)
+    {
+        return $this->account->balance >= $amount;
+    }
+
+
+    /**
      * @param array $attributes
      *
      * @return string
