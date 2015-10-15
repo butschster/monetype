@@ -138,7 +138,7 @@ class Controller extends BaseController
             $message = trans('core::core.message.gate_not_allowed');
         }
 
-        if ( ! $this->user->can($ability, $arguments)) {
+        if ($this->user->cannot($ability, $arguments)) {
             abort(403, $message);
         }
     }
