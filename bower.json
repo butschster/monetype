@@ -13,6 +13,7 @@
     "select2": "latest",
     "underscore": "latest",
     "jStorage": "latest",
-    "Chart.js": "latest"
+    "Chart.js": "latest",
+    "dropzone": "latest"
   }
 }
