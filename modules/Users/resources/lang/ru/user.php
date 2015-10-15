@@ -19,12 +19,12 @@ return [
         'balance' => 'Ваш баланс: :amount р.',
     ],
     'menu'    => [
-        'profile'         => 'Профиль',
-        'login'           => 'Войти',
-        'logout'          => 'Выйти',
-        'cashin'          => 'Пополнить счет',
-        'activate_coupon' => 'Активировать купон',
-        'articles'        => 'Мои статьи',
+        'profile'  => 'Профиль',
+        'login'    => 'Войти',
+        'logout'   => 'Выйти',
+        'cashin'   => 'Пополнить счет',
+        'coupons'  => 'Купоны',
+        'articles' => 'Мои статьи',
     ],
     'button'  => [
         'forget_password' => 'Забыли пароль?',

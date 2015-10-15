@@ -3,8 +3,10 @@
 namespace Modules\Users\Model;
 
 use Carbon\Carbon;
+use Modules\Support\Helpers\Date;
 use Modules\Support\Helpers\String;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -13,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $to_user_id
  * @property string  $code
  * @property float   $amount
+ * @property float   $formatedAmount
+ * @property string  $expired
  *
  * @property User    $fromUser
  * @property User    $toUser
@@ -69,6 +73,58 @@ class Coupon extends Model
     public function isExpired()
     {
         return ($this->expired_at instanceof Carbon) and $this->expired_at->lt(Carbon::now());
+    }
+
+    /**********************************************************************
+     * Mutators
+     **********************************************************************/
+
+    /**
+     * @return string
+     */
+    public function getFormatedAmountAttribute()
+    {
+        return String::formatAmount($this->amount);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getExpiredAttribute()
+    {
+        return Date::format($this->expired_at, 'd F Y');
+    }
+
+    /**********************************************************************
+     * Scopes
+     **********************************************************************/
+
+    /**
+     * @param Builder $query
+     * @param integer $userId
+     *
+     * @return Builder
+     */
+    public function scopeFilterByUser(Builder $query, $userId)
+    {
+        if ($userId instanceof User) {
+            $userId = $userId->id;
+        }
+
+        return $query->where('from_user_id', $userId);
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeOnlyActive(Builder $query)
+    {
+        return $query->where(function($q) {
+            return $q->orWhereIsNull('expired_at')->orWhereRaw('expired_at > CURDATE()');
+        });
     }
 
     /**********************************************************************

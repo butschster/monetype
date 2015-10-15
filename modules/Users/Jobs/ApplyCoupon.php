@@ -37,14 +37,15 @@ class ApplyCoupon implements SelfHandling
 
 
     /**
-     * @return mixed
+     * @return Transaction
+     *
      * @throws CouponException
      * @throws CouponExpiredException
      * @throws NotEnoughMoneyException
      */
     public function handle()
     {
-        if ($this->coupon->fromUser->id < $this->user->id) {
+        if ($this->coupon->fromUser->id == $this->user->id) {
             throw new CouponException;
         }
 
@@ -53,6 +54,7 @@ class ApplyCoupon implements SelfHandling
         }
 
         if ($this->coupon->isExpired()) {
+            $this->coupon->delete();
             throw new CouponExpiredException;
         }
 

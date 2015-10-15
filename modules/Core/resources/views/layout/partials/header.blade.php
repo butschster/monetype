@@ -26,11 +26,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                {!! link_to_route('front.user.account.add', trans('users::user.menu.cashin')) !!}
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                {!! link_to_route('front.user.activate_coupon', trans('users::user.menu.activate_coupon')) !!}
+                                {!! link_to_route('front.coupon.index', trans('users::user.menu.coupons')) !!}
                             </li>
                         </ul>
                     </li>

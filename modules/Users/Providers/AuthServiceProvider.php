@@ -3,6 +3,8 @@
 namespace Modules\Users\Providers;
 
 use Schema;
+use Modules\Users\Model\User;
+use Modules\Users\Model\Coupon;
 use Modules\Users\Model\Permission;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -28,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         parent::registerPolicies($gate);
+
+        $gate->define('delete-coupon', function (User $user, Coupon $coupon) {
+            return $user->id === $coupon->from_user_id;
+        });
 
         if (Schema::hasTable('permission')) {
             // Dynamically register permissions with Laravel's Gate.

@@ -8,9 +8,10 @@ Route::group(['as' => 'front.'], function () {
     Route::group(['middleware' => 'auth', 'prefix' => 'me'], function () {
         Route::get('settings', ['as' => 'profile.settings', 'uses' => 'ProfileController@settings']);
 
-        Route::get('coupon', ['as' => 'user.activate_coupon', 'uses' => 'AccountController@coupon']);
-        Route::post('coupon', ['as' => 'user.activate_coupon.post', 'uses' => 'AccountController@activateCoupon']);
-        Route::get('account/add', ['as' => 'user.account.add', 'uses' => 'AccountController@add']);
+        Route::get('coupon', ['as' => 'coupon.index', 'uses' => 'CouponController@index']);
+        Route::post('coupon/activate', ['as' => 'coupon.activate', 'uses' => 'CouponController@activate']);
+        Route::post('coupon', ['as' => 'coupon.create', 'uses' => 'CouponController@create']);
+        Route::delete('coupon/{id}', ['as' => 'coupon.delete', 'uses' => 'CouponController@delete']);
     });
 });
 
