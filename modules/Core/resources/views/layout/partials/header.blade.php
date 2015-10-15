@@ -10,7 +10,7 @@
             </button>
 
             <a class="navbar-brand" href="{{ url('/') }}">
-                {!! HTML::image('img/logo-sm.png', trans('app.title')) !!}
+                {!! HTML::image('img/logo.gif', trans('app.title'), ['style' => 'height: 40px']) !!}
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse m-r-n-md">
