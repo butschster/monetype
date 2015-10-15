@@ -783,6 +783,20 @@ App.Components
 
             $self.datetimepicker(local_options);
         });
+    })
+    .add('icon', function () {
+        $('*[data-icon]').add('*[data-icon-prepend]').each(function () {
+            var cls = $(this).data('icon');
+            if ($(this).hasClass('btn-labeled')) cls += ' btn-label icon';
+
+            $(this).html('<i class="fa fa-' + cls + '"></i> ' + $(this).html());
+            $(this).removeAttr('data-icon-prepend').removeAttr('data-icon');
+        });
+
+        $('*[data-icon-append]').each(function () {
+            $(this).html($(this).html() + '&nbsp&nbsp<i class="fa fa-' + $(this).data('icon-append') + '"></i>');
+            $(this).removeAttr('data-icon-append');
+        });
     });
 App.Form.extend('articles', {
 	fields: {

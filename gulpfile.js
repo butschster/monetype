@@ -54,6 +54,7 @@ elixir(function (mix) {
             paths.jqueryvalidation + "dist/additional-methods.js",
             paths.jqueryvalidation + "dist/additional-methods.js",
             paths.jStorage + "jstorage.js",
+            paths.datetimepicker + "jquery.datetimepicker.js",
             paths.i18next + "i18next.js"
         ], 'public/js/lib.js')
         .scripts([
