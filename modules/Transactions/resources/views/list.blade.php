@@ -6,11 +6,11 @@
             <col width="150px" />
         </colgroup>
         <thead>
-        <tr>
-            <th>@lang('transactions::transaction.field.debit')</th>
-            <th class="text-right">@lang('transactions::transaction.field.amount')</th>
-            <th class="text-right">@lang('transactions::transaction.field.created_at')</th>
-        </tr>
+            <tr class="bg-primary">
+                <th>@lang('transactions::transaction.field.debit')</th>
+                <th class="text-right">@lang('transactions::transaction.field.amount')</th>
+                <th class="text-right">@lang('transactions::transaction.field.created_at')</th>
+            </tr>
         </thead>
         @foreach($transactions as $transaction)
             <tr>
