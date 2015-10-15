@@ -17,7 +17,8 @@ var paths = {
     'select2': './bower_components/select2/',
     'i18next': './bower_components/i18next/',
     'jStorage': './bower_components/jStorage/',
-    'charts': './bower_components/Chart.js/'
+    'charts': './bower_components/Chart.js/',
+    'dropzone': './bower_components/dropzone/'
 };
 
 
@@ -65,7 +66,8 @@ elixir(function (mix) {
             'controllers/articles.js',
             'run.js'
         ], 'public/js/app.js')
-        .copy(paths.charts + 'Chart.min.js', 'public/js')
+        .copy(paths.charts + 'Chart.min.js', 'public/libs/chart')
+        .copy(paths.dropzone + 'dist/min/**', 'public/libs/dropzone')
 
         // Versioning
         //.version(['public/css/app.css', 'public/js/app.js']);
