@@ -168,7 +168,7 @@ class Article extends Model implements Buyable
 
     public function setDraft()
     {
-        $this->status       = static::STATUS_PUBLISHED;
+        $this->status       = static::STATUS_DRAFT;
         $this->published_at = null;
         $this->save();
     }
