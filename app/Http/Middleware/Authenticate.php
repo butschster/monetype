@@ -42,6 +42,10 @@ class Authenticate
             }
         }
 
+        if ($this->auth->user()->isBlocked()) {
+            abort(403);
+        }
+
         return $next($request);
     }
 }
