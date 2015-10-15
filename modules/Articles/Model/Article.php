@@ -22,7 +22,6 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property integer        bocked_by_id
  * @property string         $title
  * @property string         $text_source
- * @property string         $text_intro_source
  * @property string         $text
  * @property string         $text_intro
  * @property string         $image
@@ -76,7 +75,6 @@ class Article extends Model implements Buyable
     protected $fillable = [
         'title',
         'text_source',
-        'text_intro_source',
         'tags',
         'image',
         'forbid_comment',
