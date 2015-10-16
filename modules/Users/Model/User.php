@@ -12,6 +12,7 @@ use Modules\Articles\Model\ArticleCheck;
 use Modules\Users\Traits\BackgroundTrait;
 use Modules\Users\Traits\PermissionsTrait;
 use Modules\Transactions\Model\Transaction;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -34,6 +35,9 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property \Carbon\Carbon $updated_at
  *
  * @property Account        $account
+ * @property Collection     $followers
+ * @property Collection     $favorites
+ * @property Collection     $checks
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -181,6 +185,24 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function checks()
     {
         return $this->hasMany(ArticleCheck::class, 'user_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favorites()
+    {
+        return $this->belongsToMany(Article::class, 'user_favorites');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_followers', 'user_id', 'follower_id');
     }
 
     /**********************************************************************

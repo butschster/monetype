@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Modules\Users\Model\User;
 use Modules\Support\Helpers\Date;
 use Modules\Support\Helpers\String;
+use Modules\Comments\Model\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Articles\Traits\TaggableTrait;
@@ -39,12 +40,13 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property integer        $count_favorites
  *
  * @property User           $author
- * @property User           $approver
+ * @property User           $approvedBy
  * @property User           $blockedBy
  * @property Collection     $tags
  * @property Collection     $recipients
  * @property Collection     $subscribers
  * @property Collection     $checks
+ * @property Collection     $comments
  *
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -253,7 +255,7 @@ class Article extends Model implements Buyable
         }
 
         $this->status = static::STATUS_APPROVED;
-        $this->approver()->associate($user);
+        $this->approvedBy()->associate($user);
 
         $this->save();
     }
@@ -505,7 +507,7 @@ class Article extends Model implements Buyable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function approver()
+    public function approvedBy()
     {
         return $this->belongsTo(User::class, 'approver_id');
     }
@@ -536,4 +538,12 @@ class Article extends Model implements Buyable
         return $this->belongsToMany(User::class, 'user_favorites');
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'article_id');
+    }
 }
