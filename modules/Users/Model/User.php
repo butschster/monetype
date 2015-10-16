@@ -8,8 +8,10 @@ use Illuminate\Auth\Authenticatable;
 use Modules\Users\Traits\AvatarTrait;
 use Modules\Transactions\Model\Account;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Articles\Model\ArticleCheck;
 use Modules\Users\Traits\BackgroundTrait;
 use Modules\Users\Traits\PermissionsTrait;
+use Modules\Transactions\Model\Transaction;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -163,6 +165,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany(Article::class, 'author_id');
     }
 
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -171,6 +174,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(Account::class);
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function checks()
+    {
+        return $this->hasMany(ArticleCheck::class, 'user_id');
+    }
 
     /**********************************************************************
      * Static methods
@@ -187,5 +198,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         static::created(function (User $user) {
             $user->account()->create([]);
         });
+    }
+
+
+    /**
+     * @return User
+     */
+    public static function getDebitUser()
+    {
+        return static::findOrFail(Transaction::ACCOUNT_DEBIT);
+    }
+
+
+    /**
+     * @return User
+     */
+    public static function getCreditUser()
+    {
+        return static::findOrFail(Transaction::ACCOUNT_CREDIT);
     }
 }

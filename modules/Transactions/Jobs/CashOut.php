@@ -57,7 +57,7 @@ class CashOut implements SelfHandling
             $transaction->amount = $this->amount;
 
             $transaction->assignPurchaser($this->user);
-            $transaction->assignRecipient(User::find(Transaction::ACCOUNT_DEBIT));
+            $transaction->assignRecipient(User::getDebitUser());
 
             $transaction->setType('cashout');
             $transaction->setStatus('new');

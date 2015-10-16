@@ -17,6 +17,7 @@ class CreateArticleChecksTable extends Migration {
 		{
 			$table->increments('id');
 			$table->unsignedInteger('article_id')->index();
+			$table->unsignedInteger('user_id')->index();
 
 			$table->float('percent');
 			$table->string('error');
@@ -29,6 +30,11 @@ class CreateArticleChecksTable extends Migration {
 			$table->foreign('article_id')
 				->references('id')
 				->on('articles')
+				->onDelete('cascade');
+
+			$table->foreign('user_id')
+				->references('id')
+				->on('users')
 				->onDelete('cascade');
 		});
 	}

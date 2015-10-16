@@ -14,6 +14,11 @@ class CheckForPlagiarism implements SelfHandling
 {
 
     /**
+     * @var User
+     */
+    protected $user;
+
+    /**
      * @var Article
      */
     protected $article;
@@ -30,19 +35,25 @@ class CheckForPlagiarism implements SelfHandling
 
 
     /**
+     * @param User    $user
      * @param Article $article
      */
-    public function __construct(Article $article)
+    public function __construct(User $user, Article $article)
     {
+        $this->user    = $user;
         $this->article = $article;
     }
 
 
+    /**
+     * @return ArticleCheck
+     * @throws CheckForPlagiarismException
+     */
     public function handle()
     {
         $checkingCost = (int) config('article.check.cost', 0);
 
-        if($checkingCost > 0) {
+        if ($checkingCost > 0) {
             $this->payAndSendRequest($checkingCost);
         } else {
             $this->sendRequest();
@@ -55,6 +66,8 @@ class CheckForPlagiarism implements SelfHandling
         $check = new ArticleCheck;
 
         $check->article()->associate($this->article);
+        $check->user()->associate($this->user);
+
         $check->percent = array_get($response, 'percent');
         $check->text    = array_get($response, 'text');
         $check->error   = array_get($response, 'error');
@@ -102,7 +115,7 @@ class CheckForPlagiarism implements SelfHandling
     /**
      * @param float|integer $amount
      *
-     * @return mixed
+     * @return Transaction
      */
     protected function payAndSendRequest($amount)
     {
@@ -110,8 +123,8 @@ class CheckForPlagiarism implements SelfHandling
             $transaction         = new Transaction();
             $transaction->amount = $amount;
 
-            $transaction->assignPurchaser($this->article->author);
-            $transaction->assignRecipient(User::find(Transaction::ACCOUNT_DEBIT));
+            $transaction->assignPurchaser($this->user);
+            $transaction->assignRecipient(User::getDebitUser());
             $transaction->setType('article_check');
             $transaction->setStatus('new');
             $transaction->setPaymentMethod('account');

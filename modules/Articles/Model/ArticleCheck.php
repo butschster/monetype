@@ -118,4 +118,12 @@ class ArticleCheck extends Model
     {
         return $this->belongsTo(Article::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

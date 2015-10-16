@@ -50,7 +50,7 @@ class CashIn implements SelfHandling
 
             $transaction->amount = $this->amount;
 
-            $transaction->assignPurchaser(User::find(Transaction::ACCOUNT_CREDIT));
+            $transaction->assignPurchaser(User::getCreditUser());
             $transaction->assignRecipient($this->user);
 
             $transaction->setType('cashin');
