@@ -9959,6 +9959,176 @@ button.close {
 .border-left {
   border-left: 1px solid #dddddd;
 }
+/*
+http://cssdeck.com/labs/different-css3-box-shadows-effects
+*/
+.shadow1 {
+  box-shadow: 0 10px 6px -6px #777;
+}
+.shadow2 {
+  position: relative;
+}
+.shadow2:before,
+.shadow2:after {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width: 300px;
+  background: #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.shadow2:after {
+  -webkit-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+.shadow3 {
+  position: relative;
+}
+.shadow3:before {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width: 300px;
+  background: #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+/*==================================================
+ * Effect 4
+ * ===============================================*/
+.shadow4 {
+  position: relative;
+}
+.shadow4:after {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  right: 10px;
+  left: auto;
+  width: 50%;
+  top: 80%;
+  max-width: 300px;
+  background: #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(3deg);
+  transform: rotate(3deg);
+}
+/*==================================================
+ * Effect 5
+ * ===============================================*/
+.shadow5 {
+  position: relative;
+}
+.shadow5:before,
+.shadow5:after {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width: 300px;
+  background: #777;
+  box-shadow: 0 35px 20px #777;
+  -webkit-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+}
+.shadow5:after {
+  -webkit-transform: rotate(8deg);
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
+}
+/*==================================================
+ * Effect 6
+ * ===============================================*/
+.shadow6 {
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.shadow6:before,
+.shadow6:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  top: 50%;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  border-radius: 10px;
+}
+.shadow6:after {
+  right: 10px;
+  left: auto;
+  -webkit-transform: skew(8deg) rotate(3deg);
+  transform: skew(8deg) rotate(3deg);
+}
+/*==================================================
+ * Effect 7
+ * ===============================================*/
+.shadow7 {
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.shadow7:before,
+.shadow7:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  top: 0;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  border-radius: 10px;
+}
+.shadow7:after {
+  right: 10px;
+  left: auto;
+  -webkit-transform: skew(8deg) rotate(3deg);
+  transform: skew(8deg) rotate(3deg);
+}
+/*==================================================
+ * Effect 8
+ * ===============================================*/
+.shadow8 {
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.shadow8:before,
+.shadow8:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  top: 10px;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  border-radius: 10px;
+}
+.shadow8:after {
+  right: 10px;
+  left: auto;
+  -webkit-transform: skew(8deg) rotate(3deg);
+  transform: skew(8deg) rotate(3deg);
+}
 .navbar-nav > li {
   border-right: 1px solid #f1f1f1;
   border-left: 1px solid #f1f1f1;
@@ -10294,6 +10464,9 @@ a.stat-cell:hover {
   font-weight: 600;
   text-transform: uppercase;
 }
+.panel-primary .panel-title {
+  color: #fff;
+}
 .panel-title-icon {
   display: inline-block;
   font-size: 14px;
@@ -10518,6 +10691,118 @@ a.stat-cell:hover {
 .well p:last-child,
 .well ul:last-child {
   margin-bottom: 0;
+}
+#profiler table.profiler {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+#profiler table.profiler th,
+#profiler table.profiler td {
+  padding: 0 0.4em;
+  background: #fff;
+  border: solid 1px #999;
+  border-width: 1px 0;
+  text-align: left;
+  font-weight: normal;
+  font-size: 1em;
+  color: #111;
+  vertical-align: top;
+  text-align: right;
+}
+#profiler table.profiler tr.group th {
+  background: #222;
+  color: #eee;
+  border-color: #222;
+}
+#profiler table.profiler tr.group td {
+  background: #222;
+  color: #777;
+  border-color: #222;
+}
+#profiler table.profiler tr.group td.time {
+  padding-bottom: 0;
+}
+#profiler table.profiler tr.headers th {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  background: #ddd;
+  color: #777;
+}
+#profiler table.profiler tr.mark th.name {
+  width: 40%;
+  background: #fff;
+  vertical-align: middle;
+}
+#profiler table.profiler tr.mark td {
+  padding: 0;
+}
+#profiler table.profiler tr.mark td > div {
+  position: relative;
+  padding: 0.2em 0.4em;
+}
+#profiler table.profiler tr.mark td div.value {
+  position: relative;
+  z-index: 2;
+}
+#profiler table.profiler tr.mark td div.graph {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 100%;
+  background: #71bdf0;
+  z-index: 1;
+}
+#profiler table.profiler tr.mark.final td {
+  padding: 0 0.4em;
+}
+#profiler table.profiler tr.mark.memory td div.graph {
+  background: #acd4f0;
+}
+#profiler table.profiler tr.mark td.current {
+  background: #eddecc;
+}
+#profiler table.profiler tr.mark td.min {
+  background: #d2f1cb;
+}
+#profiler table.profiler tr.mark td.max {
+  background: #ead3cb;
+}
+#profiler table.profiler tr.mark td.average {
+  background: #ddd;
+}
+#profiler table.profiler tr.mark td.total {
+  background: #d0e3f0;
+}
+#profiler table.profiler tr.time td {
+  border-bottom: 0;
+  font-weight: bold;
+}
+#profiler table.profiler tr.memory td {
+  border-top: 0;
+}
+#profiler table.profiler tr.final th.name {
+  background: #222;
+  color: #fff;
+}
+#profiler table.profiler abbr {
+  border: 0;
+  color: #777;
+  font-weight: normal;
+}
+#profiler table.profiler,
+#profiler table.profiler th.name {
+  text-align: left;
+}
+#profiler table.profiler:hover tr.group td {
+  color: #ccc;
+}
+#profiler table.profiler:hover tr.mark td div.graph {
+  background: #1197f0;
+}
+#profiler table.profiler:hover tr.mark.memory td div.graph {
+  background: #7cc1f0;
 }
 .profile-block .profile-photo {
   padding: 6px;
