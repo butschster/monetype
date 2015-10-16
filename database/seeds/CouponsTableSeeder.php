@@ -25,7 +25,11 @@ class CouponsTableSeeder extends Seeder
         });
 
         User::where('id', '>', 3)->take(10)->orderByRaw('RAND()')->get()->each(function(User $user) {
-            Bus::dispatch(new ApplyCoupon($user, Coupon::first()));
+            try {
+                Bus::dispatch(new ApplyCoupon($user, Coupon::first()));
+            } catch(Exception $e) {
+
+            }
         });
     }
 }

@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(TagsTableSeeder::class);
-        $this->call(ArticlesTableSeeder::class);
         $this->call(PaymentMethodsTableSeeder::class);
         $this->call(TransactionsTableSeeder::class);
         $this->call(CouponsTableSeeder::class);
+        $this->call(ArticlesTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
