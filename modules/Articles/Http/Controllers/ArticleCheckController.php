@@ -3,6 +3,7 @@
 namespace Modules\Articles\Http\Controllers;
 
 use Modules\Articles\Model\ArticleCheck;
+use Modules\Users\Repositories\UserRepository;
 use Modules\Articles\Repositories\ArticleRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Modules\Core\Http\Controllers\System\FrontController;
@@ -10,12 +11,37 @@ use Modules\Core\Http\Controllers\System\FrontController;
 class ArticleCheckController extends FrontController
 {
 
+    /**
+     * @return \View
+     */
     public function index()
     {
         $this->checkPermissions('check.index');
 
         return $this->setLayout('check.index', [
-            'checks' => ArticleCheck::with('article')->paginate()
+            'checks' => ArticleCheck::with('article')->orderByCreated()->paginate()
+        ]);
+    }
+
+
+    /**
+     * @param UserRepository $userRepository
+     * @param integer|null   $userId
+     *
+     * @return \View
+     */
+    public function listByUser(UserRepository $userRepository, $userId = null)
+    {
+        if (is_null($userId)) {
+            $user = $this->user;
+        } else {
+            $user = $userRepository->findOrFail($userId);
+            $this->checkPermissions('check.byUser', $user);
+        }
+
+        return $this->setLayout('check.byUser', [
+            'user'   => $user,
+            'checks' => $user->checks()->with('article')->orderByCreated()->paginate()
         ]);
     }
 
@@ -34,7 +60,7 @@ class ArticleCheckController extends FrontController
 
         return $this->setLayout('check.byArticle', [
             'article' => $article,
-            'checks'  => $article->checks()->paginate()
+            'checks'  => $article->checks()->orderByCreated()->paginate()
         ]);
     }
 

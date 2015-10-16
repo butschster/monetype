@@ -40,10 +40,15 @@ class PublishArticle implements SelfHandling
     }
 
 
+    /**
+     * @return bool
+     * @throws PlagiarismException
+     * @throws \Modules\Articles\Exceptions\ArticleException
+     */
     public function handle()
     {
         if ( ! $this->article->isChecked()) {
-            $checkResult = Bus::dispatch(new CheckForPlagiarism($this->article));
+            $checkResult = Bus::dispatch(new CheckForPlagiarism($this->user, $this->article));
         } else {
             $checkResult = $this->article->getLastCheckResult();
         }

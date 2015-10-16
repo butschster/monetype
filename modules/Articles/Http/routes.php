@@ -18,7 +18,8 @@ Route::group(['as' => 'front.'], function () {
         Route::put('article/{article}/approve', ['as' => 'article.approve', 'uses' => 'ArticleController@approve']);
         Route::put('article/{article}/block', ['as' => 'article.block', 'uses' => 'ArticleController@block']);
 
-        Route::get('article-checks', ['as' => 'checks.index', 'uses' => 'ArticleCheckController@index']);
+        Route::get('profile/{userId}/checks', ['as' => 'checks.byUser', 'uses' => 'ArticleCheckController@listByUser']);
+        Route::get('articles/checks', ['as' => 'checks.index', 'uses' => 'ArticleCheckController@index']);
         Route::get('article/{article}/checks/{id}', ['as' => 'article.checks.details', 'uses' => 'ArticleCheckController@details']);
         Route::get('article/{article}/checks', ['as' => 'article.checks', 'uses' => 'ArticleCheckController@listByArticle']);
 

@@ -99,12 +99,9 @@ class ArticleCheck extends Model
      *
      * @return Builder
      */
-    public function scopeRelevant(Builder $query)
+    public function scopeOrderByCreated(Builder $query)
     {
-        return $query
-
-            ->orderBy('created_at', 'desc')
-            ->take(50);
+        return $query->orderBy('created_at', 'desc');
     }
 
     /**********************************************************************

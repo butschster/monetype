@@ -3,10 +3,10 @@
 namespace Modules\Articles\Http\Controllers;
 
 use Bus;
-use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Articles\Jobs\BlockArticle;
 use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
+use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Articles\Exceptions\PlagiarismException;
 use Modules\Articles\Repositories\ArticleRepository;

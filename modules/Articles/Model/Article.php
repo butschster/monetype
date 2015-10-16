@@ -102,6 +102,15 @@ class Article extends Model implements Buyable
     /**
      * @return int
      */
+    public function isFree()
+    {
+        return $this->getCost() === 0;
+    }
+
+
+    /**
+     * @return int
+     */
     public function getCost()
     {
         return 1;

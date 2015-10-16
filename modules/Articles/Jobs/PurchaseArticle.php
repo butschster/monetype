@@ -40,6 +40,10 @@ class PurchaseArticle implements SelfHandling
      */
     public function handle()
     {
+        if ($this->article->isFree()) {
+            return true;
+        }
+
         if ($this->article->authoredBy($this->user) or $this->article->isPurchasedByUser($this->user)) {
             return true;
         }

@@ -39,6 +39,10 @@ class ModuleServiceProvider extends AuthServiceProvider
             return $user->isAdmin() or $article->authoredBy($user);
         });
 
+        $gate->define('check.byUser', function (User $user, User $targetUser) {
+            return $user->isAdmin();
+        });
+
         $gate->define('check.article.detail', function (User $user, Article $article) {
             return $user->isAdmin() or $article->authoredBy($user);
         });
