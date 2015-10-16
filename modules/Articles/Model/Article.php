@@ -178,7 +178,6 @@ class Article extends Model implements Buyable
     public function assignAuthor($author)
     {
         $this->author()->associate($author);
-        $this->save();
     }
 
 

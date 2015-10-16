@@ -16,7 +16,7 @@
     {!! Form::model($article , [
 		'route' => $action,
 		'class' => 'panel',
-		'method' => 'PUT'
+		'method' => $article->exists ? 'PUT' : 'POST'
     ]) !!}
 
         @if (count($errors) > 0)
@@ -34,12 +34,13 @@
             </div>
 
             <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            {!! Form::checkbox('forbid_comment') !!}
-                            @lang('articles::article.field.forbid_comment')
-                        </label>
-                    </div>
+                <div class="checkbox">
+                    <label>
+                        {!! Form::hidden('forbid_comment', 0) !!}
+                        {!! Form::checkbox('forbid_comment') !!}
+                        @lang('articles::article.field.forbid_comment')
+                    </label>
+                </div>
             </div>
         </div>
 

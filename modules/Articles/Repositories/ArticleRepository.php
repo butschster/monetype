@@ -25,7 +25,7 @@ class ArticleRepository extends Repository
     {
         $tags = array_pull($data, 'tags', '');
 
-        $article = $this->getModel()->create($data);
+        $article = parent::create($data);
 
         if (is_string($tags)) {
             $tags = explode(',', $tags);
