@@ -74,6 +74,7 @@ class ArticleRepository extends Repository
             ->with('author', 'tags')
             ->orderByDate()
             ->published()
+            ->withFavorites()
             ->paginate($perPage, $columns);
     }
 
@@ -94,6 +95,7 @@ class ArticleRepository extends Repository
             ->filterByTag($tag)
             ->orderByDate()
             ->published()
+            ->withFavorites()
             ->paginate($perPage, $columns);
     }
 }

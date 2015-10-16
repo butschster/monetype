@@ -30,3 +30,14 @@ App.Form.extend('articles', {
 App.Controllers.add(['article.create', 'article.edit'], function(action) {
 	App.Form.articles.init($('form'));
 });
+
+App.Controllers.add(['article.index', 'article.show'], function () {
+    $('body').on('click', '.addToFavorite', addToFavorite);
+});
+
+function addToFavorite(e) {
+    var $self = $(this);
+    Api.post('/api.article.favorite', {id: $(this).data('id')}, function (response) {
+		$self.parent().html(response.content);
+    });
+}

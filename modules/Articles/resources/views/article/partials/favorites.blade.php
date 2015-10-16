@@ -1,0 +1,2 @@
+<i class="fa fa-fw fa-star addToFavorite @if($article->is_favorited) text-warning @endif" data-id="{{ $article->id }}"></i>
+<span class="favs_count" title="@lang('articles::article.label.favorites')">{{ $article->count_favorites }}</span>

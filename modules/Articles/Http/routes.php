@@ -23,6 +23,8 @@ Route::group(['as' => 'front.'], function () {
         Route::get('article/{article}/checks/{id}', ['as' => 'article.checks.details', 'uses' => 'ArticleCheckController@details']);
         Route::get('article/{article}/checks', ['as' => 'article.checks', 'uses' => 'ArticleCheckController@listByArticle']);
 
+        RouteAPI::post('article.favorite', ['uses' => 'Api\ArticleController@favorite']);
+
         Route::resource('article', 'ArticleController', [
             'except' => [
                 'index',

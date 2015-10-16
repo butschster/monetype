@@ -33,6 +33,7 @@ class CreateArticlesTable extends Migration {
 
 			$table->decimal('amount', 10, 2)->default(0)->index();
 			$table->unsignedInteger('count_payments')->default(0);
+			$table->unsignedInteger('count_favorites')->default(0);
 
 			$table->enum('status', [Article::STATUS_DRAFT, Article::STATUS_PUBLISHED, Article::STATUS_APPROVED, Article::STATUS_BLOCKED])
 				->default(Article::STATUS_DRAFT)
