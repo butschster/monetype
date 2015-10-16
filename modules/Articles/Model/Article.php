@@ -472,13 +472,17 @@ class Article extends Model implements Buyable
      */
     public function scopeWithFavorites(Builder $query, User $user = null)
     {
-        if (is_null($user)) {
-            $user = auth()->user();
+        if (is_null($user) and auth()->check()) {
+            $userId = auth()->user()->id;
+        } else if(!is_null($user)) {
+            $userId = $user->id;
+        } else {
+            $userId = 0;
         }
 
         $subQuery = DB::table('user_favorites')
             ->selectRaw('user_id IS NOT NULL')
-            ->where('user_id', $user->id)
+            ->where('user_id', $userId)
             ->whereRaw('article_id = articles.id');
 
         return $query->selectSub($subQuery, 'is_favorited')->addSelect('articles.*');
