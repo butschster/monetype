@@ -10270,6 +10270,33 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
   display: inline-block;
   margin-bottom: 3px;
 }
+/*Blog Comments
+------------------------------------*/
+/** Comments
+ **************************************************************** **/
+.comments .comment-item {
+  margin: 0 0 30px;
+}
+.comments a.comment-reply {
+  float: right;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.comments span.user-avatar {
+  background: #eee;
+  width: 64px;
+  height: 64px;
+  float: left;
+  margin-right: 10px;
+}
+.comments small {
+  font-size: 12px;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  color: #aaa;
+}
+.comments h4 {
+  font-size: 15px;
+}
 /* social icons */
 a.social {
   display: inline-block;

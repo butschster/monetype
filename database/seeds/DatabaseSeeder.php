@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionsTableSeeder::class);
         $this->call(CouponsTableSeeder::class);
         $this->call(ArticlesTableSeeder::class);
+        $this->call(CommentsTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 

@@ -3,6 +3,7 @@
 use Modules\Users\Model\User;
 use Modules\Articles\Model\Tag;
 use Modules\Articles\Model\Article;
+use Modules\Comments\Model\Comment;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -40,5 +41,14 @@ $factory->defineAs(Article::class, 'article', function (Faker\Generator $faker) 
         'forbid_comment' => $faker->boolean(),
         'author_id' => $faker->randomElement($users),
         'status' => $faker->randomElement(['new', 'published', 'approved'])
+    ];
+});
+
+$factory->defineAs(Comment::class, 'comment', function (Faker\Generator $faker) {
+    $users = User::where('id', '>', 3)->get()->lists('id', 'id')->all();
+
+    return [
+        'text' => $faker->sentence(rand(1, 10)),
+        'author_id' => $faker->randomElement($users)
     ];
 });

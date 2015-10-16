@@ -5,7 +5,6 @@ use Modules\Articles\Model\Tag;
 use Modules\Articles\Model\Article;
 use Modules\Articles\Model\ArticleCheck;
 use Modules\Articles\Jobs\PublishArticle;
-use Modules\Articles\Exceptions\CheckForPlagiarismException;
 
 class ArticlesTableSeeder extends Seeder
 {
@@ -26,7 +25,7 @@ class ArticlesTableSeeder extends Seeder
 
             try {
                 Bus::dispatch(new PublishArticle($article->author, $article));
-            } catch (CheckForPlagiarismException $e) {
+            } catch (Exception $e) {
 
             }
         });
