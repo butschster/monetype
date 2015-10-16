@@ -1,5 +1,5 @@
 <div class="panel">
-    <table class="table">
+    <table class="table table-striped">
         <colgroup>
             <col />
             <col width="100px" />

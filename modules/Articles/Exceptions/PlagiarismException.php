@@ -4,7 +4,7 @@ namespace Modules\Articles\Exceptions;
 
 use Modules\Articles\Model\ArticleCheck;
 
-class PlagiatException extends \Exception
+class PlagiarismException extends \Exception
 {
 
     /**

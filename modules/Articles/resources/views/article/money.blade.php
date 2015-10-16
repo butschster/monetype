@@ -17,5 +17,5 @@
             </div>
         </div>
     </div>
-    @include('transactions::list')
+    @include('transactions::partials.list')
 @endsection

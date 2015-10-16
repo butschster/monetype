@@ -3,10 +3,10 @@
 namespace Modules\Articles\Jobs;
 
 use Bus;
-use Modules\Articles\Exceptions\PlagiatException;
 use Modules\Users\Model\User;
 use Modules\Articles\Model\Article;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Modules\Articles\Exceptions\PlagiarismException;
 
 class PublishArticle implements SelfHandling
 {
@@ -43,13 +43,13 @@ class PublishArticle implements SelfHandling
     public function handle()
     {
         if ( ! $this->article->isChecked()) {
-            $checkResult = Bus::dispatch(new CheckForPlagiat($this->article));
+            $checkResult = Bus::dispatch(new CheckForPlagiarism($this->article));
         } else {
             $checkResult = $this->article->getLastCheckResult();
         }
 
-        if ($checkResult->isPlagiat()) {
-            throw new PlagiatException($checkResult);
+        if ($checkResult->isPlagiarism()) {
+            throw new PlagiarismException($checkResult);
         }
 
         $this->article->setPublished();

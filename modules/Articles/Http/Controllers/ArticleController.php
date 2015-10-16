@@ -8,12 +8,13 @@ use Modules\Articles\Jobs\BlockArticle;
 use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
-use Modules\Articles\Exceptions\PlagiatException;
+use Modules\Articles\Exceptions\PlagiarismException;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Articles\Http\Requests\StoreArticleRequest;
 use Modules\Articles\Http\Requests\UpdateArticleRequest;
 use Modules\Core\Http\Controllers\System\FrontController;
 use Modules\Transactions\Exceptions\NotEnoughMoneyException;
+use Modules\Articles\Exceptions\CheckForPlagiarismException;
 
 class ArticleController extends FrontController
 {
@@ -189,10 +190,10 @@ class ArticleController extends FrontController
 
         try {
             Bus::dispatch(new PublishArticle($this->user, $article));
-        } catch (PlagiatException $e) {
-            return $this->errorRedirect(trans('articles::article.message.plagiat'));
-        } catch (CheckForPlagiatException $e) {
-            return $this->errorRedirect(trans('articles::article.message.cant_check_for_plagiat', ['error' => $e->getMessage()]));
+        } catch (PlagiarismException $e) {
+            return $this->errorRedirect(trans('articles::article.message.plagiarism'));
+        } catch (CheckForPlagiarismException $e) {
+            return $this->errorRedirect(trans('articles::article.message.cant_check_for_plagiarism', ['error' => $e->getMessage()]));
         }
 
 

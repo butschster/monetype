@@ -21,6 +21,7 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property float          $percent
  * @property string         $error
  * @property string         $text
+ * @property string         $created
  *
  * @property object         $response
  * @property Article        $article
@@ -60,9 +61,50 @@ class ArticleCheck extends Model
     /**
      * @return bool
      */
-    public function isPlagiat()
+    public function isPlagiarism()
     {
-        return $this->percent > 20;
+        return $this->percent > (int) config('article.check.max_percent_plagiarism', 20);
+    }
+
+    /**********************************************************************
+     * Mutators
+     **********************************************************************/
+
+    /**
+     * @return string
+     */
+    public function getCreatedAttribute()
+    {
+        return Date::format($this->created_at);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusAttribute()
+    {
+        if($this->isPlagiarism()) {
+            return trans('articles::check.label.plagiarism');
+        }
+
+        return trans('articles::check.label.successfully');
+    }
+
+    /**********************************************************************
+     * Scopes
+     **********************************************************************/
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeRelevant(Builder $query)
+    {
+        return $query
+
+            ->orderBy('created_at', 'desc')
+            ->take(50);
     }
 
     /**********************************************************************

@@ -13,11 +13,14 @@ Route::group(['as' => 'front.'], function () {
 
         Route::get('article/{article}/money', ['as' => 'article.money', 'uses' => 'ArticleController@money']);
         Route::get('article/{article}/preview', ['as' => 'article.preview', 'uses' => 'ArticleController@preview']);
-
         Route::put('article/{article}/publish', ['as' => 'article.publish', 'uses' => 'ArticleController@publish']);
         Route::put('article/{article}/draft', ['as' => 'article.draft', 'uses' => 'ArticleController@draft']);
         Route::put('article/{article}/approve', ['as' => 'article.approve', 'uses' => 'ArticleController@approve']);
         Route::put('article/{article}/block', ['as' => 'article.block', 'uses' => 'ArticleController@block']);
+
+        Route::get('article-checks', ['as' => 'checks.index', 'uses' => 'ArticleCheckController@index']);
+        Route::get('article/{article}/checks/{id}', ['as' => 'article.checks.details', 'uses' => 'ArticleCheckController@details']);
+        Route::get('article/{article}/checks', ['as' => 'article.checks', 'uses' => 'ArticleCheckController@listByArticle']);
 
         Route::resource('article', 'ArticleController', [
             'except' => [
@@ -25,5 +28,7 @@ Route::group(['as' => 'front.'], function () {
                 'destroy',
             ],
         ]);
+
     });
+
 });

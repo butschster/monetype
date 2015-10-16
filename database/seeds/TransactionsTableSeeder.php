@@ -39,6 +39,11 @@ class TransactionsTableSeeder extends Seeder
         ]);
 
         Type::create([
+            'name'  => 'article_check',
+            'title' => 'Проверка статьи'
+        ]);
+
+        Type::create([
             'name'      => 'transfer',
             'title'     => 'Перевод',
             'comission' => 5,
