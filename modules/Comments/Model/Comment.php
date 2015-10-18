@@ -2,7 +2,9 @@
 
 namespace Modules\Comments\Model;
 
+use Carbon\Carbon;
 use Modules\Users\Model\User;
+use Modules\Support\Helpers\Date;
 use Modules\Articles\Model\Article;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string         $text
  * @property integer        $author_id
  * @property integer        $article_id
+ * @property string         $user_ip
+ * @property string         $created
  *
  * @property Article        $article
  *
@@ -27,8 +31,28 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'text'
+        'text',
     ];
+
+    /**********************************************************************
+     * Mutators
+     **********************************************************************/
+
+    /**
+     * @return string|null
+     */
+    public function getCreatedAttribute()
+    {
+        if ($this->created_at instanceof Carbon) {
+            if ($this->created_at->gt(new Carbon('-1 days'))) {
+                return $this->created_at->diffForHumans();
+            } else {
+                return Date::format($this->created_at);
+            }
+        }
+
+        return null;
+    }
 
     /**********************************************************************
      * Relations
