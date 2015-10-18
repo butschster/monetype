@@ -11,9 +11,9 @@ class CommentsTableSeeder extends Seeder
     {
         Comment::truncate();
 
-        foreach(Article::all() as $article) {
-            factory(Comment::class, 'comment', rand(1, 30))->create()->each(function (Comment $comment) use($article) {
-                $comment->article()->associate($article)->save();
+        foreach (Article::all() as $article) {
+            factory(Comment::class, 'comment', rand(5, 30))->create()->each(function (Comment $comment) use ($article) {
+                $article->addComment($comment);
             });
         }
     }
