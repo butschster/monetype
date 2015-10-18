@@ -32,7 +32,7 @@ App.Controllers.add(['article.create', 'article.edit'], function(action) {
 });
 
 App.Controllers.add(['article.index', 'article.show'], function () {
-    $('body').on('click', '.addToFavorite', addToFavorite);
+	if(USER_ID) $('body').on('click', '.addToFavorite', addToFavorite);
 });
 
 function addToFavorite(e) {
