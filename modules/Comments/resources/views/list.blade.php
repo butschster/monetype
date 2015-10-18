@@ -8,6 +8,8 @@
                 </div>
                 <div class="media-body comments-itself">
                     <h4 class="media-heading">{!! $comment->author->getProfileLink() !!}</h4>
+                    <small class="text-muted">{{ $comment->created }}</small>
+                    <br />
                     {!! $comment->text !!}
                 </div>
             </div>
