@@ -32,8 +32,10 @@ class CreateArticlesTable extends Migration {
 			$table->unsignedInteger('bocked_by_id')->index()->nullable();
 
 			$table->decimal('amount', 10, 2)->default(0)->index();
+
 			$table->unsignedInteger('count_payments')->default(0);
 			$table->unsignedInteger('count_favorites')->default(0);
+			$table->unsignedInteger('count_comments')->default(0);
 
 			$table->enum('status', [Article::STATUS_DRAFT, Article::STATUS_PUBLISHED, Article::STATUS_APPROVED, Article::STATUS_BLOCKED])
 				->default(Article::STATUS_DRAFT)
@@ -42,6 +44,8 @@ class CreateArticlesTable extends Migration {
 			$table->text('block_reason');
 
 			$table->boolean('need_check')->default(true);
+
+			$table->string('user_ip', 20);
 
 			$table->timestamps();
 			$table->softDeletes();

@@ -21,6 +21,8 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('author_id');
             $table->unsignedInteger('article_id');
 
+            $table->string('user_ip', 20);
+
             $table->timestamps();
             $table->softDeletes();
 
