@@ -318,6 +318,25 @@ class Article extends Model implements Buyable
     }
 
 
+    /**
+     * @return bool
+     */
+    public function hasComments()
+    {
+        return $this->count_comments > 0;
+    }
+
+
+    /**
+     * @param Comment $comment
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->increment('count_comments');
+        $comment->article()->associate($this)->save();
+    }
+
+
     /**********************************************************************
      * Mutators
      **********************************************************************/
