@@ -32,12 +32,14 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property string         $status
  * @property string         $block_reason
  * @property integer        $count_payments
+ * @property integer        $count_favorites
+ * @property integer        $count_comments
  * @property float          $amount
  * @property float          $cost
  * @property string         $published
  * @property string         $statusTitle
  * @property boolean        $need_check
- * @property integer        $count_favorites
+ * @property string         $user_ip
  *
  * @property User           $author
  * @property User           $approvedBy
