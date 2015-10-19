@@ -27,7 +27,8 @@ class UpdateArticleRequest extends Request
     {
         return [
             'title'       => 'required|max:255',
-            'text_source' => 'required|min:500'
+            'text_source' => 'required|min:500',
+            'tags'        => 'required|mintags:3'
         ];
     }
 

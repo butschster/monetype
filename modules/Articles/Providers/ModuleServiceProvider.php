@@ -2,6 +2,7 @@
 
 namespace Modules\Articles\Providers;
 
+use Validator;
 use Modules\Users\Model\User;
 use Modules\Articles\Model\Article;
 use Modules\Articles\Policies\ArticlePolicy;
@@ -45,6 +46,20 @@ class ModuleServiceProvider extends AuthServiceProvider
 
         $gate->define('check.article.detail', function (User $user, Article $article) {
             return $user->isAdmin() or $article->authoredBy($user);
+        });
+
+        Validator::extend('mintags', function ($attribute, $tags, $parameters, $validator) {
+            if (is_string($tags)) {
+                $tags = explode(',', $tags);
+            }
+
+            $tags = array_unique(array_map('trim', $tags));
+
+            return count($tags) > array_get($parameters, 0);
+        });
+
+        Validator::replacer('mintags', function($message, $attribute, $rule, $parameters) {
+            return str_replace(':size', $parameters[0], $message);
         });
     }
 
