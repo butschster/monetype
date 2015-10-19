@@ -11,19 +11,19 @@
 @brand-primary:         #34495e;
 @brand-success:         #2ecc71;
 @brand-info:            #3498db;
-@brand-warning:         #ffb606;
+@brand-warning:         #ffad1c;
 @brand-danger:          #e74c3c;
 
 @state-success-bg:               lighten(@brand-success, 20%);
 @state-info-bg:                  lighten(@brand-info, 20%);
-@state-warning-bg:               lighten(@brand-warning, 20%);
+@state-warning-bg:               @brand-warning;
 @state-danger-bg:                lighten(@brand-danger, 20%);
 
 
-@state-success-text:             @brand-success;
-@state-info-text:                @brand-info;
-@state-warning-text:             @brand-warning;
-@state-danger-text:              @brand-danger;
+@state-success-text:             @white;
+@state-info-text:                @white;
+@state-warning-text:             @white;
+@state-danger-text:              darken(@brand-danger, 15%);
 
 
 @headings-font-weight:    300;

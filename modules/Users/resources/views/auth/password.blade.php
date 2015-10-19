@@ -20,7 +20,7 @@
 			@endif
 
 			@if (count($errors) > 0)
-			<ul class="alert alert-warning">
+			<ul class="alert alert-warning list-unstyled">
 				@foreach ($errors->all() as $error)
 					<li>{{ $error }}</li>
 				@endforeach
