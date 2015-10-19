@@ -12,9 +12,9 @@
 
     <li>
         @if($article->hasComments())
-        <i class="fa fa-fw fa-comments"></i> {{ $article->count_comments }}
+        <i class="fa fa-fw fa-comment"></i> {{ $article->count_comments }}
         @else
-            <i class="fa fa-fw fa-comments-o"></i> 0
+            <i class="fa fa-fw fa-comment-o"></i> 0
         @endif
     </li>
 

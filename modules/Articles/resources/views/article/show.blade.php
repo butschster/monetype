@@ -1,13 +1,14 @@
 @extends('core::layout.main')
 
 @section('content')
-    <h2>{{ $article->title }}</h2>
-
-    <div class="panel">
-        <div class="panel-heading">
+    <div class="articleItem articleItem--inner">
+        <div class="articleItem--heading">
             @include('articles::article.partials.heading')
         </div>
-        <div class="panel-body">
+
+        <h2 class="articleItem--title">{{ $article->title }}</h2>
+
+        <div class="articleItem--content">
             @include('articles::article.partials.categories')
             @if(!$isPurchased)
                 {!! $article->text_intro !!}
@@ -16,12 +17,13 @@
             @else
                 {!! $article->text !!}
             @endif
-
-            <hr class="panel-wide" />
-
-            @include('articles::article.partials.tags', ['tags' => $tags, 'showTagsTitle' => true])
         </div>
-        <div class="panel-footer clearfix">
+
+        @include('articles::article.partials.tags', ['tags' => $tags])
+
+        <hr />
+
+        <div class="articleItem--meta  shadow1">
             @include('articles::article.partials.meta')
 
             <div class="socials pull-right">
@@ -31,8 +33,14 @@
                 <a href="#" class="rounded-icon social fa fa-pinterest"><!-- pinterest --></a>
                 <a href="#" class="rounded-icon social fa fa-linkedin"><!-- linkedin --></a>
             </div>
+
+            <div class="clearfix"></div>
         </div>
     </div>
+@endsection
+
+@section('footer.content')
 
     @include('comments::list')
+</div>
 @endsection
