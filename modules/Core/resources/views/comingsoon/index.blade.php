@@ -14,7 +14,7 @@
             <div class="row coming-soon">
                 <div class="col-md-7 col-sm-5 text text-left">
                     <h3 style="margin-top: -10px;">@lang('core::comingsoon.howWorksTitle')</h3>
-                    <p>@lang('core::comingsoon.howWorksText', ['cost' => 1, 'choise' => Lang::choice('core::comingsoon.articleCostValue', 1)])</p>
+                    <p>@lang('core::comingsoon.howWorksText')</p>
                 </div>
                 <div class="col-md-5 col-sm-7 form-box wow fadeInUp animated" style="visibility: visible;">
                     @if(auth()->check())

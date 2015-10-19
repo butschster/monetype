@@ -3,26 +3,29 @@
 ]) !!}
     <header>
         <h3>@lang('users::user.title.registration')</h3>
-        @if($startBalance)
-            <p>@lang('core::comingsoon.registerBonus', ['balance' => $startBalance])</p>
+
+        @if($couponsCount > 0)
+        <p>@lang('core::comingsoon.registerBonus', ['count' => $couponsCount, 'amount' => 10])</p>
         @endif
     </header>
+
     @if (count($errors) > 0)
-        <ul class="alert alert-warning">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <ul class="alert alert-warning">
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
     @endif
+
     <fieldset>
         <div class="form-group">
-            <label class="sr-only" for="form-email">@lang('users::user.field.name')</label>
+            <label class="sr-only" for="form-email">@lang('users::user.field.username')</label>
 
             <div class="input-icon-append">
                 <i class="icon-append fa fa-user"></i>
 
-                {!! Form::text('name', null, [
-                    'class' => 'form-control', 'placeholder' => trans('users::user.field.name'), 'id' => 'form-name'
+                {!! Form::text('username', null, [
+                    'class' => 'form-control', 'placeholder' => trans('users::user.field.username'), 'id' => 'form-name'
                 ]) !!}
             </div>
         </div>
