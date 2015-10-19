@@ -80,12 +80,32 @@ class AuthController extends FrontController
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($data, [
             'username' => 'required|alpha_dash|max:50|unique:users',
             'name'     => 'max:255',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ], [], trans('users::user.field'));
+
+        $request = $this->request;
+
+        $validator->after(function ($validator) use ($data, $request) {
+            $client   = new \GuzzleHttp\Client();
+            $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
+                'verify' => false,
+                'query'  => [
+                    'secret'   => '6LexrAMTAAAAAAlyG_SQCUNegF7Wvh3Lqe03_-vD',
+                    'response' => array_get($data, 'g-recaptcha-response'),
+                    'remoteip' => $request->ip()
+                ]
+            ]);
+
+            if (array_get($response->json(), 'success') === false) {
+                $validator->errors()->add('captcha', trans('validation.custom.captcha.not_valid'));
+            }
+        });
+
+        return $validator;
     }
 
 

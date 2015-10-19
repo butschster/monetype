@@ -97,9 +97,9 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+        'captcha' => [
+            'not_valid' => 'Капча не пройдена',
+        ]
     ],
 
     /*

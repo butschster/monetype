@@ -2,6 +2,7 @@
 
 return [
     'title'   => [
+        'registration'    => 'Регистрация',
         'reset_password'  => 'Сброс пароля',
         'profile'         => ':user <small>Профиль пользователя</small>',
         'articles'        => 'Мои статьи',

@@ -1,7 +1,7 @@
 <?php
 Route::group(['as' => 'front.'], function () {
 
-    Route::get('/', ['as' => 'main', 'uses' => 'ArticleController@index']);
+    //Route::get('/', ['as' => 'main', 'uses' => 'ArticleController@index']);
 
     Route::get('articles', ['as' => 'articles.index', 'uses' => 'ArticleController@index']);
     Route::get('articles/tag/{tag}', ['as' => 'articles.byTag', 'uses' => 'ArticleController@indexByTag']);
