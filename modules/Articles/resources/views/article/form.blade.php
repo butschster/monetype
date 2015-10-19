@@ -4,13 +4,6 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
-    <script>
-        $(function() {
-            new SimpleMDE({
-                element: document.getElementById('inputText')
-            });
-        });
-    </script>
     <h2>@lang('articles::article.title.create')</h2>
 
     {!! Form::model($article , [

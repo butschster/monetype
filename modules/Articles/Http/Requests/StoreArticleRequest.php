@@ -2,9 +2,9 @@
 
 namespace Modules\Articles\Http\Requests;
 
-use App\Http\Requests\Request;
+use Modules\Core\Http\Requests\ApiRequest;
 
-class StoreArticleRequest extends Request
+class StoreArticleRequest extends ApiRequest
 {
 
     /**

@@ -24,11 +24,12 @@ Route::group(['as' => 'front.'], function () {
         Route::get('article/{article}/checks', ['as' => 'article.checks', 'uses' => 'ArticleCheckController@listByArticle']);
 
         RouteAPI::post('article.favorite', ['uses' => 'Api\ArticleController@favorite']);
+        RouteAPI::post('article.store', ['as' => 'article.store', 'uses' => 'Api\ArticleController@store']);
+        RouteAPI::post('article.update', ['as' => 'article.update', 'uses' => 'Api\ArticleController@update']);
 
         Route::resource('article', 'ArticleController', [
             'except' => [
-                'index',
-                'destroy',
+                'index', 'destroy', 'store', 'update'
             ],
         ]);
 
