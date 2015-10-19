@@ -8741,23 +8741,6 @@ button.close {
 .form .g-recaptcha {
   height: 78px;
 }
-.form .alert {
-  padding: 10px 0;
-  margin-bottom: 0;
-}
-.form .alert li {
-  border-bottom: 1px solid #f29b00;
-  border-top: 1px solid #ffc969;
-  padding: 10px 20px;
-}
-.form .alert li:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
-}
-.form .alert li:first-child {
-  padding-top: 0;
-  border-top: none;
-}
 .form fieldset {
   display: block;
   padding: 25px 30px 5px;
@@ -8790,6 +8773,23 @@ button.close {
   padding-left: 3px;
   border-left-width: 1px;
   border-left-style: solid;
+}
+ul.alert {
+  padding: 10px 0;
+  margin-bottom: 0;
+}
+ul.alert li {
+  border-bottom: 1px solid #f29b00;
+  border-top: 1px solid #ffc969;
+  padding: 10px 20px;
+}
+ul.alert li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+ul.alert li:first-child {
+  padding-top: 0;
+  border-top: none;
 }
 form {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
