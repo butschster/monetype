@@ -59,7 +59,7 @@ class UsersTableSeeder extends Seeder
         factory(User::class, 'user', 100)->create()->each(function (User $user) {
             $user->account->update(['balance' => 100]);
 
-            $filename = $this->getnerateAvatar($user->email);
+            $filename = $this->generateAvatar($user->email);
             $user->attachAvatar(
                 new UploadedFile($filename, 'avatar.png', 'image/png', 0, 0, true)
             );
@@ -72,7 +72,7 @@ class UsersTableSeeder extends Seeder
      *
      * @return string
      */
-    protected function getnerateAvatar($string)
+    protected function generateAvatar($string)
     {
         $filename = public_path(uniqid() . '.png');
 
