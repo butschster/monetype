@@ -2,9 +2,9 @@
 
 namespace Modules\Users\Http\Controllers\Api;
 
-use KodiCMS\API\Http\Controllers\Controller;
+use Modules\Core\Http\Controllers\System\ApiController;
 
-class ProfileController extends Controller
+class ProfileController extends ApiController
 {
     public function uploadBackground()
     {
