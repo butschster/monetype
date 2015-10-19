@@ -219,7 +219,8 @@ App.Form = {
         messages: {
             saved: null
         },
-        fields: {},
+        fieldsMeta: {},
+        _fields: {},
         autoSaveDelay: 5000,
         init: function (form) {
             this._form = form;
@@ -248,61 +249,53 @@ App.Form = {
             this.getFieldsData();
             this._id = this._fieldsData['id'];
 
+            for (i in this.fieldsMeta) {
+                switch (this.fieldsMeta[i]) {
+                    case 'tags':
+                        this._fields[i] = new FieldTags(this._form, i);
+                        break;
+                    case 'checkbox':
+                        this._fields[i] = new FieldCheckbox(this._form, i);
+                        break;
+                    case 'markdown':
+                        this._fields[i] = new FieldMarkdown(this._form, i);
+                        break;
+                    default:
+                        this._fields[i] = new FieldDefault(this._form, i);
+                }
+            }
+
+            console.log(this);
+
             this.onLoad();
             $(window).unload($.proxy(this.onUnload, this));
         },
         getFieldsData: function () {
-            for (i in this.fields)
+            for (i in this._fields) {
                 this._fieldsData[i] = this._getFieldData(i);
+            }
 
             return this._fieldsData;
         },
         setFieldsData: function (data) {
-            for (i in this.fields) {
+            for (i in this._fields) {
                 if (i == 'id') continue;
                 this._setFieldData(i, data[i]);
             }
         },
         getField: function (name) {
-            switch (this.fields[name]) {
-                case 'multiple':
-                    return $(':input[name="' + name + '[]"]', this._form)
-                default:
-                    return $(':input[name="' + name + '"]', this._form)
-            }
+            return this._fields[name] || null;
+        },
+        hasField: function(name) {
+            return this.fieldsMeta[name] != 'undefined';
         },
         _getFieldData: function (name) {
-            if (!this.fields[name]) return null;
-
-            var $elm = this.getField(name);
-
-            switch (this.fields[name]) {
-                case 'checkbox':
-                    return $elm.prop('checked');
-                case 'tags':
-                    return $elm.val().split(',');
-                default:
-                    return $elm.val();
-            }
+            if (!this.hasField(name)) return false;
+            return this.getField(name).getValue();
         },
         _setFieldData: function (name, value) {
-            if (!this.fields[name]) return false;
-
-            var $elm = this.getField(name);
-
-            switch (this.fields[name]) {
-                case 'checkbox':
-                    $elm.prop('checked', value);
-                    break;
-                case 'tags':
-                    $elm.val(value.join()).trigger('change');
-                    break;
-                case 'multiple':
-                    $elm.val(value).trigger('change');
-                    break;
-                default:
-                    $elm.val(value).trigger('change');
-            }
+            if (!this.hasField(name)) return false;
+            return this.getField(name).setValue(value);
         },
 
         /******************************************
@@ -327,9 +320,9 @@ App.Form = {
         },
         onFailValidation: function (errors) {
             for (field in errors) {
-                if (!this.fields[field]) continue;
+                if (!this.hasField(field)) continue;
 
-                var $elm = this.getField(field)
+                var $elm = this.getField(field).getElement();
 
                 $elm.closest('.form-group')
                     .addClass('has-error')
@@ -372,21 +365,7 @@ App.Form = {
         },
         onResponse: function (response) {
             $(':button', this._form).prop('disabled', false);
-
             this.clearLocalStorage();
-
-            switch (response.code) {
-                case 120: // Validation
-                    return this.onFailValidation(response.errors);
-                    break;
-                case 200:
-                    if (this.messages.saved.length > 0)
-                        noty({text: this.messages.saved, type: 'success'});
-                    break;
-                default:
-
-                    break;
-            }
         },
         /******************************************
          * Backup
@@ -397,7 +376,7 @@ App.Form = {
                 var time = new Date(data['timestamp']);
 
                 // TODO: добавить локализацию
-                this._form.prepend(_.template('<div class="alert alert-warning m-b-none" id="notification_autosave">' +
+                this._form.prepend(_.template('<div class="alert alert-info m-b-none" id="notification_autosave">' +
                     'У вас есть автосохранение от <b><%= date %> <%= time %></b>, ' +
                     '<a href="#reset" class="reset_form_from_autosave">восстановить форму</a>?' +
                     '</div>')({
@@ -419,17 +398,103 @@ App.Form = {
             var data = this.getFieldsData();
             data['timestamp'] = new Date().getTime();
 
-            // Store data to the storage
             this.saveToLocalStorage(data);
         },
         onRestore: function (data) {
-            // Restore data from the storage
             this.setFieldsData(data);
         },
         onUnload: function (e) {
             this.onBackup(e);
         }
     }
+}
+
+FieldDefault = function(form, name) {
+    this._form = form;
+    this._name = name;
+
+    this._element = this.getFieldInput();
+    this.init();
+};
+
+FieldDefault.prototype = {
+    init: function() {
+
+    },
+    getFieldInput: function() {
+        return $(':input[name="' + this.getName() + '"]', this._form);
+    },
+    getElement: function() {
+        return this._element;
+    },
+    getValue: function() {
+        return this.getElement().val();
+    },
+    setValue: function(value) {
+        this.getElement().val(value);
+    },
+    getName: function() {
+        return this._name;
+    }
+};
+
+FieldCheckbox = function(form, name) {
+    FieldDefault.apply(this, arguments);
+}
+
+FieldCheckbox.prototype.__proto__ = FieldDefault.prototype;
+
+FieldCheckbox.prototype.getValue = function() {
+   return this.getElement().prop('checked')
+};
+
+FieldCheckbox.prototype.setValue = function(value) {
+    return this.getElement().prop('checked', value)
+};
+
+
+FieldMarkdown = function(form, name) {
+    FieldDefault.apply(this, arguments);
+}
+
+FieldMarkdown.prototype.__proto__ = FieldDefault.prototype;
+
+FieldMarkdown.prototype.init = function() {
+    var $elm = this.getElement();
+    this.editor = new SimpleMDE({
+        element: $elm[0]
+    });
+};
+
+FieldMarkdown.prototype.getValue = function() {
+    return this.editor.value();
+};
+
+FieldMarkdown.prototype.setValue = function(value) {
+    return this.editor.value(value);
+};
+
+FieldTags = function(form, name) {
+    FieldDefault.apply(this, arguments);
+}
+
+FieldTags.prototype.__proto__ = FieldDefault.prototype;
+
+FieldTags.prototype.getValue = function() {
+    return this.getElement().val().split(',');
+};
+
+FieldTags.prototype.setValue = function(value) {
+    return this.getElement().val(value.join()).trigger('change');
+};
+
+
+function extend(Child, Parent) {
+    var F = function() { }
+    F.prototype = Parent.prototype
+    Child.prototype = new F()
+    Child.prototype.constructor = Child
+    Child.superclass = Parent.prototype
 }
 
 // TODO: добавить локализацию
@@ -799,32 +864,15 @@ App.Components
         });
     });
 App.Form.extend('articles', {
-	fields: {
+	fieldsMeta: {
 		title: 'string',
-		text_source: 'textarea',
+		text_source: 'markdown',
 		forbid_comment: 'checkbox',
 		tags: 'tags'
 	},
 	messages: {
 		saved: 'Article saved'
 	}
-	/*onSubmit: function(e) {
-		e.preventDefault();
-		this.clearErrors();
-
-		var action = this._submitButton.val();
-
-		switch (action) {
-			case 'publish':
-				var url = '/api.articles.publish/' + this._id;
-				break;
-			default:
-				var url = this._api_url;
-		}
-
-		$(':button', this._form).prop('disabled', true);
-		Api[this._api_method](url, this.getFieldsData(), $.proxy(this.onResponse, this));
-	}*/
 });
 
 App.Controllers.add(['article.create', 'article.edit'], function(action) {
