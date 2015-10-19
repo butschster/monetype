@@ -51,19 +51,23 @@ class Coupon extends Model
 
     /**
      * @param User $user
+     *
+     * @return User
      */
     public function assignFromUser(User $user)
     {
-        $this->fromUser()->associate($user);
+        return $this->fromUser()->associate($user);
     }
 
 
     /**
      * @param User $user
+     *
+     * @return User
      */
     public function assignToUser(User $user)
     {
-        $this->toUser()->associate($user);
+        return $this->toUser()->associate($user);
     }
 
 
@@ -73,6 +77,21 @@ class Coupon extends Model
     public function isExpired()
     {
         return ($this->expired_at instanceof Carbon) and $this->expired_at->lt(Carbon::now());
+    }
+
+
+    /**
+     * @param string|Type $type
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        if (is_string($type)) {
+            $type = CouponType::find($type);
+        }
+
+        return $this->type()->associate($type);
     }
 
     /**********************************************************************
@@ -123,8 +142,31 @@ class Coupon extends Model
     public function scopeOnlyActive(Builder $query)
     {
         return $query->where(function($q) {
-            return $q->orWhereIsNull('expired_at')->orWhereRaw('expired_at > CURDATE()');
+            return $q->orWhereNull('expired_at')->orWhereRaw('expired_at > CURDATE()');
         });
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeOnlyUsers(Builder $query)
+    {
+        return $query->where('type_id', 'user');
+    }
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeOnlyForRegister(Builder $query)
+    {
+        return $query
+            ->onlyActive()
+            ->where('type_id', 'register')
+            ->whereNull('to_user_id');
     }
 
     /**********************************************************************
@@ -146,5 +188,14 @@ class Coupon extends Model
     public function toUser()
     {
         return $this->belongsTo(User::class, 'to_user_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(CouponType::class, 'type_id');
     }
 }

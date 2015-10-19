@@ -3,7 +3,7 @@
 use Modules\Users\Model\User;
 use Modules\Users\Model\Coupon;
 use Illuminate\Database\Seeder;
-use Modules\Users\Jobs\ApplyCoupon;
+use Modules\Users\Model\CouponType;
 use Modules\Users\Jobs\CreateCoupon;
 
 class CouponsTableSeeder extends Seeder
@@ -17,19 +17,28 @@ class CouponsTableSeeder extends Seeder
     public function run()
     {
         Coupon::truncate();
+        CouponType::truncate();
 
-        User::where('id', '>', 3)->with(['account' => function($query) {
-            $query->where('balance', '>', 3);
-        }])->take(20)->orderByRaw('RAND()')->get()->each(function(User $user) {
-            Bus::dispatch(new CreateCoupon($user, rand(1, 2)));
-        });
+        CouponType::create([
+            'name'  => 'user',
+            'title' => 'Пользовательские'
+        ]);
 
-        User::where('id', '>', 3)->take(10)->orderByRaw('RAND()')->get()->each(function(User $user) {
-            try {
-                Bus::dispatch(new ApplyCoupon($user, Coupon::first()));
-            } catch(Exception $e) {
+        CouponType::create([
+            'name'  => 'register',
+            'title' => 'Регистрационные'
+        ]);
 
+        User::where('id', '>', 3)->with([
+            'account' => function ($query) {
+                $query->where('balance', '>', 3);
             }
+        ])->take(20)->orderByRaw('RAND()')->get()->each(function (User $user) {
+            Bus::dispatch(new CreateCoupon($user, 10, 'user'));
         });
+
+        for ($i = 20; $i > 0; $i--) {
+            Bus::dispatch(new CreateCoupon(User::find(2), 10, 'register'));
+        }
     }
 }

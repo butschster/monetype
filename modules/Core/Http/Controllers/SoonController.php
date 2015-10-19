@@ -5,6 +5,7 @@ namespace Modules\Core\Http\Controllers;
 use Auth;
 use Lang;
 use Assets;
+use Modules\Users\Model\Coupon;
 use Modules\Core\Http\Controllers\System\FrontController;
 
 class SoonController extends FrontController
@@ -28,7 +29,7 @@ class SoonController extends FrontController
     public function index()
     {
         return $this->setLayout('comingsoon.index', [
-            'startBalance' => 0
+            'couponsCount' => Coupon::onlyForRegister()->count()
         ]);
     }
 }

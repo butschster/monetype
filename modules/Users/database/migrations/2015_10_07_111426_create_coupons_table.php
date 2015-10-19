@@ -18,6 +18,8 @@ class CreateCouponsTable extends Migration
             $table->unsignedInteger('from_user_id');
             $table->unsignedInteger('to_user_id')->nullable();
 
+            $table->string('type_id');
+
             $table->string('code');
             $table->decimal('amount', 10, 2);
 
@@ -26,6 +28,10 @@ class CreateCouponsTable extends Migration
             $table->softDeletes();
 
             $table->unique('id');
+
+            $table->foreign('type_id')
+                ->references('name')
+                ->on('coupon_types');
 
             $table->foreign('from_user_id')
                 ->references('id')
