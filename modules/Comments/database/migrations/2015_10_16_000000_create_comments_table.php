@@ -1,5 +1,6 @@
 <?php
 
+use Modules\Comments\Model\Comment;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -20,6 +21,11 @@ class CreateCommentsTable extends Migration
 
             $table->unsignedInteger('author_id');
             $table->unsignedInteger('article_id');
+
+
+            $table->enum('status', [Comment::STATUS_PUBLISHED, Comment::STATUS_SPAM, Comment::STATUS_BLOCKED])
+                ->default(Comment::STATUS_PUBLISHED)
+                ->index();
 
             $table->string('user_ip', 20);
 

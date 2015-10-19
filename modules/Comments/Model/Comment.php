@@ -7,6 +7,8 @@ use Modules\Users\Model\User;
 use Modules\Support\Helpers\Date;
 use Modules\Articles\Model\Article;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer        $id
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer        $article_id
  * @property string         $user_ip
  * @property string         $created
+ * @property string         $status
  *
  * @property Article        $article
  *
@@ -24,6 +27,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+
+    use SoftDeletes;
+
+    const STATUS_PUBLISHED = 'published';
+    const STATUS_SPAM = 'spam';
+    const STATUS_BLOCKED = 'blocked';
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +61,34 @@ class Comment extends Model
         }
 
         return null;
+    }
+
+    /**********************************************************************
+     * Scopes
+     **********************************************************************/
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeBlocked(Builder $query)
+    {
+        return $query->where('status', static::STATUS_BLOCKED);
+    }
+
+
+    /**
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopePublished(Builder $query)
+    {
+        return $query->where('status', static::STATUS_PUBLISHED)
+            ->whereHas('author', function ($q) {
+                $q->where('status', '!=', User::STATUS_BLOCKED);
+            });
     }
 
     /**********************************************************************
