@@ -406,6 +406,9 @@ App.Components.add('register.validator', function() {
 	// Validation for login form
 	$("#registerForm").validate({
 		rules: {
+			username: {
+				required: true
+			},
 			email: {
 				required: true,
 				email: true
