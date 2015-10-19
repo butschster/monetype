@@ -34,7 +34,7 @@ return [
         Article::STATUS_BLOCKED   => '<span class="label label-danger"><i class="fa fa-ban"></i> Заблокирована</span>',
     ],
     'label'   => [
-        'balance'        => '<i class="fa fa-money"></i> :amount <i class="fa fa-rub"></i>',
+        'balance'        => '<i class="fa fa-fw fa-lg fa-money"></i> :amount <i class="fa fa-rub"></i>',
         'cost'           => ':amount <i class="fa fa-rub"></i>',
         'total_amount'   => 'Собрано денег',
         'count_payments' => 'Всего платежей',

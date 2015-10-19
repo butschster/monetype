@@ -21,9 +21,7 @@
 
         @include('articles::article.partials.tags', ['tags' => $tags])
 
-        <hr />
-
-        <div class="articleItem--meta  shadow1">
+        <div class="articleItem--meta">
             @include('articles::article.partials.meta')
 
             <div class="socials pull-right">

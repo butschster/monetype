@@ -1,6 +1,6 @@
-<ul class="list-unstyled m-t-xs list-inline pull-left m-b-none m-t-none">
+<ul class="articleItem--meta-items list-unstyled list-inline">
     <li>
-        <i class="fa fa-fw fa-eye"></i> {{ $article->count_payments }}
+        <i class="fa fa-lg fa-fw fa-eye"></i> {{ $article->count_payments }}
     </li>
     <li>
         @lang('articles::article.label.cost', ['amount' => $article->cost])
@@ -12,9 +12,9 @@
 
     <li>
         @if($article->hasComments())
-        <i class="fa fa-fw fa-comment"></i> {{ $article->count_comments }}
+        <i class="fa fa-lg fa-fw fa-comment"></i> {{ $article->count_comments }}
         @else
-            <i class="fa fa-fw fa-comment-o"></i> 0
+            <i class="fa fa-lg fa-fw fa-comment-o"></i> 0
         @endif
     </li>
 

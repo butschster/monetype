@@ -9172,6 +9172,14 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
 .articleItem .articleItem--meta:after {
   clear: both;
 }
+.articleItem .articleItem--meta .articleItem--meta-items {
+  float: left;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.articleItem .articleItem--meta .articleItem--meta-items li .fa {
+  color: #bbb;
+}
 .articleItem .articleItem--title {
   font-weight: 500;
 }
@@ -9219,11 +9227,14 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
 }
 .articleItem--inner .articleItem--meta {
   background: whitesmoke;
-  padding: 20px;
+  padding: 10px;
 }
 .commentList {
   background: whitesmoke;
   padding: 10px 0;
+  border: 10px solid #fff;
+  border-left-width: 0;
+  border-right-width: 0;
 }
 .commentItem {
   padding: 20px 0;
@@ -9370,48 +9381,48 @@ ul.alert li:first-child {
 /* social icons */
 a.social {
   display: inline-block;
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
-  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 17px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
   color: #fff;
   margin: 0 1px 0;
   text-decoration: none;
   transition: all 0.2s;
 }
 a.social.fa-twitter:hover {
-  background: #41b7d8!important;
-  color: #fff!important;
+  background: #41b7d8 !important;
+  color: #fff !important;
 }
 a.social.fa-facebook:hover {
-  background: #3b5997!important;
-  color: #fff!important;
+  background: #3b5997 !important;
+  color: #fff !important;
 }
 a.social.fa-google-plus:hover {
-  background: #d64937!important;
-  color: #fff!important;
+  background: #d64937 !important;
+  color: #fff !important;
 }
 a.social.fa-linkedin:hover {
-  background: #0073b2!important;
-  color: #fff!important;
+  background: #0073b2 !important;
+  color: #fff !important;
 }
 a.social.fa-flickr:hover {
-  background: #ff0084!important;
-  color: #fff!important;
+  background: #ff0084 !important;
+  color: #fff !important;
 }
 a.social.fa-pinterest:hover {
-  background: #cb2027!important;
-  color: #fff!important;
+  background: #cb2027 !important;
+  color: #fff !important;
 }
 a.social.fa-rss:hover {
-  background: #e0812a!important;
-  color: #fff!important;
+  background: #e0812a !important;
+  color: #fff !important;
 }
 a.social.default:hover {
-  background: #37353A!important;
-  color: #fff!important;
+  background: #37353A !important;
+  color: #fff !important;
 }
 a.social.rounded {
   width: 35px;
