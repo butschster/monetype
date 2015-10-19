@@ -157,6 +157,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Modules\Support\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        nickurt\Akismet\ServiceProvider::class,
     ],
 
     /*
@@ -211,5 +212,6 @@ return [
         'HTML'      => Illuminate\Html\HtmlFacade::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Image'     => Intervention\Image\Facades\Image::class,
+        'Akismet'   => nickurt\Akismet\Facade::class,
     ],
 ];
