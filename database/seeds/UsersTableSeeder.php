@@ -27,17 +27,17 @@ class UsersTableSeeder extends Seeder
         $administrator->assignRole(Role::ROLE_ADMIN);
 
         $creditUser = User::create([
-            'username' => bcrypt('credit'),
+            'username' => bcrypt(str_random()),
             'email'    => 'credit@site.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt(str_random()),
             'gender'   => 'other',
             'status'   => User::STATUS_APPROVED,
         ]);
 
         $debitUser = User::create([
-            'username' => bcrypt('debit'),
+            'username' => bcrypt(str_random()),
             'email'    => 'debit@site.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt(str_random()),
             'gender'   => 'other',
             'status'   => User::STATUS_APPROVED,
         ]);
