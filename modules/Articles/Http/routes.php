@@ -11,6 +11,7 @@ Route::group(['as' => 'front.'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
 
+        Route::get('article/{article}#comments', ['as' => 'article.comments', 'uses' => 'ArticleController@show']);
         Route::get('article/{article}/money', ['as' => 'article.money', 'uses' => 'ArticleController@money']);
         Route::get('article/{article}/preview', ['as' => 'article.preview', 'uses' => 'ArticleController@preview']);
         Route::put('article/{article}/publish', ['as' => 'article.publish', 'uses' => 'ArticleController@publish']);

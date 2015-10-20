@@ -20,6 +20,9 @@ class CommentController extends FrontController
             $comment->makeChildOf($rootComment);
         }
 
-        return $this->successRedirect(trans('comments::comment.message.posted'));
+        return $this->successRedirect(
+            trans('comments::comment.message.posted'),
+            route('front.article.show', $article->id) . '#comment_' . $comment->id
+        );
     }
 }

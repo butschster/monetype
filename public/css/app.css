@@ -10172,6 +10172,10 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
 .articleItem .articleItem--meta .articleItem--meta-items li .fa {
   color: #bbb;
 }
+.articleItem .articleItem--meta .articleItem--meta-items .articleItem--meta-coost {
+  background: whitesmoke;
+  padding: 5px;
+}
 .articleItem .articleItem--title {
   font-weight: 500;
 }
