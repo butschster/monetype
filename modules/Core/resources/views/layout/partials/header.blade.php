@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
+    <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {!! HTML::image('img/logo.gif', trans('app.title'), ['style' => 'height: 40px']) !!}
