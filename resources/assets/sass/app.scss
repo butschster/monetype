@@ -1,27 +1,35 @@
 /*@import "variables";*/
-html {
-  overflow-y: scroll; }
 
-.navbar-brand {
-  float: none; }
+html {
+  overflow-y: scroll;
+}
+
+.navbar-brand {float:none;}
 
 .navbar-brand img {
   height: 40px;
-  margin-top: -10px; }
+  margin-top: -10px;
+}
 
-@media screen and (min-width: 768px) {
+
+@media screen and (min-width:768px){
   .navbar-brand-centered {
     position: absolute;
     left: 50%;
     display: block;
     width: 160px;
-    text-align: center; }
-  .navbar > .container .navbar-brand-centered,
-  .navbar > .container-fluid .navbar-brand-centered {
-    margin-left: -80px; } }
+    text-align: center;
+  }
+  .navbar>.container .navbar-brand-centered,
+  .navbar>.container-fluid .navbar-brand-centered {
+    margin-left: -80px;
+  }
+}
+
 
 .navbar .container {
-  width: 100%; }
+  width: 100%;
+}
 
 .dropdown-menu:before {
   position: absolute;
@@ -32,7 +40,8 @@ html {
   border-bottom: 7px solid #ccc;
   border-left: 7px solid transparent;
   border-bottom-color: rgba(0, 0, 0, 0.2);
-  content: ''; }
+  content: '';
+}
 
 .dropdown-menu:after {
   position: absolute;
@@ -42,7 +51,10 @@ html {
   border-right: 6px solid transparent;
   border-bottom: 6px solid #ffffff;
   border-left: 6px solid transparent;
-  content: ''; }
+  content: '';
+}
+
+
 
 /*
 .navbar-brand {
@@ -106,5 +118,3 @@ html {
   }
 }
 */
-
-/*# sourceMappingURL=app.css.map */
