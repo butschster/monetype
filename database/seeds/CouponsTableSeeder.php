@@ -30,7 +30,7 @@ class CouponsTableSeeder extends Seeder
         ]);
 
         for ($i = 20; $i > 0; $i--) {
-            Bus::dispatch(new CreateCoupon(User::getCreditUser(), 100, 'register'));
+            Bus::dispatch(new CreateCoupon(User::getCreditUser(), 10, 'register'));
         }
 
         if ( ! App::environment('local')) {
