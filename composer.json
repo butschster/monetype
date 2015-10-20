@@ -18,7 +18,8 @@
         "filp/whoops": "^1.1",
         "endroid/qrcode": "^1.5",
         "nickurt/laravel-akismet": "^0.0.1",
-        "idma/robokassa": "dev-master"
+        "idma/robokassa": "dev-master",
+        "baum/baum": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

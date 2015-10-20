@@ -2,16 +2,17 @@
 
 namespace Modules\Comments\Model;
 
+use Baum\Node;
 use Carbon\Carbon;
 use Modules\Users\Model\User;
 use Modules\Support\Helpers\Date;
 use Modules\Articles\Model\Article;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer        $id
+ * @property string         $title
  * @property string         $text
  * @property integer        $author_id
  * @property integer        $article_id
@@ -19,13 +20,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string         $created
  * @property string         $status
  *
+ * @property integer        $parent_id
+ * @property integer        $lft
+ * @property integer        $rgt
+ * @property integer        $depth
+ *
  * @property Article        $article
  *
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
  */
-class Comment extends Model
+class Comment extends Node
 {
 
     use SoftDeletes;
@@ -40,6 +46,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
+        'title',
         'text',
     ];
 
