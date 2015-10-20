@@ -9,6 +9,7 @@
 	</div>
 	<div class="login-content">
 		{!! Form::open(['url' => 'password/reset', 'class' => 'form']) !!}
+		{!! Form::hidden('token', $token) !!}
 		<fieldset>
 			<h2 class="m-t-n">@lang('users::user.title.reset_password')</h2>
 

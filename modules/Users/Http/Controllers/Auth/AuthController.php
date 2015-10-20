@@ -25,7 +25,10 @@ class AuthController extends FrontController
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectTo = '/';
+    /**
+     * @var string
+     */
+    public $redirectPath = '/';
 
 
     /**
