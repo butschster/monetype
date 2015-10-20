@@ -24,14 +24,13 @@
                 <div class="comingSoon--right">
                     <div class="comingSoon--register">
                         @if(auth()->check())
-                            <div class="well">
-                                <div class="headline">
-                                    <h3>@lang('core::comingsoon.thankRegistration')</h3>
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <h3 class="m-t-none">@lang('core::comingsoon.thankRegistration')</h3>
+                                    <hr class="panel-wide" />
+                                    <p>@lang('core::comingsoon.startBalance', ['balance' => $currentUser->balance])</p>
+                                    <p>@lang('core::comingsoon.startNotification')</p>
                                 </div>
-
-                                <hr />
-                                <p>@lang('core::comingsoon.startBalance', ['balance' => $currentUser->balance])</p>
-                                <p>@lang('core::comingsoon.startNotification')</p>
                             </div>
                         @else
                             @include('users::auth.partials.registerForm')
