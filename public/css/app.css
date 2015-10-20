@@ -10486,20 +10486,12 @@ a.social.fa-google-plus:hover {
   background: #d64937 !important;
   color: #fff !important;
 }
-a.social.fa-linkedin:hover {
-  background: #0073b2 !important;
-  color: #fff !important;
-}
-a.social.fa-flickr:hover {
-  background: #ff0084 !important;
-  color: #fff !important;
-}
-a.social.fa-pinterest:hover {
-  background: #cb2027 !important;
-  color: #fff !important;
-}
 a.social.fa-rss:hover {
   background: #e0812a !important;
+  color: #fff !important;
+}
+a.social.fa-vk:hover {
+  background: #4e729a !important;
   color: #fff !important;
 }
 a.social.default:hover {
