@@ -6,6 +6,9 @@ Route::group(['as' => 'front.'], function () {
     Route::get('articles', ['as' => 'articles.index', 'uses' => 'ArticleController@index']);
     Route::get('articles/tag/{tag}', ['as' => 'articles.byTag', 'uses' => 'ArticleController@indexByTag']);
 
+
+    Route::get('article/create', ['as' => 'article.create', 'uses' => 'ArticleController@create']);
+
     Route::get('article/{article}#comments', ['as' => 'article.comments', 'uses' => 'ArticleController@show']);
     Route::get('article/{article}', ['as' => 'article.show', 'uses' => 'ArticleController@show']);
 
@@ -33,7 +36,7 @@ Route::group(['as' => 'front.'], function () {
 
         Route::resource('article', 'ArticleController', [
             'except' => [
-                'index', 'destroy', 'store', 'update', 'show'
+                'index', 'destroy', 'store', 'update', 'show', 'create'
             ],
         ]);
 
