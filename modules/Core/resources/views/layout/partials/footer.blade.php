@@ -1,12 +1,15 @@
-@if(config('app.debug'))
+<aside id="footer-widgets">
     <div class="container">
-        <div class="panel panel-primary shadow1">
-            <div class="panel-heading" role="button" data-toggle="collapse" href="#collapseProfile" aria-expanded="false" aria-controls="collapseProfile">
-                <span class="panel-title" data-icon="area-chart">Profiler</span>
-            </div>
-            <div class="collapse" id="collapseProfile">
-                @include('core::layout.partials.profiler')
-            </div>
+        <div class="socials text-right">
+            <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
+            <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
+            <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
         </div>
     </div>
+</aside>
+<footer id="footer">
+    <p>© {{ date('Y') }} MoneType, inc. All rights reserved.</p>
+</footer>
+@if(config('app.debug'))
+@include('core::layout.partials.profiler')
 @endif

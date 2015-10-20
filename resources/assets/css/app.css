@@ -9242,9 +9242,7 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
 .commentList {
   background: whitesmoke;
   padding: 10px 0;
-  border: 10px solid #fff;
-  border-left-width: 0;
-  border-right-width: 0;
+  border-top: 10px solid #fff;
 }
 .commentItem {
   padding: 10px 0 0;
@@ -9304,6 +9302,46 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
 .commentForm--title a:focus {
   text-decoration: none;
   border-bottom-style: solid;
+}
+#footer {
+  background-color: #333;
+  color: #ccc;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 12px;
+  border-top: solid 1px #555;
+}
+#footer a {
+  color: #0099da;
+  text-decoration: none;
+}
+#footer a:hover {
+  color: #0099da;
+}
+#footer p {
+  margin: 0;
+  padding: 0;
+  line-height: 100%;
+}
+#footer-widgets {
+  background-color: #444;
+  color: #eee;
+  padding: 20px 0;
+  border-top: solid 1px #ccc;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+}
+#footer-widgets .footer-widget-title {
+  font-family: 'Lato', sans-serif;
+  font-size: 1.6em;
+  color: #0eb7ff;
+}
+#footer-widgets a {
+  color: #eee;
+  text-decoration: none;
+  transition: all .25s ease;
+}
+#footer-widgets a:hover {
+  color: #0eb7ff;
 }
 .navbar-nav > li {
   border-right: 1px solid #f1f1f1;
@@ -9860,16 +9898,29 @@ a.stat-cell:hover {
 .well ul:last-child {
   margin-bottom: 0;
 }
+#profiler {
+  border-top: solid 1px #555;
+}
 #profiler table.profiler {
   width: 100%;
   margin: 0 auto;
   border-collapse: collapse;
 }
+#profiler table.profiler thead[data-toggle="collapse"] {
+  cursor: n-resize;
+}
+#profiler table.profiler thead th,
+#profiler table.profiler thead td {
+  border: solid 1px #555;
+}
+#profiler table.profiler tbody th,
+#profiler table.profiler tbody td {
+  border: solid 1px #ccc;
+}
 #profiler table.profiler th,
 #profiler table.profiler td {
   padding: 0 0.4em;
   background: #fff;
-  border: solid 1px #999;
   border-width: 1px 0;
   text-align: left;
   font-weight: normal;

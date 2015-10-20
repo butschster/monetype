@@ -1,13 +1,30 @@
 #profiler {
+  border-top: solid 1px #555;
+
   table.profiler {
     width: 100%;
     margin: 0 auto;
     border-collapse: collapse;
 
+    thead {
+      &[data-toggle="collapse"] {
+        cursor: n-resize;
+      }
+
+      th, td {
+        border: solid 1px #555;
+      }
+    }
+
+    tbody {
+      th, td {
+        border: solid 1px #ccc;
+      }
+    }
+
     th, td {
       padding: 0 0.4em;
       background: #fff;
-      border: solid 1px #999;
       border-width: 1px 0;
       text-align: left;
       font-weight: normal;
