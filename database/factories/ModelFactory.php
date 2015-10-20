@@ -48,7 +48,8 @@ $factory->defineAs(Comment::class, 'comment', function (Faker\Generator $faker) 
     $users = User::where('id', '>', 3)->get()->lists('id', 'id')->all();
 
     return [
-        'text' => $faker->sentence(rand(1, 10)),
+        'title' => $faker->sentence,
+        'text' => $faker->sentences(rand(1, 3), true),
         'author_id' => $faker->randomElement($users)
     ];
 });
