@@ -28,7 +28,7 @@
                             <p>@lang('core::comingsoon.startNotification')</p>
                         </div>
                     @else
-                        @include('core::comingsoon.registerForm')
+                        @include('users::auth.partials.registerForm')
                     @endif
                 </div>
             </div>

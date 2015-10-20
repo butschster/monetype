@@ -3223,26 +3223,26 @@ fieldset[disabled] .btn-success.active {
 }
 .btn-info {
   color: #fff;
-  background-color: #3268a6;
-  border-color: #2c5c92;
+  background-color: #4795de;
+  border-color: #3189da;
 }
 .btn-info:focus,
 .btn-info.focus {
   color: #fff;
-  background-color: #264f7f;
-  border-color: #0f1e30;
+  background-color: #257ccd;
+  border-color: #154877;
 }
 .btn-info:hover {
   color: #fff;
-  background-color: #264f7f;
-  border-color: #1e3e63;
+  background-color: #257ccd;
+  border-color: #1f6aaf;
 }
 .btn-info:active,
 .btn-info.active,
 .open > .dropdown-toggle.btn-info {
   color: #fff;
-  background-color: #264f7f;
-  border-color: #1e3e63;
+  background-color: #257ccd;
+  border-color: #1f6aaf;
 }
 .btn-info:active:hover,
 .btn-info.active:hover,
@@ -3254,8 +3254,8 @@ fieldset[disabled] .btn-success.active {
 .btn-info.active.focus,
 .open > .dropdown-toggle.btn-info.focus {
   color: #fff;
-  background-color: #1e3e63;
-  border-color: #0f1e30;
+  background-color: #1f6aaf;
+  border-color: #154877;
 }
 .btn-info:active,
 .btn-info.active,
@@ -3280,11 +3280,11 @@ fieldset[disabled] .btn-info:active,
 .btn-info.disabled.active,
 .btn-info[disabled].active,
 fieldset[disabled] .btn-info.active {
-  background-color: #3268a6;
-  border-color: #2c5c92;
+  background-color: #4795de;
+  border-color: #3189da;
 }
 .btn-info .badge {
-  color: #3268a6;
+  color: #4795de;
   background-color: #fff;
 }
 .btn-warning {
@@ -4889,11 +4889,11 @@ a.label:focus {
   background-color: #008529;
 }
 .label-info {
-  background-color: #3268a6;
+  background-color: #4795de;
 }
 .label-info[href]:hover,
 .label-info[href]:focus {
-  background-color: #264f7f;
+  background-color: #257ccd;
 }
 .label-warning {
   background-color: #ffad1c;
@@ -5063,12 +5063,12 @@ a.thumbnail.active {
   color: #e6e6e6;
 }
 .alert-info {
-  background-color: #264f7f;
-  border-color: #1f4167;
+  background-color: #4795de;
+  border-color: #3189da;
   color: #fff;
 }
 .alert-info hr {
-  border-top-color: #193454;
+  border-top-color: #257ccd;
 }
 .alert-info .alert-link {
   color: #e6e6e6;
@@ -5148,7 +5148,7 @@ a.thumbnail.active {
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
 .progress-bar-info {
-  background-color: #3268a6;
+  background-color: #4795de;
 }
 .progress-striped .progress-bar-info {
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -9357,44 +9357,14 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
   border-radius: 25px;
   margin: -5px 5px -5px 0;
 }
-.form {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e4e5e7;
-  border-radius: 0;
-}
-.form header {
-  display: block;
-  padding: 20px 30px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(248, 248, 248, 0.9);
-  color: #232323;
-}
-.form header h3 {
-  margin-bottom: 0;
-  margin-top: 0;
-  font-weight: 100;
-}
-.form .g-recaptcha {
+form.panel .g-recaptcha {
   height: 78px;
 }
-.form fieldset {
-  display: block;
-  padding: 25px 30px 5px;
-  border: none;
-}
-.form footer {
-  display: block;
-  padding: 15px 30px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(248, 248, 248, 0.9);
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form .input-icon-append {
+form.panel .input-icon-append {
   position: relative;
   display: block;
 }
-.form .icon-append {
+form.panel .icon-append {
   color: #ccc;
   position: absolute;
   top: 5px;
@@ -9404,7 +9374,7 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
   line-height: 25px;
   text-align: center;
 }
-.form .icon-append {
+form.panel .icon-append {
   right: 5px;
   padding-left: 3px;
   border-left-width: 1px;
@@ -9624,24 +9594,6 @@ a.stat-cell:hover {
   margin-bottom: 30px;
   position: relative;
 }
-.panel-heading {
-  background: #fafafa;
-  border-bottom: 2px solid #ececec;
-  padding-bottom: 9px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 11px;
-  position: relative;
-}
-.panel-heading .nav-tabs {
-  border-bottom-color: transparent;
-  bottom: -2px;
-  position: absolute;
-  right: 9px;
-}
-.panel-heading .nav-tabs > li > a {
-  border-bottom-color: transparent;
-}
 .panel-body {
   background: #fff;
   margin: 0;
@@ -9678,140 +9630,6 @@ a.stat-cell:hover {
   display: inline-block;
   font-size: 14px;
   margin-right: 7px;
-}
-.panel-heading-controls {
-  margin-top: -2px;
-}
-.panel-heading-controls:after:before,
-.panel-heading-controls:after:after {
-  content: " ";
-  display: table;
-}
-.panel-heading-controls:after:after {
-  clear: both;
-}
-.panel-heading-controls:after:before,
-.panel-heading-controls:after:after {
-  content: " ";
-  display: table;
-}
-.panel-heading-controls:after:after {
-  clear: both;
-}
-.panel-heading-controls > * {
-  margin-bottom: 0;
-}
-.panel-heading-controls > * + * {
-  margin-left: 4px;
-}
-.panel-heading-controls > .btn,
-.panel-heading-controls > .btn-group {
-  margin-top: -4px;
-}
-.panel-heading-controls > .btn.btn-sm,
-.panel-heading-controls > .btn-group.btn-group-sm {
-  margin-top: -1px;
-}
-.panel-heading-controls > .btn.btn-xs,
-.panel-heading-controls > .btn-group.btn-group-xs {
-  margin-top: 0;
-}
-.panel-heading-controls > .progress {
-  height: 6px;
-  margin-top: 8px;
-}
-.panel-heading-controls > .label,
-.panel-heading-controls .badge {
-  margin-bottom: -10px;
-  margin-top: 1px;
-}
-.panel-heading-controls > .pagination {
-  margin: -5px 0 0 0;
-}
-.panel-heading-controls > .pagination.pagination-sm {
-  margin-top: -3px;
-}
-.panel-heading-controls > .pagination.pagination-xs {
-  margin-top: -1px;
-}
-.panel-heading-controls > .pager {
-  margin: -4px 0 0 0;
-}
-.panel-heading-controls > .pager.pager-xs {
-  margin: -1px 0 0 0;
-}
-.panel-heading-controls > .form-control,
-.panel-heading-controls .input-group {
-  margin-top: -2px;
-}
-.panel-heading-controls > .form-control,
-.panel-heading-controls .input-group .form-control,
-.panel-heading-controls .input-group .btn {
-  height: 26px;
-  padding: 3px 8px;
-}
-.panel-heading-controls > .panel-heading-icon {
-  font-size: 14px;
-  margin-top: 1px;
-}
-.panel-heading-controls > .switcher {
-  margin-top: 1px;
-}
-.panel-heading-text {
-  display: inline-block;
-  line-height: 20px;
-  font-size: 12px;
-  margin-top: 1px;
-}
-.panel-dark .panel-heading-controls .btn {
-  border-color: transparent;
-}
-.panel-dark .panel-heading-controls .btn.btn-outline {
-  border-width: 1px;
-  border-color: #fff;
-  border-color: rgba(255, 255, 255, 0.12);
-}
-.panel-dark .panel-heading-controls .btn.btn-outline:hover {
-  border-color: transparent !important;
-}
-.panel-dark .panel-heading-controls > .form-control {
-  border-color: transparent !important;
-}
-.panel-dark .panel-heading-controls > .pagination li a,
-.panel-dark .panel-heading-controls > .pager li a,
-.panel-dark .panel-heading-controls > .pagination li span,
-.panel-dark .panel-heading-controls > .pager li span {
-  border-color: #fff;
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  color: rgba(255, 255, 255, 0.7);
-}
-.panel-dark .panel-heading-controls > .pagination li a:hover,
-.panel-dark .panel-heading-controls > .pager li a:hover {
-  color: #fff;
-  border-color: #fff;
-}
-.panel-dark .panel-heading-controls > .pagination li.active a,
-.panel-dark .panel-heading-controls > .pager li.active a,
-.panel-dark .panel-heading-controls > .pagination li.active a:hover,
-.panel-dark .panel-heading-controls > .pager li.active a:hover,
-.panel-dark .panel-heading-controls > .pagination li.active span,
-.panel-dark .panel-heading-controls > .pager li.active span {
-  background: #fff;
-  border-color: #fff;
-}
-.panel-dark .panel-heading-controls > .pagination li.disabled a,
-.panel-dark .panel-heading-controls > .pager li.disabled a,
-.panel-dark .panel-heading-controls > .pagination li.disabled span,
-.panel-dark .panel-heading-controls > .pager li.disabled span {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.3) !important;
-}
-.panel-dark .panel-heading-controls .input-group .form-control {
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  border-right-color: #d5d5d5;
 }
 .panel-transparent {
   background: none !important;
@@ -10053,6 +9871,9 @@ a.stat-cell:hover {
 .login-container .login-header .brand {
   padding: 0;
   font-size: 28px;
+}
+.login-container .login-content {
+  border: 15px solid #f6f6f6;
 }
 .error-container {
   height: 400px;

@@ -46,6 +46,10 @@ class AuthServiceProvider extends ServiceProvider
                 });
             }
         }
+
+        view()->composer('users::auth.partials.registerForm', function($view) {
+            $view->with('couponsCount', Coupon::onlyForRegister()->count());
+        });
     }
 
 

@@ -33,6 +33,7 @@ return [
         'reset_password'  => 'Сбросить',
         'register'        => 'Регистрация',
         'login'           => 'Войти',
+        'giveMoney'       => 'Получить деньги'
     ],
     'message' => [
         'not_found' => 'Пользователь не найден',
