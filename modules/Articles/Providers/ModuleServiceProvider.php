@@ -4,6 +4,7 @@ namespace Modules\Articles\Providers;
 
 use Validator;
 use Modules\Users\Model\User;
+use Modules\Users\Model\Coupon;
 use Modules\Articles\Model\Article;
 use Modules\Articles\Policies\ArticlePolicy;
 use Modules\Articles\Observers\ArticleObserver;
@@ -60,6 +61,12 @@ class ModuleServiceProvider extends AuthServiceProvider
 
         Validator::replacer('mintags', function($message, $attribute, $rule, $parameters) {
             return str_replace(':size', $parameters[0], $message);
+        });
+
+
+
+        view()->composer('articles::article.partials.buy', function($view) {
+            $view->with('couponsCount', Coupon::onlyForRegister()->count());
         });
     }
 
