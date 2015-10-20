@@ -56,20 +56,32 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
-        $this->checkPermissions('view', $article);
-
-        try {
-            $isPurchased = Bus::dispatch(new PurchaseArticle($article, $this->user));
-        } catch (NotEnoughMoneyException $e) {
-            $isPurchased = false;
-        }
-
         return $this->setLayout('article.show', [
             'article'     => $article,
-            'isPurchased' => $isPurchased,
+            'isPurchased' => $article->checkPurchaseStatus($this->user),
             'author'      => $article->author,
             'tags'        => $article->tags,
         ]);
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function buy(ArticleRepository $articleRepository, $articleId)
+    {
+        $article = $articleRepository->findOrFail($articleId);
+
+        try {
+            Bus::dispatch(new PurchaseArticle($article, $this->user));
+        } catch (NotEnoughMoneyException $e) {
+            return $this->errorRedirect(trans('articles::article.message.not_enough_money'));
+        }
+
+        return back();
     }
 
 

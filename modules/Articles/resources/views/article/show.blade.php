@@ -12,8 +12,16 @@
             @include('articles::article.partials.categories')
             @if(!$isPurchased)
                 {!! $article->text_intro !!}
-                <p>...</p>
-                <h3 class="alert alert-warning">@lang('articles::article.message.not_enough_money')</h3>
+
+                <h4 class="alert alert-info m-b-none">@lang('articles::article.message.need_to_buy', ['amount' => $article->cost])</h4>
+                <div class="well well-sm">
+                    {!! Form::open(['route' => ['front.article.buy', $article->id]]) !!}
+                    {!! Form::button(trans('articles::article.button.buy'), [
+                        'type' => 'submit', 'class' => 'btn btn-success', 'data-icon' => 'check'
+                    ]) !!}
+                    {!! Form::close() !!}
+                </div>
+
             @else
                 {!! $article->text !!}
             @endif

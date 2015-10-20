@@ -26,6 +26,7 @@ return [
         'publish' => 'Опубликовать',
         'approve' => 'Одобрить',
         'block'   => 'Заблокировать',
+        'buy'     => 'Оплатить'
     ],
     'status'  => [
         Article::STATUS_DRAFT     => '<span class="label label-default">Черновик</span>',
@@ -40,10 +41,12 @@ return [
         'count_payments' => 'Всего платежей',
     ],
     'message' => [
+        'need_to_buy'               => 'Вам необходимо заплатить :amount <i class="fa fa-rub"></i> для прочтения статьи.',
         'not_enough_money'          => 'У вас недостаточно денег для прочтения данной статьи',
         'can_publish_only_draft'    => 'Опубликовать можно только черновик',
         'can_approve_ony_published' => 'Проверить можно только опубликованную статью',
         'empty_list'                => 'На данный момент не написано ни одной статьи',
+        'bought'                    => '',
         'created'                   => 'Статья добавлена',
         'updated'                   => 'Статья сохранена',
         'published'                 => 'Статья опубликована',

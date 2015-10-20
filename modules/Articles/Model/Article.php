@@ -187,6 +187,29 @@ class Article extends Model implements Buyable
 
 
     /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function checkPurchaseStatus($user)
+    {
+        if ($this->isFree()) {
+            return true;
+        }
+
+        if (( ! $user instanceof User )) {
+            return false;
+        }
+
+        if ($this->authoredBy($user) or $this->isPurchasedByUser($user)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
      * @param $author
      */
     public function assignAuthor($author)
