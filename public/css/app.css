@@ -5479,8 +5479,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: #fff;
+  border-color: #eeeeee;
 }
 .navbar-default .navbar-brand {
   color: #777;
@@ -5505,7 +5505,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #555;
-  background-color: #e7e7e7;
+  background-color: #eeeeee;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -5525,12 +5525,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
-  border-color: #e7e7e7;
+  border-color: #eeeeee;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #e7e7e7;
+  background-color: #eeeeee;
   color: #555;
 }
 @media (max-width: 767px) {
@@ -5546,7 +5546,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #555;
-    background-color: #e7e7e7;
+    background-color: #eeeeee;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -5711,8 +5711,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   line-height: 1.42857143;
   text-decoration: none;
   color: #003970;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: whitesmoke;
+  border: 1px solid #fff;
   margin-left: -1px;
 }
 .pagination > li:first-child > a,
@@ -5755,7 +5755,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > .disabled > a:focus {
   color: #777777;
   background-color: #fff;
-  border-color: #ddd;
+  border-color: #fff;
   cursor: not-allowed;
 }
 .pagination-lg > li > a,
@@ -5803,8 +5803,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pager li > span {
   display: inline-block;
   padding: 5px 14px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: whitesmoke;
+  border: 1px solid #fff;
   border-radius: 15px;
 }
 .pager li > a:hover,
@@ -5825,7 +5825,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pager .disabled > a:focus,
 .pager .disabled > span {
   color: #777777;
-  background-color: #fff;
+  background-color: whitesmoke;
   cursor: not-allowed;
 }
 .label {
@@ -10129,9 +10129,15 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
   -webkit-transform: skew(8deg) rotate(3deg);
   transform: skew(8deg) rotate(3deg);
 }
+.articleList {
+  margin-top: 40px;
+}
 .articleItem {
   padding: 40px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.articleItem:first-child {
+  padding-top: 0;
 }
 .articleItem:last-child {
   border-bottom-width: 0;
@@ -10223,15 +10229,63 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
   border-right-width: 0;
 }
 .commentItem {
-  padding: 20px 0;
-  border-bottom: 1px solid #e6e6e6;
+  padding: 10px 0 0;
 }
 .commentItem:last-child {
   border-bottom-width: 0;
 }
+.commentItem .commentItem--body {
+  background: #fff;
+  padding: 15px;
+  position: relative;
+}
+.commentItem .commentItem--body:after {
+  bottom: 100%;
+  left: 45px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #ffffff;
+  border-width: 10px;
+  margin-left: -10px;
+}
 .commentItem .commentItem--content {
-  margin: 20px 0;
-  font-size: 17px;
+  margin: 10px 0 0;
+}
+.commentItem .commentItem--content p:last-child {
+  margin-bottom: 0;
+}
+.commentItem .commentItem--replies {
+  margin: 20px 0 0 40px;
+}
+.commentItem .commentItem--reply {
+  font-size: 12px;
+  color: #2ecc71;
+  border-bottom: 1px dashed #2ecc71;
+}
+.commentItem .commentItem--reply:hover,
+.commentItem .commentItem--reply:active,
+.commentItem .commentItem--reply:focus {
+  text-decoration: none;
+  border-bottom-style: solid;
+}
+.commentForm {
+  padding: 15px;
+  background: #fff;
+}
+.commentForm--title a {
+  color: #003970;
+  border-bottom: 1px dashed #003970;
+}
+.commentForm--title a:hover,
+.commentForm--title a:active,
+.commentForm--title a:focus {
+  text-decoration: none;
+  border-bottom-style: solid;
 }
 .navbar-nav > li {
   border-right: 1px solid #f1f1f1;

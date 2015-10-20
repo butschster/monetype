@@ -11,15 +11,71 @@
 }
 
 .commentItem {
-  padding: 20px 0;
-  border-bottom: 1px solid #e6e6e6;
+  padding: 10px 0 0;
 
   &:last-child {
     border-bottom-width: 0;
   }
 
-  .commentItem--content {
-    margin: 20px 0;
-    font-size: 17px;
+  .commentItem--body {
+    background: #fff;
+    padding: 15px;
+    position: relative;
+
+    &:after {
+      bottom: 100%;
+      left: 45px;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0);
+      border-bottom-color: #ffffff;
+      border-width: 10px;
+      margin-left: -10px;
+    }
   }
+
+  .commentItem--content {
+    margin: 10px 0 0;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .commentItem--replies {
+    margin: 20px 0 0 40px;
+  }
+
+  .commentItem--reply {
+    font-size: 12px;
+    color: @brand-success;
+    border-bottom: 1px dashed @brand-success;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      border-bottom-style: solid;
+    }
+  }
+}
+
+.commentForm {
+  padding: 15px;
+  background: #fff;
+}
+
+.commentForm--title {
+  a {
+    color: @brand-primary;
+    border-bottom: 1px dashed @brand-primary;
+
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      border-bottom-style: solid;
+    }
+  }
+
 }

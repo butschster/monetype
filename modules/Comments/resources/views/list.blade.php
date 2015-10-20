@@ -1,20 +1,14 @@
 <div class="commentList">
+    @if($article->comments->count() > 0)
     <div class="container">
-        <h2 class="commentList--title">@lang('comments::comment.title.list', ['size' => $article->comments->count()])</h2>
-        @foreach($article->comments as $comment)
-        <div class="media commentItem">
-            <div class="media-left user-avatar">
-                {!! $comment->author->getAvatar(35, ['class' => 'media-object img-circle']) !!}
-            </div>
-            <div class="media-body comments-itself">
-                {!! $comment->author->getProfileLink() !!}<br />
-                <small class="text-muted">{{ $comment->created }}</small>
-            </div>
+        <h2 class="commentList--title" id="comments">@lang('comments::comment.title.list', ['size' => $article->comments->count()])</h2>
 
-            <div class="commentItem--content clearfix">
-                {!! $comment->text !!}
-            </div>
-        </div>
-        @endforeach
+        @include('comments::partials.list', ['comments' => $article->comments()->with('author')->get()->toHierarchy()])
+    </div>
+    <hr />
+    @endif
+
+    <div class="container">
+        @include('comments::partials.form', ['article' => $article])
     </div>
 </div>
