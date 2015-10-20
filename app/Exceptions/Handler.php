@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Response;
 use KodiCMS\API\Http\Response as APIResponse;
 use Modules\Core\Http\Controllers\ErrorController;
 use KodiCMS\API\Exceptions\Exception as APIException;
@@ -123,7 +124,13 @@ class Handler extends ExceptionHandler
                 $action = 'errorDefault';
             }
 
-            return $controller->callAction($action, [$e]);
+            $response = $controller->callAction($action, [$e]);
+
+            if ( ! ( $response instanceof Response )) {
+                $response = new Response($response);
+            }
+
+            return $response;
         } catch (Exception $ex) {
             return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
         }

@@ -10,10 +10,12 @@ class ErrorController extends FrontController
 
     /**
      * @param \Exception|null $exception
+     *
+     * @return \View
      */
     public function error500($exception = null)
     {
-        $this->setLayout('errors.code', [
+        return $this->setLayout('errors.code', [
             'error'   => $exception,
             'code'    => $this->getCode($exception),
             'message' => $this->getMessage($exception),
@@ -23,10 +25,12 @@ class ErrorController extends FrontController
 
     /**
      * @param \Exception|null $exception
+     *
+     * @return \View
      */
     public function error403($exception = null)
     {
-        $this->setLayout('errors.code', [
+        return $this->setLayout('errors.code', [
             'error'   => $exception,
             'code'    => $this->getCode($exception),
             'message' => trans('core::core.message.gate_not_allowed'),
@@ -36,10 +40,12 @@ class ErrorController extends FrontController
 
     /**
      * @param \Exception|null $exception
+     *
+     * @return \View
      */
     public function error404($exception = null)
     {
-        $this->setLayout('errors.code', [
+        return $this->setLayout('errors.code', [
             'error'   => $exception,
             'code'    => $this->getCode($exception),
             'message' => trans('core::core.message.page_not_found'),
@@ -48,11 +54,13 @@ class ErrorController extends FrontController
 
 
     /**
-     * @param null $exception
+     * @param \Exception|null $exception
+     *
+     * @return \View
      */
     public function errorDefault($exception = null)
     {
-        $this->setLayout('errors.code', [
+        return $this->setLayout('errors.code', [
             'code'    => 500,
             'error'   => $exception,
             'message' => $this->getMessage($exception),
