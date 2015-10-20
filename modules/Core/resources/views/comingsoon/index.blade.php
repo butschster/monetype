@@ -53,6 +53,6 @@
     <div class="comingSoon--border"></div>
 
     <p class="copyright-space">
-        {{ date('Y') }} © MoneType. ALL Rights Reserved.
+        @lang('core::core.message.copyright')
     </p>
 @stop

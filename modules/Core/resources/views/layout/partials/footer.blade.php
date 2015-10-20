@@ -55,7 +55,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
-                    <span class="copy-text">© {{ date('Y') }} MoneType, inc. All rights reserved.</span>
+                    <span class="copy-text">@lang('core::core.message.copyright')</span>
                 </div>
                 <div class="col-xs-6">
                     <div class="socials text-right">
