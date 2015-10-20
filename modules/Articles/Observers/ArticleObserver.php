@@ -16,10 +16,9 @@ class ArticleObserver
     {
         if (is_null($article->author_id)) {
             $article->assignAuthor(auth()->user());
-
-            $article->user_ip = Request::ip();
         }
 
+        $article->user_ip = Request::ip();
         $article->status = Article::STATUS_DRAFT;
     }
 

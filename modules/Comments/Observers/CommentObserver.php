@@ -27,12 +27,16 @@ class CommentObserver
             }
         }
 
+        if (is_null($comment->author_id)) {
+            $comment->assignAuthor(auth()->user());
+        }
+
         $parser = new Parsedown;
 
         $comment->user_ip   = Request::ip();
         $comment->text      = $parser->text($comment->text);
 
-        $comment->assignAuthor(auth()->user());
+
     }
 
 
