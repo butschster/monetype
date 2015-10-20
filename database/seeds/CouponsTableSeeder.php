@@ -29,6 +29,10 @@ class CouponsTableSeeder extends Seeder
             'title' => 'Регистрационные',
         ]);
 
+        for ($i = 20; $i > 0; $i--) {
+            Bus::dispatch(new CreateCoupon(User::getCreditUser(), 100, 'register'));
+        }
+
         if ( ! App::environment('local')) {
             return;
         }
@@ -40,9 +44,5 @@ class CouponsTableSeeder extends Seeder
         ])->take(20)->orderByRaw('RAND()')->get()->each(function (User $user) {
             Bus::dispatch(new CreateCoupon($user, 10, 'user'));
         });
-
-        for ($i = 20; $i > 0; $i--) {
-            Bus::dispatch(new CreateCoupon(User::find(2), 10, 'register'));
-        }
     }
 }

@@ -42,11 +42,12 @@ class UsersTableSeeder extends Seeder
             'status'   => User::STATUS_APPROVED,
         ]);
 
+        $creditUser->account->update(['balance' => 10000]);
+
         if ( ! App::environment('local')) {
             return;
         }
 
-        $creditUser->account->update(['balance' => 10000]);
         $debitUser->account->update(['balance' => 10000]);
 
         File::cleanDirectory(public_path('avatars'));
