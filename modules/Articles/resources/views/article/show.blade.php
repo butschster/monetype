@@ -37,7 +37,8 @@
 @endsection
 
 @section('footer.content')
-
-    @include('comments::list')
+    @if(!$article->forbid_comment)
+        @include('comments::list')
+    @endif
 </div>
 @endsection

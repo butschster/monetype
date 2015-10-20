@@ -18,7 +18,7 @@
         <i class="fa fa-fw fa-eye"></i> {{ $article->count_payments }}
     </li>
 
-    @if(empty($inner))
+    @if(empty($inner) and !$article->forbid_comment)
         <li>
             @if($article->hasComments())
                 <i class="fa fa-fw fa-comment"></i> {!! link_to_route('front.article.comments', $article->count_comments, $article->id) !!}
