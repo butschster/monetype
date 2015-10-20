@@ -50,6 +50,16 @@ class Comment extends Node
         'text',
     ];
 
+
+    /**
+     * @param $author
+     */
+    public function assignAuthor($author)
+    {
+        $this->author()->associate($author);
+    }
+
+
     /**********************************************************************
      * Mutators
      **********************************************************************/
