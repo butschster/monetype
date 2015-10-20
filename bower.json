@@ -2,7 +2,6 @@
   "name": "Monetype",
   "version": "0.1",
   "dependencies": {
-    "bootstrap": "latest",
     "i18next": "latest",
     "datetimepicker": "latest",
     "fontawesome": "latest",

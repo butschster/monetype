@@ -25,21 +25,21 @@ var paths = {
 elixir(function (mix) {
     mix
         // SaSS
-        //.sass('bootstrap.scss', paths.assetsCss)
-        //.sass('app.scss', paths.assetsCss)
+        .sass('bootstrap.scss', paths.assetsCss)
+        .sass('app.scss', paths.assetsCss)
 
         // Less
-        .less('app.less', paths.assetsCss)
-        .less('coming_soon.less', paths.assetsCss)
+        //.less('app.less', paths.assetsCss)
+        //.less('coming_soon.less', paths.assetsCss)
 
         // CSS
         .styles([
-            //paths.assetsCss + 'bootstrap.css',
+            paths.assetsCss + 'bootstrap.css',
             paths.select2 + "dist/css/select2.css",
             paths.datetimepicker + "jquery.datetimepicker.css",
             paths.jquerytagsinput + "src/jquery.tagsinput.css",
             paths.assetsCss + 'app.css'
-        ], 'public/css/app.css')
+        ], 'public/css/app_new.css')
 
         .styles([
             paths.assetsCss + 'coming_soon.css'
