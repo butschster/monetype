@@ -3,7 +3,7 @@
 return [
 
     'modules' => [
-        'Core', 'Articles', 'Transactions', 'Users', 'Comments'
+        'Core', 'Articles', 'Transactions', 'Users', 'Comments', 'Docs'
     ],
 
     /*
