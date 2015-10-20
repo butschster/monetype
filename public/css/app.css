@@ -10293,7 +10293,6 @@ http://cssdeck.com/labs/different-css3-box-shadows-effects
   background-color: #412e52;
   color: rgba(255, 255, 255, 0.5);
   position: relative;
-  z-index: 200;
 }
 #footer .bottom {
   height: 51px;
