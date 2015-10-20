@@ -1,17 +1,19 @@
 @import "../../../bower_components/bootstrap/less/bootstrap";
 @import "../../../bower_components/fontawesome/less/font-awesome";
+
+@import "variables";
+
 @import "widgets/form";
 @import "widgets/alert";
 @import "widgets/panels";
 
-@import "variables";
+@import "helpers/margins";
 
 @btn-font-weight: 300;
 
 .header-container {
   .header-logo {
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-top: 50px;
   }
 
   text-align: center;
@@ -27,38 +29,16 @@
   content: " ";
   height: 100%;
   position: absolute;
-  background: rgba(65,36,92,0.5);
+  background: rgba(65,36,92,0.6);
 }
 
 .coming-soon {
-  padding: 20px;
-  margin: 100px 0;
+  padding: 40px;
+  margin: 50px 0 100px;
+  background: rgba(0, 0,0, 0.2);
 
   .text {
-	h1, p {
-	  color: #fff;
-	}
-
-	h1 {
-	  font-size: 55px;
-	  font-weight: 100;
-	  line-height: 65px;
-	  margin-bottom: 15px;
-	}
-
-	h2 {
-	  color: #fff;
-	  font-size: 55px;
-	  font-weight: 100;
-	  line-height: 65px;
-	  margin-bottom: 15px;
-	}
-
-	h3 {
-	  color: #fff;
-	  font-size: 30px;
-	  font-weight: 100;
-	}
+	color: #fff;
 
 	p {
 	  font-size: 16px;
@@ -88,8 +68,6 @@
 ------------------------------------*/
 #defaultCountdown {
   width: 100%;
-  margin: 10px 0;
-  text-align: center;
 
   span.countdown_row {
 	overflow: hidden;
@@ -97,27 +75,26 @@
 
   span.countdown-section {
 	margin: 2px;
-	width: 150px;
-	padding: 25px 0;
+	width: 100px;
+	padding: 15px 0;
 	text-align: center;
 	display: inline-block;
-	background: rgba(65,36,92,1);
+	background: @brand-success;
 	box-shadow: 0 0 50px rgba(0, 0, 0, .3);
   }
 
   span.countdown-amount {
 	color: #fff;
 	display: block;
-	font-weight: 200;
-	font-size: 60px !important;
-	line-height: 65px !important;
-	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 30px !important;
+	line-height: 35px !important;
   }
 
   span.countdown-period {
 	color: #fff;
 	display: block;
-	font-weight: 200;
-	font-size: 16px !important;
+	font-weight: 300;
+	font-size: 14px !important;
   }
 }
