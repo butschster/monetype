@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 
 	{!! Assets::group('global', 'layoutScripts') !!}
-	{!! Assets::css() !!}
+	{!! Assets::css(null,'/public/app_new.css') !!}
 	{!! Assets::js() !!}
 	{!! Assets::group('global', 'layoutEvents') !!}
 
