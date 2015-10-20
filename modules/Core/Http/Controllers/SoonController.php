@@ -19,7 +19,7 @@ class SoonController extends FrontController
             'USER_ID'         => Auth::id(),
             'URL'             => $this->request->url(),
             'MESSAGE_ERRORS'  => view()->shared('errors')->getBag('default'),
-            'MESSAGE_SUCCESS' => (array) $this->session->get('success', []),
+            'MESSAGE_SUCCESS' => (array) $this->session->get('success', [])
         ];
 
         Assets::package(['libraries', 'coming_soon', 'backstretch', 'countdown']);

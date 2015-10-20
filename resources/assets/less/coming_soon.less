@@ -1,60 +1,135 @@
 @import "../../../bower_components/bootstrap/less/bootstrap";
 @import "../../../bower_components/fontawesome/less/font-awesome";
-
 @import "variables";
-
 @import "widgets/form";
 @import "widgets/alert";
 @import "widgets/panels";
-
 @import "helpers/margins";
 
-@btn-font-weight: 300;
-
-.header-container {
-  .header-logo {
-	margin-top: 50px;
-  }
-
-  text-align: center;
-}
-.coming-soon-border {
+.comingSoon--border {
   border-top: solid 5px @brand-primary;
 }
 
-.coming-soon-bg-cover:before {
-  top: 0;
-  z-index: -1;
-  width: 100%;
-  content: " ";
-  height: 100%;
-  position: absolute;
-  background: rgba(65,36,92,0.6);
-}
+.comingSoon {
+  .comingSoon--header {
+    .header-logo {
+      margin-top: 50px;
+    }
 
-.coming-soon {
-  padding: 40px;
-  margin: 50px 0 100px;
-  background: rgba(0, 0,0, 0.2);
+    text-align: center;
+  }
 
-  .text {
-	color: #fff;
+  .comingSoon--register {
 
-	p {
-	  font-size: 16px;
-	  font-weight: 400;
-	  line-height: 26px;
-	}
+  }
+
+  .comingSoon--about {
+    color: #fff;
+  }
+
+  .comingSoon--content {
+    padding: 40px;
+    margin: 50px 0 100px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .comingSoon--bg-cover {
+    &:before {
+      top: 0;
+      z-index: -1;
+      width: 100%;
+      content: " ";
+      height: 100%;
+      position: absolute;
+      background: rgba(65, 36, 92, 0.6);
+    }
+  }
+
+  .comingSoon--text {
+    color: #fff;
   }
 }
+
 /* Small devices (tablets, 768px and less) */
-@media (max-width: 768px) {
-  .coming-soon h1 {
-	font-size: 40px;
+@media (min-width: @screen-xs-min) {
+  .comingSoon--right {
+    width: 100%;
   }
 
-  .coming-soon p {
-	font-size: 14px;
+  .comingSoon--left {
+    width: 100%;
+  }
+
+  .comingSoon--about {
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+    }
+  }
+}
+
+@media (min-width: @screen-sm-min) {
+  .comingSoon--right {
+    float: right;
+    width: 70%;
+  }
+
+  .comingSoon--left {
+    float: left;
+    width: 30%;
+  }
+
+  .comingSoon--about {
+    padding-right: 10px;
+  }
+
+  .comingSoon--register {
+    padding-left: 10px;
+  }
+
+  .comingSoon--left.comingSoon--countDown {
+    width: 100%;
+  }
+
+  .comingSoon--about {
+    p {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 20px;
+    }
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .comingSoon--right {
+    float: right;
+    width: 50%;
+  }
+
+  .comingSoon--left {
+    float: left;
+    width: 50%;
+  }
+
+  .comingSoon--about {
+    padding-right: 20px;
+  }
+
+  .comingSoon--register {
+    padding-left: 20px;
+  }
+
+  .comingSoon--left.comingSoon--countDown {
+    width: 50%;
+  }
+
+  .comingSoon--about {
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+    }
   }
 }
 
@@ -66,35 +141,34 @@
 
 /*Countdown
 ------------------------------------*/
-#defaultCountdown {
-  width: 100%;
+.comingSoon--countDown {
 
   span.countdown_row {
-	overflow: hidden;
+    overflow: hidden;
   }
 
   span.countdown-section {
-	margin: 2px;
-	width: 100px;
-	padding: 15px 0;
-	text-align: center;
-	display: inline-block;
-	background: @brand-success;
-	box-shadow: 0 0 50px rgba(0, 0, 0, .3);
+    margin: 2px;
+    width: 100px;
+    padding: 15px 0;
+    text-align: center;
+    display: inline-block;
+    background: @brand-success;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .3);
   }
 
   span.countdown-amount {
-	color: #fff;
-	display: block;
-	font-weight: 400;
-	font-size: 30px !important;
-	line-height: 35px !important;
+    color: #fff;
+    display: block;
+    font-weight: 400;
+    font-size: 30px !important;
+    line-height: 35px !important;
   }
 
   span.countdown-period {
-	color: #fff;
-	display: block;
-	font-weight: 300;
-	font-size: 14px !important;
+    color: #fff;
+    display: block;
+    font-weight: 300;
+    font-size: 14px !important;
   }
 }
