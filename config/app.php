@@ -158,6 +158,7 @@ return [
         Modules\Support\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         nickurt\Akismet\ServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class
     ],
 
     /*
