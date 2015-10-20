@@ -205,6 +205,10 @@ class Article extends Model implements Buyable
             return true;
         }
 
+        if ($user->isAdmin() or $user->isModerator()) {
+            return true;
+        }
+
         return false;
     }
 
