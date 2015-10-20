@@ -1,6 +1,7 @@
 <aside id="footer-widgets">
     <div class="container">
         <div class="socials text-right">
+            <a href="#" class="rounded-icon social fa fa-vk"><!-- vkontakte --></a>
             <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
             <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
             <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
