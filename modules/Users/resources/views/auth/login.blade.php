@@ -8,7 +8,7 @@
 		</div>
 	</div>
 	<div class="login-content">
-		{!! Form::open(['url' => 'auth/login', 'class' => 'form']) !!}
+		{!! Form::open(['url' => 'auth/login', 'class' => 'panel m-b-none']) !!}
 
 			@if (count($errors) > 0)
 			<ul class="alert alert-warning list-unstyled">
@@ -18,7 +18,7 @@
 			</ul>
 			@endif
 
-			<fieldset>
+			<div class="panel-body">
 				<div class="form-group">
 					<div class="input-icon-append">
 						<i class="icon-append fa fa-envelope-o"></i>
@@ -30,21 +30,20 @@
 						<i class="icon-append fa fa-lock"></i>
 						{!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => trans('users::user.field.password')]) !!}
 					</div>
-					<p class="help-block">
-						{!! link_to('password/email', trans('users::user.button.forget_password'), ['class' => 'color-green']) !!}
-					</p>
 				</div>
-				<div class="form-group">
-					<div class="checkbox">
+				<div class="form-group m-b-none">
+					<div class="checkbox m-b-none">
 						<label>
 							{!! Form::checkbox('remember') !!} @lang('users::user.field.remember')
 						</label>
 					</div>
 				</div>
-			</fieldset>
-			<footer>
-				{!! Form::button(trans('users::user.button.login'), ['class' => 'btn btn-success', 'type' => 'submit']) !!}
-			</footer>
+			</div>
+			<div class="panel-footer">
+				{!! Form::button(trans('users::user.button.login'), ['class' => 'btn btn-success', 'type' => 'submit', 'data-icon' => 'check']) !!}
+
+				{!! link_to('password/email', trans('users::user.button.forget_password'), ['class' => 'btn btn-link']) !!}
+			</div>
 		{!! Form::close() !!}
 	</div>
 </div>

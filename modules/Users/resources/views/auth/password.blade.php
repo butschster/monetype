@@ -8,10 +8,11 @@
 		</div>
 	</div>
 	<div class="login-content">
-		{!! Form::open(['url' => 'password/email', 'class' => 'form']) !!}
+		{!! Form::open(['url' => 'password/email', 'class' => 'panel m-b-none']) !!}
 
-		<fieldset>
-			<h2 class="m-t-n">@lang('users::user.title.reset_password')</h2>
+		<div class="panel-body">
+			<h2 class="m-t-none">@lang('users::user.title.reset_password')</h2>
+			<hr class="panel-wide" />
 
 			@if (session('status'))
 			<div class="alert alert-success">
@@ -33,10 +34,10 @@
 					{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => trans('users::user.field.email')]) !!}
 				</div>
 			</div>
-		</fieldset>
-		<footer>
-			{!! Form::button(trans('users::user.button.send_password'), ['class' => 'btn btn-info', 'type' => 'submit']) !!}
-		</footer>
+		</div>
+		<div class="panel-footer">
+			{!! Form::button(trans('users::user.button.send_password'), ['class' => 'btn btn-info', 'type' => 'submit', 'data-icon' => 'check']) !!}
+		</div>
 		{!! Form::close() !!}
 	</div>
 </div>
