@@ -4,23 +4,16 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
-    <script>
-        $(function() {
-            new SimpleMDE({
-                element: document.getElementById('inputText')
-            });
-        });
-    </script>
     <h2>@lang('articles::article.title.create')</h2>
 
     {!! Form::model($article , [
 		'route' => $action,
 		'class' => 'panel',
-		'method' => 'PUT'
+		'method' => $article->exists ? 'PUT' : 'POST'
     ]) !!}
 
         @if (count($errors) > 0)
-        <ul class="alert alert-warning m-b-none">
+        <ul class="alert alert-warning m-b-none list-unstyled">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -34,12 +27,13 @@
             </div>
 
             <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            {!! Form::checkbox('forbid_comment') !!}
-                            @lang('articles::article.field.forbid_comment')
-                        </label>
-                    </div>
+                <div class="checkbox">
+                    <label>
+                        {!! Form::hidden('forbid_comment', 0) !!}
+                        {!! Form::checkbox('forbid_comment') !!}
+                        @lang('articles::article.field.forbid_comment')
+                    </label>
+                </div>
             </div>
         </div>
 

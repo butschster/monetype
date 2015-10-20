@@ -2,10 +2,12 @@
 
 namespace Modules\Articles\Model;
 
+use DB;
 use Carbon\Carbon;
 use Modules\Users\Model\User;
 use Modules\Support\Helpers\Date;
 use Modules\Support\Helpers\String;
+use Modules\Comments\Model\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Articles\Traits\TaggableTrait;
@@ -13,6 +15,7 @@ use Modules\Transactions\Contracts\Buyable;
 use Modules\Transactions\Model\Transaction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Articles\Traits\CategoryableTrait;
 use Modules\Articles\Exceptions\ArticleException;
 
 /**
@@ -29,27 +32,33 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property string         $status
  * @property string         $block_reason
  * @property integer        $count_payments
+ * @property integer        $count_favorites
+ * @property integer        $count_comments
  * @property float          $amount
  * @property float          $cost
  * @property string         $published
  * @property string         $statusTitle
  * @property boolean        $need_check
+ * @property string         $user_ip
  *
  * @property User           $author
- * @property User           $approver
+ * @property User           $approvedBy
  * @property User           $blockedBy
  * @property Collection     $tags
- * @property Collection     $categories
  * @property Collection     $recipients
+ * @property Collection     $subscribers
+ * @property Collection     $checks
+ * @property Collection     $comments
  *
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $published_at
+ * @property \Carbon\Carbon $deleted_at
  */
 class Article extends Model implements Buyable
 {
 
-    use TaggableTrait, SoftDeletes;
+    use TaggableTrait, CategoryableTrait, SoftDeletes;
 
     const STATUS_PUBLISHED = 'published';
     const STATUS_DRAFT = 'draft';
@@ -141,10 +150,15 @@ class Article extends Model implements Buyable
     }
 
 
+    /**
+     * @return $this
+     */
     public function setChecked()
     {
         $this->need_check = false;
         $this->save();
+
+        return $this;
     }
 
 
@@ -178,7 +192,6 @@ class Article extends Model implements Buyable
     public function assignAuthor($author)
     {
         $this->author()->associate($author);
-        $this->save();
     }
 
 
@@ -245,7 +258,7 @@ class Article extends Model implements Buyable
         }
 
         $this->status = static::STATUS_APPROVED;
-        $this->approver()->associate($user);
+        $this->approvedBy()->associate($user);
 
         $this->save();
     }
@@ -266,53 +279,66 @@ class Article extends Model implements Buyable
 
 
     /**
-     * @param array $ids
+     * @param User $user
      *
-     * @return array
+     * @return int
      */
-    public function attachCategories(array $ids)
+    public function toggleFavorite(User $user)
     {
-        $attachedCategories = [];
-        $categories         = Category::whereIn('id', $ids)->get();
-        foreach ($categories as $category) {
-            if ($category->attachArticle($this)) {
-                $attachedCategories[] = $category->id;
-            }
+        if ($this->isFavoritedBy($user)) {
+            $this->subscribers()->detach($user);
+            $this->decrement('count_favorites');
+
+            return -1;
         }
 
-        return $attachedCategories;
+        $this->subscribers()->attach($user);
+        $this->increment('count_favorites');
+
+        return 1;
     }
 
 
     /**
-     * @param array $ids
+     * @param User $user
      *
-     * @return array
+     * @return bool
      */
-    public function updateCategories(array $ids)
+    public function isFavoritedBy(User $user = null)
     {
-        $categories        = Category::whereIn('id', $ids)->get();
-        $ids               = $categories->lists('id');
-        $currentCategories = $this->categories()->get()->lists('id');
-        $updatedCategories = [];
-
-        $deletions = array_diff($currentCategories, $ids);
-        $additions = array_diff($ids, $currentCategories);
-
-        foreach (Category::whereIn('id', $deletions)->get() as $category) {
-            if ($category->detachArticle($this)) {
-                $updatedCategories[] = $category->id;
-            }
+        if (is_null($user)) {
+            return false;
         }
 
-        foreach (Category::whereIn('id', $additions)->get() as $category) {
-            if ($category->attachArticle($this)) {
-                $updatedCategories[] = $category->id;
-            }
-        }
-
-        return $updatedCategories;
+        return !is_null(
+            $this
+                ->subscribers()
+                ->newPivotStatement()
+                ->where('article_id', $this->id)
+                ->where('user_id', $user->id)
+                ->first()
+        );
     }
+
+
+    /**
+     * @return bool
+     */
+    public function hasComments()
+    {
+        return $this->count_comments > 0;
+    }
+
+
+    /**
+     * @param Comment $comment
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->increment('count_comments');
+        $comment->article()->associate($this)->save();
+    }
+
 
     /**********************************************************************
      * Mutators
@@ -361,6 +387,26 @@ class Article extends Model implements Buyable
         return String::formatAmount($this->getCost());
     }
 
+    /**
+     * @return string
+     */
+    public function getIsFavoritedAttribute()
+    {
+        if ( ! array_key_exists('is_favorited', $this->attributes)) {
+            $this->attributes['is_favorited'] = $this->isFavoritedBy(auth()->user());
+        }
+
+        return (bool) $this->attributes['is_favorited'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function setIsFavoritedAttribute($status)
+    {
+        $this->attributes['is_favorited'] = (bool) $status;
+    }
+
     /**********************************************************************
      * Scopes
      **********************************************************************/
@@ -379,9 +425,13 @@ class Article extends Model implements Buyable
             $userId = $user->id;
         }
 
-        return $query
-            ->selectSub('select `id` from `transactions` where `transactions`.`deleted_at` is null and `debit` = ? and `article_id` = ? limit 1', 'is_published')
-            ->addBinding([$userId, $this->id], 'select');
+        $subQuery = DB::table('transactions')
+            ->selectRaw('id')
+            ->whereIsNull('deleted_at')
+            ->where('debit', $userId)
+            ->where('article_id', $this->id);
+
+        return $query->selectSub($subQuery, 'is_published')->select('articles.*');
     }
 
 
@@ -437,6 +487,29 @@ class Article extends Model implements Buyable
         return $query->orderBy($column, 'desc');
     }
 
+
+    /**
+     * @param Builder   $query
+     * @param User|null $user
+     */
+    public function scopeWithFavorites(Builder $query, User $user = null)
+    {
+        if (is_null($user) and auth()->check()) {
+            $userId = auth()->user()->id;
+        } else if(!is_null($user)) {
+            $userId = $user->id;
+        } else {
+            $userId = 0;
+        }
+
+        $subQuery = DB::table('user_favorites')
+            ->selectRaw('user_id IS NOT NULL')
+            ->where('user_id', $userId)
+            ->whereRaw('article_id = articles.id');
+
+        return $query->selectSub($subQuery, 'is_favorited')->addSelect('articles.*');
+    }
+
     /**********************************************************************
      * Relations
      **********************************************************************/
@@ -460,7 +533,7 @@ class Article extends Model implements Buyable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function approver()
+    public function approvedBy()
     {
         return $this->belongsTo(User::class, 'approver_id');
     }
@@ -483,12 +556,20 @@ class Article extends Model implements Buyable
         return $this->hasMany(Transaction::class, 'article_id');
     }
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories()
+    public function subscribers()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(User::class, 'user_favorites');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'article_id');
     }
 }

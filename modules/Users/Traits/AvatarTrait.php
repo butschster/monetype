@@ -27,10 +27,12 @@ trait AvatarTrait
      *
      * @return string
      */
-    public function getAvatar($size = 50)
+    public function getAvatar($size = 50, array $attributes = [])
     {
+        $localAttributes = ['width' => $size . 'px', 'class' => 'img-circle'];
+
         if ( ! empty( $this->avatar )) {
-            return $this->getAvatarHtml(['width' => $size . 'px', 'class' => 'img-circle']);
+            return $this->getAvatarHtml(array_merge($localAttributes, $attributes));
         }
 
         return $this->getGravatarHTML($size);

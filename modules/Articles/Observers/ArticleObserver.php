@@ -2,6 +2,7 @@
 
 namespace Modules\Articles\Observers;
 
+use Request;
 use Parsedown;
 use Modules\Articles\Model\Article;
 
@@ -17,6 +18,7 @@ class ArticleObserver
             $article->assignAuthor(auth()->user());
         }
 
+        $article->user_ip = Request::ip();
         $article->status = Article::STATUS_DRAFT;
     }
 

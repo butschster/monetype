@@ -3,7 +3,7 @@
 return [
 
     'modules' => [
-        'Core', 'Articles', 'Transactions', 'Users'
+        'Core', 'Articles', 'Transactions', 'Users', 'Comments'
     ],
 
     /*
@@ -84,7 +84,7 @@ return [
 
     'key' => env('APP_KEY', 'SomeRandomString'),
 
-    'cipher' => 'AES-256-CBC',
+    'cipher' => MCRYPT_RIJNDAEL_128,
 
     /*
     |--------------------------------------------------------------------------
@@ -157,6 +157,8 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Modules\Support\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        nickurt\Akismet\ServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class
     ],
 
     /*
@@ -211,5 +213,6 @@ return [
         'HTML'      => Illuminate\Html\HtmlFacade::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Image'     => Intervention\Image\Facades\Image::class,
+        'Akismet'   => nickurt\Akismet\Facade::class,
     ],
 ];

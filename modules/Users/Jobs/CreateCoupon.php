@@ -26,17 +26,24 @@ class CreateCoupon implements SelfHandling
      */
     protected $expiredAt;
 
+    /**
+     * @var string
+     */
+    protected $type;
+
 
     /**
      * @param User        $user
      * @param integer     $amount
+     * @param string      $type
      * @param string|null $expiredAt
      */
-    public function __construct(User $user, $amount, $expiredAt = null)
+    public function __construct(User $user, $amount, $type, $expiredAt = null)
     {
         $this->user      = $user;
         $this->amount    = $amount;
-        $this->expiredAt = empty($expiredAt) ? null : $expiredAt;
+        $this->type      = $type;
+        $this->expiredAt = empty( $expiredAt ) ? null : $expiredAt;
     }
 
 
@@ -54,6 +61,8 @@ class CreateCoupon implements SelfHandling
             $coupon             = new Coupon;
             $coupon->amount     = $this->amount;
             $coupon->expired_at = $this->expiredAt;
+
+            $coupon->setType($this->type);
             $coupon->assignFromUser($this->user);
 
             $coupon->save();

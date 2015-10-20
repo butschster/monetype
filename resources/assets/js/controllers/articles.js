@@ -1,32 +1,56 @@
 App.Form.extend('articles', {
-	fields: {
+	fieldsMeta: {
 		title: 'string',
-		text_source: 'textarea',
+		text_source: 'markdown',
 		forbid_comment: 'checkbox',
 		tags: 'tags'
 	},
 	messages: {
 		saved: 'Article saved'
 	}
-	/*onSubmit: function(e) {
-		e.preventDefault();
-		this.clearErrors();
-
-		var action = this._submitButton.val();
-
-		switch (action) {
-			case 'publish':
-				var url = '/api.articles.publish/' + this._id;
-				break;
-			default:
-				var url = this._api_url;
-		}
-
-		$(':button', this._form).prop('disabled', true);
-		Api[this._api_method](url, this.getFieldsData(), $.proxy(this.onResponse, this));
-	}*/
 });
 
 App.Controllers.add(['article.create', 'article.edit'], function(action) {
 	App.Form.articles.init($('form'));
 });
+
+App.Controllers.add(['article.index', 'article.show'], function () {
+	if(USER_ID) $('body').on('click', '.addToFavorite', addToFavorite);
+});
+
+App.Controllers.add('article.show', function () {
+	$('.commentItem--reply').on('click', function(e) {
+		e.preventDefault();
+		showCommentForm($(this), $(this).data('id'));
+	});
+
+	$('.commentForm--title a').on('click', function(e) {
+		e.preventDefault();
+		showCommentForm($(this).parent(), null);
+	});
+
+	// Validation for login form
+	$("#commentForm").validate({
+		rules: {
+			text: {
+				required: true,
+				minlength: 10,
+			},
+			title: {
+				maxlength: 255
+			}
+		}
+	});
+});
+
+function showCommentForm($container, parentId) {
+	$('#commentParentId').val(parentId);
+	$('#commentForm').insertAfter($container);
+}
+
+function addToFavorite(e) {
+    var $self = $(this);
+    Api.post('/api.article.favorite', {id: $(this).data('id')}, function (response) {
+		$self.parent().html(response.content);
+    });
+}

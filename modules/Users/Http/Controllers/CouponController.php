@@ -68,7 +68,7 @@ class CouponController extends FrontController
         try {
             Bus::dispatch(
                 new CreateCoupon(
-                    $this->user, $this->request->get('amount'), $this->request->get('expired_at')
+                    $this->user, $this->request->get('amount'), 'user', $this->request->get('expired_at')
                 )
             );
         } catch (NotEnoughMoneyException $e) {

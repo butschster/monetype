@@ -3,7 +3,9 @@
 namespace Modules\Core\Providers;
 
 use Lang;
+use Event;
 use Carbon\Carbon;
+use Modules\Support\Helpers\Profiler;
 use Modules\Core\Console\Commands\DropDatabaseCommand;
 use Modules\Core\Console\Commands\GenerateJavaScriptLang;
 
@@ -19,6 +21,13 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->registerConsoleCommand(DropDatabaseCommand::class);
         $this->registerConsoleCommand(GenerateJavaScriptLang::class);
+
+        Event::listen('illuminate.query', function($sql, $bindings, $time) {
+            $sql = str_replace(array('%', '?'), array('%%', '%s'), $sql);
+            $sql = vsprintf($sql, $bindings);
+
+            Profiler::append('Database', $sql, $time / 1000);
+        });
     }
 
     public function boot()

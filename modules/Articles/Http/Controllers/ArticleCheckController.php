@@ -19,7 +19,7 @@ class ArticleCheckController extends FrontController
         $this->checkPermissions('check.index');
 
         return $this->setLayout('check.index', [
-            'checks' => ArticleCheck::with('article')->orderByCreated()->paginate()
+            'checks' => ArticleCheck::with('article', 'user')->orderByCreated()->paginate()
         ]);
     }
 

@@ -2,9 +2,9 @@
 
 namespace Modules\Articles\Http\Requests;
 
-use App\Http\Requests\Request;
+use Modules\Core\Http\Requests\ApiRequest;
 
-class StoreArticleRequest extends Request
+class StoreArticleRequest extends ApiRequest
 {
 
     /**
@@ -27,7 +27,8 @@ class StoreArticleRequest extends Request
     {
         return [
             'title'       => 'required|max:255',
-            'text_source' => 'required|min:500'
+            'text_source' => 'required|min:500',
+            'tags'        => 'required|mintags:3'
         ];
     }
 

@@ -30,6 +30,7 @@ elixir(function (mix) {
 
         // Less
         .less('app.less', paths.assetsCss)
+        .less('coming_soon.less', paths.assetsCss)
 
         // CSS
         .styles([
@@ -39,6 +40,10 @@ elixir(function (mix) {
             paths.jquerytagsinput + "src/jquery.tagsinput.css",
             paths.assetsCss + 'app.css'
         ], 'public/css/app.css')
+
+        .styles([
+            paths.assetsCss + 'coming_soon.css'
+        ], 'public/css/coming_soon.css')
 
         // Fonts
         .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts')
@@ -66,6 +71,12 @@ elixir(function (mix) {
             'controllers/articles.js',
             'run.js'
         ], 'public/js/app.js')
+        .scripts([
+            'core/app.js',
+            'components.js',
+            'controllers/comingSoon.js',
+            'run.js'
+        ], 'public/js/coming_soon.js')
         .copy(paths.charts + 'Chart.min.js', 'public/libs/chart')
         .copy(paths.dropzone + 'dist/min/**', 'public/libs/dropzone')
 

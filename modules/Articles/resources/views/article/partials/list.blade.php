@@ -1,29 +1,26 @@
 @if($articles->count() > 0)
-@foreach($articles as $article)
-<div class="panel">
-    <div class="panel-heading">
-        @include('articles::article.partials.heading')
-    </div>
-    <div class="panel-body">
-        <div class="media">
-            <div class="media-body">
-                <h3 class="media-heading">
-                    {!! link_to_route('front.article.show', $article->title, ['id' => $article->id]) !!}
-                </h3>
-
-                <div class="media-content m-t-md">
-                    {!! $article->text_intro !!}
-                    @include('articles::article.partials.tags', ['tags' => $article->tags])
-                </div>
-            </div>
+<div class="articleList">
+    @foreach($articles as $article)
+    <div class="articleItem">
+        <div class="articleItem--heading">
+            @include('articles::article.partials.heading')
         </div>
-        <hr class="panel-wide m-t-sm m-b-sm" />
-        @include('articles::article.partials.meta')
+
+        <h3 class="articleItem--title">
+            {!! link_to_route('front.article.show', $article->title, ['id' => $article->id]) !!}
+        </h3>
+        <div class="articleItem--content">
+            {!! $article->text_intro !!}
+        </div>
+
+        @include('articles::article.partials.tags', ['tags' => $article->tags])
+
+        <div class="articleItem--meta">
+            @include('articles::article.partials.meta')
+        </div>
     </div>
-
-
+    @endforeach
 </div>
-@endforeach
 {!! $articles->render() !!}
 @else
 <div class="panel">
