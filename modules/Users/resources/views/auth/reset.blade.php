@@ -8,9 +8,12 @@
 		</div>
 	</div>
 	<div class="login-content">
-		{!! Form::open(['url' => 'password/reset', 'class' => 'form']) !!}
-		<fieldset>
-			<h2 class="m-t-n">@lang('users::user.title.reset_password')</h2>
+		{!! Form::open(['url' => 'password/reset', 'class' => 'panel m-b-none']) !!}
+		{!! Form::hidden('token', $token) !!}
+		<div class="panel-body">
+
+			<h2 class="m-t-none">@lang('users::user.title.reset_password')</h2>
+			<hr class="panel-wide" />
 
 			@if (count($errors) > 0)
 			<ul class="alert alert-warning list-unstyled">
@@ -40,10 +43,10 @@
 					{!! Form::password('password_confirmation', ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => trans('users::user.field.password_confirm')]) !!}
 				</div>
 			</div>
-		</fieldset>
-		<footer>
-			{!! Form::button(trans('users::user.button.reset_password'), ['class' => 'btn btn-info', 'type' => 'submit']) !!}
-		</footer>
+		</div>
+		<div class="panel-footer">
+			{!! Form::button(trans('users::user.button.reset_password'), ['class' => 'btn btn-info', 'type' => 'submit', 'data-icon' => 'check']) !!}
+		</div>
 		{!! Form::close() !!}
 	</div>
 </div>

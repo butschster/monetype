@@ -6,26 +6,36 @@
 @text-color:                    #6a6c6f;
 //@body-bg:                     #edf0f5;
 
-@white:                         #fff;
+@color-white:                   #fff;
 
-@brand-primary:                 #003970;
-@brand-success:                 #2ecc71;
-@brand-info:                    #3498db;
+@brand-primary:                 rgba(65,36,92,1);
+@brand-success:                 #00b839;
+@brand-info:                    #4795de;
 @brand-warning:                 #ffad1c;
 @brand-danger:                  #e74c3c;
 
 @link-color:                    @brand-primary;
 
-@state-success-bg:              lighten(@brand-success, 20%);
-@state-info-bg:                 lighten(@brand-info, 20%);
-@state-warning-bg:              @brand-warning;
-@state-danger-bg:               lighten(@brand-danger, 20%);
+// Alerts
+@alert-padding:                 15px;
+@alert-border-radius:           @border-radius-base;
+@alert-link-font-weight:        bold;
 
+@alert-success-bg:              darken(@brand-success,  10%);
+@alert-success-text:            @color-white;
+@alert-success-border:          darken(@brand-success,  15%);
 
-@state-success-text:            @white;
-@state-info-text:               @white;
-@state-warning-text:            @white;
-@state-danger-text:             darken(@brand-danger, 15%);
+@alert-info-bg:                 @brand-info;
+@alert-info-text:               @color-white;
+@alert-info-border:             darken(@brand-info,  5%);
+
+@alert-warning-bg:              darken(@brand-warning,  10%);
+@alert-warning-text:            @color-white;
+@alert-warning-border:          darken(@brand-warning,  15%);
+
+@alert-danger-bg:               darken(@brand-danger,  10%);
+@alert-danger-text:             @color-white;
+@alert-danger-border:           darken(@brand-danger,  15%);
 
 
 @headings-font-weight:          300;
@@ -55,3 +65,6 @@
 
 // Navbar
 @navbar-default-bg:             #fff;
+
+// Footer
+@footer-bg:                     desaturate(@brand-primary, 15%);

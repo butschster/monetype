@@ -1,10 +1,10 @@
 App.Components.add('register.validator', function() {
 	$.countdown.setDefaults($.countdown.regionalOptions['ru']);
-	$('#defaultCountdown').countdown({
+	$('#countDown').countdown({
 		until: new Date(2016, 1-1, 1)
 	});
 
-	$('.cooming-soon-content').backstretch([
+	$('.comingSoon').backstretch([
 		"/img/coming_soon.jpg"
 	], {fade: 1000});
 

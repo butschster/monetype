@@ -14,6 +14,10 @@ class ArticlesTableSeeder extends Seeder
         Article::truncate();
         ArticleCheck::truncate();
 
+        if ( ! App::environment('local')) {
+            return;
+        }
+
         Config::set('article.check.test', true);
         Config::set('article.check.max_percent_plagiarism', 80);
 

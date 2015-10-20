@@ -1,83 +1,135 @@
 @import "../../../bower_components/bootstrap/less/bootstrap";
 @import "../../../bower_components/fontawesome/less/font-awesome";
+@import "variables";
 @import "widgets/form";
 @import "widgets/alert";
+@import "widgets/panels";
+@import "helpers/margins";
 
-@import "variables";
-
-@btn-font-weight: 300;
-@font-family-sans-serif: "Roboto", Helvetica, Arial, sans-serif;
-
-form {
-  box-shadow: 0 0 50px rgba(0, 0, 0, .7);
+.comingSoon--border {
+  border-top: solid 5px @brand-primary;
 }
-.header-container {
-  .header-logo {
-	margin-top: 30px;
-	margin-bottom: 30px;
+
+.comingSoon {
+  .comingSoon--header {
+    .header-logo {
+      margin-top: 50px;
+    }
+
+    text-align: center;
   }
 
-  text-align: center;
-}
-.coming-soon-border {
-  border-top: solid 5px #000;
-}
+  .comingSoon--register {
 
-.coming-soon-bg-cover:before {
-  top: 0;
-  z-index: -1;
-  width: 100%;
-  content: " ";
-  height: 100%;
-  position: absolute;
-  background: rgba(65,36,92,0.5);
-}
+  }
 
-.coming-soon {
-  padding: 20px;
-  margin: 100px 0;
+  .comingSoon--about {
+    color: #fff;
+  }
 
-  .text {
-	h1, p {
-	  color: #fff;
-	}
+  .comingSoon--content {
+    padding: 40px;
+    margin: 50px 0 100px;
+    background: rgba(0, 0, 0, 0.2);
+  }
 
-	h1 {
-	  font-size: 55px;
-	  font-weight: 100;
-	  line-height: 65px;
-	  margin-bottom: 15px;
-	}
+  .comingSoon--bg-cover {
+    &:before {
+      top: 0;
+      z-index: -1;
+      width: 100%;
+      content: " ";
+      height: 100%;
+      position: absolute;
+      background: rgba(65, 36, 92, 0.6);
+    }
+  }
 
-	h2 {
-	  color: #fff;
-	  font-size: 55px;
-	  font-weight: 100;
-	  line-height: 65px;
-	  margin-bottom: 15px;
-	}
-
-	h3 {
-	  color: #fff;
-	  font-size: 30px;
-	  font-weight: 100;
-	}
-
-	p {
-	  font-size: 16px;
-	  font-weight: 400;
-	  line-height: 26px;
-	}
+  .comingSoon--text {
+    color: #fff;
   }
 }
+
 /* Small devices (tablets, 768px and less) */
-@media (max-width: 768px) {
-  .coming-soon h1 {
-	font-size: 40px;
+@media (min-width: @screen-xs-min) {
+  .comingSoon--right {
+    width: 100%;
   }
 
-  .coming-soon p {
-	font-size: 14px;
+  .comingSoon--left {
+    width: 100%;
+  }
+
+  .comingSoon--about {
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+    }
+  }
+}
+
+@media (min-width: @screen-sm-min) {
+  .comingSoon--right {
+    float: right;
+    width: 70%;
+  }
+
+  .comingSoon--left {
+    float: left;
+    width: 30%;
+  }
+
+  .comingSoon--about {
+    padding-right: 10px;
+  }
+
+  .comingSoon--register {
+    padding-left: 10px;
+  }
+
+  .comingSoon--left.comingSoon--countDown {
+    width: 100%;
+  }
+
+  .comingSoon--about {
+    p {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 20px;
+    }
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .comingSoon--right {
+    float: right;
+    width: 50%;
+  }
+
+  .comingSoon--left {
+    float: left;
+    width: 50%;
+  }
+
+  .comingSoon--about {
+    padding-right: 20px;
+  }
+
+  .comingSoon--register {
+    padding-left: 20px;
+  }
+
+  .comingSoon--left.comingSoon--countDown {
+    width: 50%;
+  }
+
+  .comingSoon--about {
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+    }
   }
 }
 
@@ -89,38 +141,34 @@ form {
 
 /*Countdown
 ------------------------------------*/
-#defaultCountdown {
-  width: 100%;
-  margin: 10px 0;
-  text-align: center;
+.comingSoon--countDown {
 
   span.countdown_row {
-	overflow: hidden;
+    overflow: hidden;
   }
 
   span.countdown-section {
-	margin: 2px;
-	width: 150px;
-	padding: 25px 0;
-	text-align: center;
-	display: inline-block;
-	background: rgba(65,36,92,1);
-	box-shadow: 0 0 50px rgba(0, 0, 0, .3);
+    margin: 2px;
+    width: 100px;
+    padding: 15px 0;
+    text-align: center;
+    display: inline-block;
+    background: @brand-success;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .3);
   }
 
   span.countdown-amount {
-	color: #fff;
-	display: block;
-	font-weight: 200;
-	font-size: 60px !important;
-	line-height: 65px !important;
-	font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    display: block;
+    font-weight: 400;
+    font-size: 30px !important;
+    line-height: 35px !important;
   }
 
   span.countdown-period {
-	color: #fff;
-	display: block;
-	font-weight: 200;
-	font-size: 16px !important;
+    color: #fff;
+    display: block;
+    font-weight: 300;
+    font-size: 14px !important;
   }
 }

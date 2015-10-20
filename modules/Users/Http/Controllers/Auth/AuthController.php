@@ -25,7 +25,10 @@ class AuthController extends FrontController
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectTo = '/';
+    /**
+     * @var string
+     */
+    public $redirectPath = '/';
 
 
     /**
@@ -81,7 +84,7 @@ class AuthController extends FrontController
     protected function validator(array $data)
     {
         $validator = Validator::make($data, [
-            'username' => 'required|alpha_dash|max:50|unique:users',
+            'username' => 'alpha_dash|max:50|unique:users',
             'name'     => 'max:255',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
@@ -119,7 +122,7 @@ class AuthController extends FrontController
     protected function create(array $data)
     {
         return User::create([
-            'username' => $data['username'],
+            'username' => array_get($data, 'username'),
             'name'     => array_get($data, 'name'),
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),

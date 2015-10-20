@@ -1,12 +1,75 @@
-@if(config('app.debug'))
+<aside id="footer-widgets">
     <div class="container">
-        <div class="panel panel-primary shadow1">
-            <div class="panel-heading" role="button" data-toggle="collapse" href="#collapseProfile" aria-expanded="false" aria-controls="collapseProfile">
-                <span class="panel-title" data-icon="area-chart">Profiler</span>
+
+    </div>
+</aside>
+<footer id="footer">
+    <div class="container">
+        <div class="links-col">
+
+            <div class="row">
+                <!-- Col -->
+                <div class="col-xs-4">
+                    <h5>guest</h5>
+                    <ul class="v-links">
+                        <li><a href="#">login</a></li>
+                        <li><a href="#">sign up</a></li>
+                        <li><a href="#">customer support</a></li>
+                        <li><a href="#">information</a></li>
+                    </ul>
+                </div>
+                <!-- Col -->
+
+                <!-- Col -->
+                <div class="col-xs-4">
+                    <h5>information</h5>
+                    <ul class="v-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Delivery Informations</a></li>
+                        <li><a href="#">Terms and conditions</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Shipping and Deliveries</a></li>
+                        <li><a href="#">Enquiries</a></li>
+                    </ul>
+                </div>
+                <!-- /Col -->
+
+                <!-- Col -->
+                <div class="col-xs-4">
+                    <h5>member</h5>
+                    <ul class="v-links">
+                        <li><a href="#">Account</a></li>
+                        <li><a href="#">Wishlist and Favourites</a></li>
+                        <li><a href="#">Purchase History</a></li>
+                        <li><a href="#">View Cart</a></li>
+                    </ul>
+                </div>
+                <!-- /Col -->
             </div>
-            <div class="collapse" id="collapseProfile">
-                @include('core::layout.partials.profiler')
-            </div>
+            <!-- /Row -->
         </div>
     </div>
+
+    <div class="bottom">
+        <!-- Container -->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <span class="copy-text">@lang('core::core.message.copyright')</span>
+                </div>
+                <div class="col-xs-6">
+                    <div class="socials text-right">
+                        <a href="#" class="rounded-icon social fa fa-vk"><!-- vkontakte --></a>
+                        <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
+                        <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
+                        <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Container -->
+    </div>
+</footer>
+@if(config('app.debug'))
+    @include('core::layout.partials.profiler')
 @endif

@@ -12,8 +12,8 @@
             @include('articles::article.partials.categories')
             @if(!$isPurchased)
                 {!! $article->text_intro !!}
-                <p>...</p>
-                <h3 class="alert alert-warning">@lang('articles::article.message.not_enough_money')</h3>
+
+                @include('articles::article.partials.buy')
             @else
                 {!! $article->text !!}
             @endif
@@ -25,11 +25,10 @@
             @include('articles::article.partials.meta', ['inner' => true])
 
             <div class="socials pull-right">
+                <a href="#" class="rounded-icon social fa fa-vk"><!-- vkontakte --></a>
                 <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
                 <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
                 <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
-                <a href="#" class="rounded-icon social fa fa-pinterest"><!-- pinterest --></a>
-                <a href="#" class="rounded-icon social fa fa-linkedin"><!-- linkedin --></a>
             </div>
 
             <div class="clearfix"></div>

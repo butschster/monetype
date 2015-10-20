@@ -1,3 +1,4 @@
+@if(auth()->check())
 <h3 class="commentForm--title" id="comment" data-icon="commenting-o">
     <a href="#">@lang('comments::comment.title.new')</a>
 </h3>
@@ -19,3 +20,6 @@
 
     {!! Form::button(trans('comments::comment.button.send'), ['type' => 'submit', 'class' => 'btn btn-success', 'data-icon' => 'comment']) !!}
 {!! Form::close() !!}
+@else
+    <h4 class="alert alert-info">@lang('comments::comment.message.need_to_auth')</h4>
+@endif

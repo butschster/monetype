@@ -71,6 +71,10 @@ class TransactionsTableSeeder extends Seeder
             'comission' => 5,
         ]);
 
+        if ( ! App::environment('local')) {
+            return;
+        }
+
         $users    = User::where('id', '>', 3)->get();
         $articles = Article::all();
 

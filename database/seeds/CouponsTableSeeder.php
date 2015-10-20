@@ -21,24 +21,28 @@ class CouponsTableSeeder extends Seeder
 
         CouponType::create([
             'name'  => 'user',
-            'title' => 'Пользовательские'
+            'title' => 'Пользовательские',
         ]);
 
         CouponType::create([
             'name'  => 'register',
-            'title' => 'Регистрационные'
+            'title' => 'Регистрационные',
         ]);
+
+        for ($i = 20; $i > 0; $i--) {
+            Bus::dispatch(new CreateCoupon(User::getCreditUser(), 10, 'register'));
+        }
+
+        if ( ! App::environment('local')) {
+            return;
+        }
 
         User::where('id', '>', 3)->with([
             'account' => function ($query) {
                 $query->where('balance', '>', 3);
-            }
+            },
         ])->take(20)->orderByRaw('RAND()')->get()->each(function (User $user) {
             Bus::dispatch(new CreateCoupon($user, 10, 'user'));
         });
-
-        for ($i = 20; $i > 0; $i--) {
-            Bus::dispatch(new CreateCoupon(User::find(2), 10, 'register'));
-        }
     }
 }

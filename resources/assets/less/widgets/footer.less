@@ -1,0 +1,52 @@
+#footer {
+  background-color: @footer-bg;
+  color: rgba(255, 255, 255, 0.5);
+  position: relative;
+
+  .bottom {
+    height: 51px;
+    line-height: 50px;
+    text-align: left;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .links-col {
+    padding: 40px 0;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.5);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  h5 {
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  .v-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+
+    & > li {
+      & > a {
+        color: rgba(255, 255, 255, 0.5);
+        display: block;
+        line-height: 2em;
+        text-align: left;
+      }
+
+      &:hover > a {
+        color: #fff;
+      }
+    }
+  }
+}

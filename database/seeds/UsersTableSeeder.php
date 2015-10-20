@@ -15,6 +15,41 @@ class UsersTableSeeder extends Seeder
         User::truncate();
         Account::truncate();
 
+        $administrator = User::create([
+            'username' => 'admin',
+            'name'     => 'Administrator',
+            'email'    => 'admin@site.com',
+            'password' => bcrypt('password'),
+            'gender'   => 'male',
+            'status'   => User::STATUS_APPROVED,
+        ]);
+
+        $administrator->assignRole(Role::ROLE_ADMIN);
+
+        $creditUser = User::create([
+            'username' => bcrypt(str_random()),
+            'email'    => 'credit@site.com',
+            'password' => bcrypt(str_random()),
+            'gender'   => 'other',
+            'status'   => User::STATUS_APPROVED,
+        ]);
+
+        $debitUser = User::create([
+            'username' => bcrypt(str_random()),
+            'email'    => 'debit@site.com',
+            'password' => bcrypt(str_random()),
+            'gender'   => 'other',
+            'status'   => User::STATUS_APPROVED,
+        ]);
+
+        $creditUser->account->update(['balance' => 10000]);
+
+        if ( ! App::environment('local')) {
+            return;
+        }
+
+        $debitUser->account->update(['balance' => 10000]);
+
         File::cleanDirectory(public_path('avatars'));
         File::cleanDirectory(public_path('backgrounds'));
 
@@ -27,39 +62,6 @@ class UsersTableSeeder extends Seeder
             base_path('storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . '.gitignore'),
             public_path('backgrounds' . DIRECTORY_SEPARATOR . '.gitignore')
         );
-
-        $administrator = User::create([
-            'username' => 'admin',
-            'name'     => 'Administrator',
-            'email'    => 'admin@site.com',
-            'password' => bcrypt('password'),
-            'gender'   => 'male',
-            'status'   => User::STATUS_APPROVED,
-        ]);
-
-        $administrator->assignRole(Role::ROLE_ADMIN);
-        $administrator->account->update(['balance' => 100]);
-
-        $creditUser = User::create([
-            'username' => bcrypt('credit'),
-            'email'    => 'credit@site.com',
-            'password' => bcrypt('password'),
-            'gender'   => 'other',
-            'status'   => User::STATUS_APPROVED,
-        ]);
-
-        $creditUser->account->update(['balance' => 1000]);
-
-        $debitUser = User::create([
-            'username' => bcrypt('debit'),
-            'email'    => 'debit@site.com',
-            'password' => bcrypt('password'),
-            'gender'   => 'other',
-            'status'   => User::STATUS_APPROVED,
-        ]);
-
-        $debitUser->account->update(['balance' => 1000]);
-
 
         factory(User::class, 'user', 100)->create()->each(function (User $user) {
             $user->account->update(['balance' => 100]);
