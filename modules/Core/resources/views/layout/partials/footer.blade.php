@@ -1,16 +1,75 @@
 <aside id="footer-widgets">
     <div class="container">
-        <div class="socials text-right">
-            <a href="#" class="rounded-icon social fa fa-vk"><!-- vkontakte --></a>
-            <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
-            <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
-            <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
-        </div>
+
     </div>
 </aside>
 <footer id="footer">
-    <p>© {{ date('Y') }} MoneType, inc. All rights reserved.</p>
+    <div class="container">
+        <div class="links-col">
+
+            <div class="row">
+                <!-- Col -->
+                <div class="col-xs-4">
+                    <h5>guest</h5>
+                    <ul class="v-links">
+                        <li><a href="#">login</a></li>
+                        <li><a href="#">sign up</a></li>
+                        <li><a href="#">customer support</a></li>
+                        <li><a href="#">information</a></li>
+                    </ul>
+                </div>
+                <!-- Col -->
+
+                <!-- Col -->
+                <div class="col-xs-4">
+                    <h5>information</h5>
+                    <ul class="v-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Delivery Informations</a></li>
+                        <li><a href="#">Terms and conditions</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Shipping and Deliveries</a></li>
+                        <li><a href="#">Enquiries</a></li>
+                    </ul>
+                </div>
+                <!-- /Col -->
+
+                <!-- Col -->
+                <div class="col-xs-4">
+                    <h5>member</h5>
+                    <ul class="v-links">
+                        <li><a href="#">Account</a></li>
+                        <li><a href="#">Wishlist and Favourites</a></li>
+                        <li><a href="#">Purchase History</a></li>
+                        <li><a href="#">View Cart</a></li>
+                    </ul>
+                </div>
+                <!-- /Col -->
+            </div>
+            <!-- /Row -->
+        </div>
+    </div>
+
+    <div class="bottom">
+        <!-- Container -->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <span class="copy-text">© {{ date('Y') }} MoneType, inc. All rights reserved.</span>
+                </div>
+                <div class="col-xs-6">
+                    <div class="socials text-right">
+                        <a href="#" class="rounded-icon social fa fa-vk"><!-- vkontakte --></a>
+                        <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
+                        <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
+                        <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Container -->
+    </div>
 </footer>
 @if(config('app.debug'))
-@include('core::layout.partials.profiler')
+    @include('core::layout.partials.profiler')
 @endif

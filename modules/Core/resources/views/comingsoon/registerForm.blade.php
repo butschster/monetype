@@ -3,11 +3,12 @@
 ]) !!}
     <header>
         <h3>@lang('users::user.title.registration')</h3>
-
-        @if($couponsCount > 0)
-        <p>@lang('core::comingsoon.registerBonus', ['count' => $couponsCount, 'amount' => 10])</p>
-        @endif
     </header>
+    @if($couponsCount > 0)
+    <div class="alert alert-info">
+        <p class="text-uppercase">@lang('core::comingsoon.registerBonus', ['count' => $couponsCount, 'amount' => 10])</p>
+    </div>
+    @endif
 
     @if (count($errors) > 0)
     <ul class="alert alert-warning list-unstyled">
@@ -70,6 +71,10 @@
         </div>
     </fieldset>
     <footer>
-        <button type="submit" class="btn btn-primary">@lang('core::comingsoon.giveMoney')</button>
+        @if($couponsCount > 0)
+        <button type="submit" class="btn btn-info btn-lg" data-icon="gift fa-lg fa-fw">@lang('core::comingsoon.giveMoney')</button>
+        @else
+        <button type="submit" class="btn btn-info btn-lg" data-icon="thumbs-o-up fa-lg fa-fw">@lang('users::user.button.register')</button>
+        @endif
     </footer>
 {!! Form::close() !!}

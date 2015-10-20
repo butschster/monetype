@@ -18,3 +18,16 @@ ul.alert {
     }
   }
 }
+
+.alert {
+  &.alert-danger,
+  &.alert-success,
+  &.alert-info,
+  &.alert-warning {
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+      text-decoration: underline;
+    }
+  }
+}
