@@ -64,7 +64,7 @@ class ArticlePolicy
         return (
             $article->isDrafted()
         and
-            $user->id === $article->author_id
+            $article->authoredBy($user)
         );
     }
 
@@ -80,7 +80,7 @@ class ArticlePolicy
         return (
             !$article->isDrafted()
             and
-            $user->id === $article->author_id
+            $article->authoredBy($user)
         );
     }
 
@@ -96,7 +96,7 @@ class ArticlePolicy
         return (
             $article->isDrafted()
             and
-            $user->id === $article->author_id
+            $article->authoredBy($user)
         );
     }
 
@@ -140,7 +140,7 @@ class ArticlePolicy
         return (
             $article->isDrafted()
             and
-            $user->id === $article->author_id
+            $article->authoredBy($user)
         ) or $user->isModerator();
     }
 
@@ -153,11 +153,7 @@ class ArticlePolicy
      */
     public function preview(User $user, Article $article)
     {
-        return (
-            $article->isDrafted()
-            and
-            $user->id === $article->author_id
-        );
+        return $article->authoredBy($user);
     }
 
 
@@ -186,7 +182,7 @@ class ArticlePolicy
     public function viewPurchasers(User $user, Article $article)
     {
         return (
-            $user->id === $article->author_id
+            $article->authoredBy($user)
         or
             $user->isModerator()
         );
