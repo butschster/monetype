@@ -17,6 +17,10 @@ Package::add('dropzone')
         ->css(null, url('libs/dropzone/dropzone.min.css'))
         ->js(null, url('libs/dropzone/dropzone.min.js'), 'libraries');
 
+Package::add('simplemde')
+    ->css(null, url('libs/simplemde/simplemde.css'))
+    ->js(null, url('libs/simplemde/simplemde.js'), 'libraries');
+
 Package::add('backstretch')
         ->js(null, url('libs/jquery.backstretch/jquery.backstretch.min.js'), 'libraries');
 
