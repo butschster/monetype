@@ -201,7 +201,7 @@ App.Form = {
         if (!data) var data = {};
 
         data['_prefix'] = key;
-        App.Form[key] = $.extend(this._decorator, data);
+        App.Form[key] = $.extend({}, this._decorator, data);
         return App.Form[key];
     },
     _decorator: {
@@ -246,24 +246,20 @@ App.Form = {
 
             this._autoSaveTimer = setInterval($.proxy(this.onBackup, this), this.autoSaveDelay);
 
-            this.getFieldsData();
             this._id = this._fieldsData['id'];
 
             for (i in this.fieldsMeta) {
-                switch (this.fieldsMeta[i]) {
-                    case 'tags':
-                        this._fields[i] = new FieldTags(this._form, i);
-                        break;
-                    case 'checkbox':
-                        this._fields[i] = new FieldCheckbox(this._form, i);
-                        break;
-                    case 'markdown':
-                        this._fields[i] = new FieldMarkdown(this._form, i);
-                        break;
-                    default:
-                        this._fields[i] = new FieldDefault(this._form, i);
+                if(this.fieldsMeta[i] in  App.Form.Field) {
+                    this._fields[i] = Object.create(App.Form.Field[this.fieldsMeta[i]]);
+                } else {
+                    this._fields[i] = Object.create(App.Form.Field['default']);
                 }
+
+                this._fields[i].init(this, i);
             }
+
+            console.log(this._fields);
+            this.getFieldsData();
 
             this.onLoad();
             $(window).unload($.proxy(this.onUnload, this));
@@ -285,7 +281,7 @@ App.Form = {
             return this._fields[name] || null;
         },
         hasField: function(name) {
-            return this.fieldsMeta[name] != 'undefined';
+            return (name in this.fieldsMeta);
         },
         _getFieldData: function (name) {
             if (!this.hasField(name)) return false;
@@ -407,85 +403,86 @@ App.Form = {
     }
 }
 
-FieldDefault = function(form, name) {
-    this._form = form;
-    this._name = name;
+App.Form.Field = {
+    extend: function (key, data) {
+        if (!data) var data = {};
 
-    this._element = this.getFieldInput();
-    this.init();
-};
+        data['_prefix'] = key;
+        App.Form.Field[key] = $.extend({}, this._decorator, data);
+        return App.Form.Field[key];
+    },
+    _decorator: {
+        _form: null,
+        _name: null,
+        _element: null,
+        init: function (form, name) {
+            this._form = form;
+            this._name = name;
+            this._element = this.getFieldInput();
 
-FieldDefault.prototype = {
-    init: function() {
+            this._init();
 
-    },
-    getFieldInput: function() {
-        return $(':input[name="' + this.getName() + '"]', this._form);
-    },
-    getElement: function() {
-        return this._element;
-    },
-    getValue: function() {
-        return this.getElement().val();
-    },
-    setValue: function(value) {
-        this.getElement().val(value);
-    },
-    getName: function() {
-        return this._name;
+            return this;
+        },
+        getFieldInput: function () {
+            return $(':input[name="' + this.getName() + '"]', this._form._form);
+        },
+        getElement: function () {
+            return this._element;
+        },
+        getValue: function () {
+            return this.getElement().val();
+        },
+        setValue: function (value) {
+            this.getElement().val(value);
+        },
+        getName: function () {
+            return this._name;
+        },
+        _init: function() {
+
+        }
     }
 };
 
-FieldCheckbox = function(form, name) {
-    FieldDefault.apply(this, arguments);
-}
+App.Form.Field.extend('default');
 
-FieldCheckbox.prototype.__proto__ = FieldDefault.prototype;
+App.Form.Field.extend('checkbox', {
+    getFieldInput: function() {
+        return $(':input[name="' + this.getName() + '"]:not(:hidden)', this._form._form);
+    },
+    getValue: function() {
+        return this.getElement().prop('checked');
+    },
+    setValue: function(value) {
+        return this.getElement().prop('checked', value).trigger('change');
+    }
+});
 
-FieldCheckbox.prototype.getValue = function() {
-   return this.getElement().prop('checked')
-};
+App.Form.Field.extend('markdown', {
+    _init: function() {
+        var $elm = this.getElement();
+        this.editor = new SimpleMDE({
+            element: $elm[0],
+            spellChecker: false
+        });
+    },
+    getValue: function() {
+        return this.editor.value();
+    },
+    setValue: function(value) {
+        return this.editor.value(value);
+    }
+});
 
-FieldCheckbox.prototype.setValue = function(value) {
-    return this.getElement().prop('checked', value)
-};
-
-
-FieldMarkdown = function(form, name) {
-    FieldDefault.apply(this, arguments);
-}
-
-FieldMarkdown.prototype.__proto__ = FieldDefault.prototype;
-
-FieldMarkdown.prototype.init = function() {
-    var $elm = this.getElement();
-    this.editor = new SimpleMDE({
-        element: $elm[0]
-    });
-};
-
-FieldMarkdown.prototype.getValue = function() {
-    return this.editor.value();
-};
-
-FieldMarkdown.prototype.setValue = function(value) {
-    return this.editor.value(value);
-};
-
-FieldTags = function(form, name) {
-    FieldDefault.apply(this, arguments);
-}
-
-FieldTags.prototype.__proto__ = FieldDefault.prototype;
-
-FieldTags.prototype.getValue = function() {
-    return this.getElement().val().split(',');
-};
-
-FieldTags.prototype.setValue = function(value) {
-    return this.getElement().val(value.join()).trigger('change');
-};
-
+App.Form.Field.extend('tags', {
+    getValue: function() {
+        return this.getElement().val().split(',');
+    },
+    setValue: function(value) {
+        return this.getElement().val(value.join()).trigger('change');
+    }
+});
 
 function extend(Child, Parent) {
     var F = function() { }
@@ -865,7 +862,9 @@ App.Form.extend('articles', {
 	fieldsMeta: {
 		title: 'string',
 		text_source: 'markdown',
-		forbid_comment: 'checkbox',
+		disable_comments: 'checkbox',
+		disable_stat_views: 'checkbox',
+		disable_stat_pays: 'checkbox',
 		tags: 'tags'
 	},
 	messages: {
