@@ -3,6 +3,7 @@
 namespace Modules\Articles\Http\Controllers;
 
 use Bus;
+use Assets;
 use Modules\Articles\Jobs\BlockArticle;
 use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
@@ -10,8 +11,6 @@ use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Articles\Exceptions\PlagiarismException;
 use Modules\Articles\Repositories\ArticleRepository;
-use Modules\Articles\Http\Requests\StoreArticleRequest;
-use Modules\Articles\Http\Requests\UpdateArticleRequest;
 use Modules\Core\Http\Controllers\System\FrontController;
 use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 use Modules\Articles\Exceptions\CheckForPlagiarismException;
@@ -56,6 +55,10 @@ class ArticleController extends FrontController
     {
         $article = $articleRepository->findOrFail($articleId);
 
+        if ($article->isDrafted()) {
+            $this->checkPermissions('preview', $article);
+        }
+
         return $this->setLayout('article.show', [
             'article'     => $article,
             'isPurchased' => $article->checkPurchaseStatus($this->user),
@@ -92,6 +95,7 @@ class ArticleController extends FrontController
      */
     public function create(ArticleRepository $articleRepository)
     {
+        Assets::package('simplemde');
         $article = $articleRepository->getModel();
 
         $this->checkPermissions('create', $article);
@@ -103,28 +107,6 @@ class ArticleController extends FrontController
         ]);
     }
 
-
-    /**
-     * @param StoreArticleRequest $request
-     * @param ArticleRepository   $articleRepository
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(StoreArticleRequest $request, ArticleRepository $articleRepository)
-    {
-        $this->checkPermissions('create', $articleRepository->getModel());
-
-        $article = $articleRepository->create($request->only(
-            'title', 'text_source', 'forbid_comment', 'tags'
-        ));
-
-        return $this->successRedirect(
-            trans('articles::article.message.created'),
-            route('front.article.preview', $article->id)
-        );
-    }
-
-
     /**
      * @param ArticleRepository $articleRepository
      * @param integer           $articleId
@@ -133,6 +115,7 @@ class ArticleController extends FrontController
      */
     public function edit(ArticleRepository $articleRepository, $articleId)
     {
+        Assets::package('simplemde');
         $article = $articleRepository->findOrFail($articleId);
 
         $this->checkPermissions('update', $article);
@@ -143,31 +126,6 @@ class ArticleController extends FrontController
             'tags'    => $article->tagsString
         ]);
     }
-
-
-    /**
-     * @param UpdateArticleRequest $request
-     * @param ArticleRepository    $articleRepository
-     * @param integer              $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(UpdateArticleRequest $request, ArticleRepository $articleRepository, $articleId)
-    {
-        $article = $articleRepository->findOrFail($articleId);
-
-        $this->checkPermissions('update', $article);
-
-        $article = $articleRepository->update($request->only(
-            'title', 'text_source', 'forbid_comment', 'tags'
-        ), $articleId);
-
-        return $this->successRedirect(
-            trans('articles::article.message.updated'),
-            route('front.article.preview', $article->id)
-        );
-    }
-
 
     /**
      * @param ArticleRepository $articleRepository

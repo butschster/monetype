@@ -3,8 +3,8 @@
 namespace Modules\Articles\Observers;
 
 use Request;
-use Parsedown;
 use Modules\Articles\Model\Article;
+use Modules\Support\Helpers\MarkdownParser;
 
 class ArticleObserver
 {
@@ -19,7 +19,7 @@ class ArticleObserver
         }
 
         $article->user_ip = Request::ip();
-        $article->status = Article::STATUS_DRAFT;
+        $article->status  = Article::STATUS_DRAFT;
     }
 
 
@@ -28,9 +28,10 @@ class ArticleObserver
      */
     public function saving(Article $article)
     {
-        $parser = new Parsedown;
+        $parser = new MarkdownParser;
 
-        $cut = '---read-more---';
+        // TODO: доработать
+        $cut = '<cut></cut>';
         if (strpos($article->text_source, $cut) !== false) {
             list( $textIntro, $text ) = explode($cut, $article->text_source, 2);
         } else {
@@ -38,8 +39,11 @@ class ArticleObserver
             $text      = $article->text_source;
         }
 
-        $article->text_intro = $parser->text($textIntro);
-        $article->text       = $parser->text($text);
+        if ( ! empty( $textIntro )) {
+            $article->text_intro = $parser->text($textIntro);
+        }
+
+        $article->text = $parser->text($text);
     }
 
 

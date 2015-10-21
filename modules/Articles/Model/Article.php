@@ -28,7 +28,9 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property string         $text
  * @property string         $text_intro
  * @property string         $image
- * @property boolean        $forbid_comment
+ * @property boolean        $disable_comments
+ * @property boolean        $disable_stat_views
+ * @property boolean        $disable_stat_pays
  * @property string         $status
  * @property string         $block_reason
  * @property integer        $count_payments
@@ -87,7 +89,10 @@ class Article extends Model implements Buyable
         'text_source',
         'tags',
         'image',
-        'forbid_comment',
+        'cost',
+        'disable_comments',
+        'disable_stat_views',
+        'disable_stat_pays'
     ];
 
     /**
@@ -96,8 +101,10 @@ class Article extends Model implements Buyable
      * @var array
      */
     protected $casts = [
-        'forbid_comment' => 'boolean',
-        'need_check'     => 'boolean',
+        'disable_comments'   => 'boolean',
+        'need_check'         => 'boolean',
+        'disable_stat_pays'  => 'boolean',
+        'disable_stat_views' => 'boolean',
     ];
 
     /**
@@ -113,7 +120,43 @@ class Article extends Model implements Buyable
      */
     public function isFree()
     {
-        return $this->getCost() === 0;
+        return $this->cost == 0;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isCommentsDisabled()
+    {
+        return (bool) $this->disable_comments;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isCommentsEnabled()
+    {
+        return ! $this->isCommentsDisabled();
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isViewsStatisticsEnabled()
+    {
+        return $this->disable_stat_views;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isPaysStatisticsEnabled()
+    {
+        return $this->disable_stat_pays;
     }
 
 
@@ -122,7 +165,16 @@ class Article extends Model implements Buyable
      */
     public function getCost()
     {
-        return 1;
+        return $this->cost;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getFormatedCost()
+    {
+        return String::formatAmount($this->cost);
     }
 
 
@@ -403,15 +455,6 @@ class Article extends Model implements Buyable
     public function getAmountAttribute()
     {
         return String::formatAmount(array_get($this->attributes, 'amount'));
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getCostAttribute()
-    {
-        return String::formatAmount($this->getCost());
     }
 
     /**

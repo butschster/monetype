@@ -37,8 +37,11 @@ $factory->defineAs(Article::class, 'article', function (Faker\Generator $faker) 
     $text = str_replace('e.', "e.\n\n<br />\n#### $faker->sentence\n\n", $faker->sentences(100, true));
     return [
         'title' => $faker->sentence(6),
+        'cost' => $faker->numberBetween(0, 5),
         'text_source' => $faker->sentences(2, true) . '---read-more---' . $text,
-        'forbid_comment' => $faker->boolean(),
+        'disable_comments' => $faker->boolean(),
+        'disable_stat_views' => $faker->boolean(),
+        'disable_stat_pays' => $faker->boolean(),
         'author_id' => $faker->randomElement($users),
         'status' => $faker->randomElement(['new', 'published', 'approved'])
     ];

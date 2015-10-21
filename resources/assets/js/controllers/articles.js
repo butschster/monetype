@@ -2,7 +2,9 @@ App.Form.extend('articles', {
 	fieldsMeta: {
 		title: 'string',
 		text_source: 'markdown',
-		forbid_comment: 'checkbox',
+		disable_comments: 'checkbox',
+		disable_stat_views: 'checkbox',
+		disable_stat_pays: 'checkbox',
 		tags: 'tags'
 	},
 	messages: {

@@ -6,8 +6,7 @@ Route::group(['as' => 'front.'], function () {
     Route::get('articles', ['as' => 'articles.index', 'uses' => 'ArticleController@index']);
     Route::get('articles/tag/{tag}', ['as' => 'articles.byTag', 'uses' => 'ArticleController@indexByTag']);
 
-
-    Route::get('article/create', ['as' => 'article.create', 'uses' => 'ArticleController@create']);
+    Route::get('article/create', ['middleware' => 'auth', 'as' => 'article.create', 'uses' => 'ArticleController@create']);
 
     Route::get('article/{article}#comments', ['as' => 'article.comments', 'uses' => 'ArticleController@show']);
     Route::get('article/{article}', ['as' => 'article.show', 'uses' => 'ArticleController@show']);
@@ -32,7 +31,7 @@ Route::group(['as' => 'front.'], function () {
 
         RouteAPI::post('article.favorite', ['uses' => 'Api\ArticleController@favorite']);
         RouteAPI::post('article.store', ['as' => 'article.store', 'uses' => 'Api\ArticleController@store']);
-        RouteAPI::post('article.update', ['as' => 'article.update', 'uses' => 'Api\ArticleController@update']);
+        RouteAPI::put('article.update/{article}', ['as' => 'article.update', 'uses' => 'Api\ArticleController@update']);
 
         Route::resource('article', 'ArticleController', [
             'except' => [
