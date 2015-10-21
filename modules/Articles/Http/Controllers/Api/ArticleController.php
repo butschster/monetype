@@ -5,6 +5,7 @@ namespace Modules\Articles\Http\Controllers\Api;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Core\Http\Controllers\System\ApiController;
 use Modules\Articles\Http\Requests\StoreArticleRequest;
+use Modules\Articles\Http\Requests\UpdateArticleRequest;
 
 class ArticleController extends ApiController
 {
@@ -33,12 +34,12 @@ class ArticleController extends ApiController
     {
         $this->checkPermissions('create', $articleRepository->getModel());
 
-        $article = $articleRepository->create($request->only(
-            'title', 'text_source', 'forbid_comment', 'tags'
+        $articleRepository->create($request->only(
+            'title', 'text_source', 'disable_comments', 'disable_stat_views', 'disable_stat_pays', 'tags'
         ));
 
+
         $this->setMessage(trans('articles::article.message.created'));
-        return redirect(route('front.article.preview', $article->id));
     }
 
 
@@ -56,7 +57,7 @@ class ArticleController extends ApiController
         $this->checkPermissions('update', $article);
 
         $article = $articleRepository->update($request->only(
-            'title', 'text_source', 'forbid_comment', 'tags'
+            'title', 'text_source', 'disable_comments', 'disable_stat_views', 'disable_stat_pays', 'tags'
         ), $articleId);
 
         $this->setMessage(trans('articles::article.message.updated'));

@@ -1,24 +1,26 @@
 <ul class="articleItem--meta-items list-unstyled list-inline">
     <li>
         <div class="articleItem--meta-coost">
-            @lang('articles::article.label.cost', ['amount' => $article->cost])
+        @if(!$article->isFree())
+            @lang('articles::article.label.cost', ['amount' => $article->getFormatedCost()])
 
-            @if($article->amount > 0)
+            @if($article->isPaysStatisticsEnabled())
             &nbsp;&nbsp;
-            {!! trans('articles::article.label.balance', ['amount' => link_to_route('front.article.money', $article->amount, $article->id)]) !!}
+            {!! trans('articles::article.label.balance', ['amount' => $article->amount]) !!}
             @endif
+        @else
+            @lang('articles::article.label.free')
+        @endif
         </div>
     </li>
 
-    <li>
-        @include('articles::article.partials.favorites')
-    </li>
-
+    @if($article->isViewsStatisticsEnabled())
     <li>
         <i class="fa fa-fw fa-eye"></i> {{ $article->count_payments }}
     </li>
+    @endif
 
-    @if(empty($inner))
+    @if(empty($inner) and $article->isCommentsEnabled())
         <li>
             @if($article->hasComments())
                 <i class="fa fa-fw fa-comment"></i> {!! link_to_route('front.article.comments', $article->count_comments, $article->id) !!}

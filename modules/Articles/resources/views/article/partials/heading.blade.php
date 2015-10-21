@@ -3,7 +3,9 @@
         {!! $article->author->getAvatar(35) !!}
     </div>
     <div class="media-body">
-        <span class="pull-right">{!! $article->statusTitle !!}</span>
+        <div class="pull-right articleItem--favorites">
+            @include('articles::article.partials.favorites')
+        </div>
 
         {!! $article->author->getProfileLink() !!}<br>
         <small class="text-muted">{{ $article->published }}</small>

@@ -13,6 +13,11 @@ class CommentController extends FrontController
     public function post(CommentPostRequest $request, ArticleRepository $repository, $articleId)
     {
         $article = $repository->findOrFail($articleId);
+
+        if ($article->isCommentsDisabled()) {
+            abort(403, trans('comments::comment.message.comments_disabled'));
+        }
+
         $comment = $article->comments()->create($request->only('title', 'text'));
 
         if ($request->has('parent_id')) {

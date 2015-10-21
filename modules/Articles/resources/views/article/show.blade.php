@@ -33,11 +33,40 @@
 
             <div class="clearfix"></div>
         </div>
+
+        @if(auth()->check() and $currentUser->can('edit', $article))
+        <div class="articleItem--meta">
+            <ul class="list-unstyled list-inline m-b-none">
+                <li>
+                    {!! link_to_route('front.article.preview', trans('articles::article.button.preview'), $article->id, [
+                        'class' => 'btn btn-default', 'data-icon' => 'pencil'
+                    ]) !!}
+                </li>
+                <li>
+                    {!! link_to_route('front.article.money', trans('articles::article.button.purchases'), $article->id, [
+                        'class' => 'btn btn-info', 'data-icon' => 'money'
+                    ]) !!}
+                </li>
+
+                @if(!$article->isDrafted())
+                <li class="pull-right">
+                    {!! Form::open(['route' => ['front.article.draft', $article->id], 'method' => 'put', 'class' => 'm-b-none']) !!}
+                    {!! Form::button(trans('articles::article.button.draft'), [
+                        'type' => 'submit',
+                        'class' => 'btn btn-danger', 'data-icon' => 'eye-slash'
+                    ]) !!}
+                    {!! Form::close() !!}
+                </li>
+                @endif
+            </ul>
+        </div>
+        @endif
     </div>
 @endsection
 
 @section('footer.content')
-
+@if($article->isCommentsEnabled())
     @include('comments::list')
+@endif
 </div>
 @endsection

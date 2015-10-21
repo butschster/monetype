@@ -153,7 +153,27 @@ class ArticlePolicy
      */
     public function preview(User $user, Article $article)
     {
-        return $article->authoredBy($user);
+        return (
+            $article->authoredBy($user)
+            or
+            $user->isModerator()
+        );
+    }
+
+
+    /**
+     * @param User    $user
+     * @param Article $article
+     *
+     * @return bool
+     */
+    public function edit(User $user, Article $article)
+    {
+        return (
+            $article->authoredBy($user)
+            or
+            $user->isModerator()
+        );
     }
 
 
