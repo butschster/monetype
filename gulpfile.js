@@ -31,6 +31,7 @@ elixir(function (mix) {
         // Less
         .less('app.less', paths.assetsCss)
         .less('coming_soon.less', paths.assetsCss)
+        .less('simplemde.less', 'public/libs/simplemde')
 
         // CSS
         .styles([
@@ -40,7 +41,6 @@ elixir(function (mix) {
             paths.jquerytagsinput + "src/jquery.tagsinput.css",
             paths.assetsCss + 'app.css'
         ], 'public/css/app.css')
-
         .styles([
             paths.assetsCss + 'coming_soon.css'
         ], 'public/css/coming_soon.css')
@@ -77,6 +77,9 @@ elixir(function (mix) {
             'controllers/comingSoon.js',
             'run.js'
         ], 'public/js/coming_soon.js')
+        .scripts([
+            'libs/simplemde.js'
+        ], 'public/libs/simplemde/simplemde.js')
         .copy(paths.charts + 'Chart.min.js', 'public/libs/chart')
         .copy(paths.dropzone + 'dist/min/**', 'public/libs/dropzone')
 
