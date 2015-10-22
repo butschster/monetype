@@ -12,6 +12,6 @@ return [
 						качестве автора.',
     'thankRegistration' => 'Спасибо за регистрацию',
     'startBalance'      => 'Ваш стартовый баланс - :balance <i class="icon-rouble"></i>.',
-    'startNotification' => 'Мы вас обязательно уведомим при запуске проекта.',
+    'startNotification' => 'Мы вас обязательно уведомим при запуске проекта. <i class="icon-emo-happy icon-lg"></i>',
     'giveMoney'         => 'Забрать бонус!',
 ];

@@ -15,15 +15,15 @@
     </li>
 
     @if($article->isViewsStatisticsEnabled())
-    <li>
+    <li class="articleItem--meta-payments">
         <i class="icon-eye"></i> {{ $article->count_payments }}
     </li>
     @endif
 
     @if(empty($inner) and $article->isCommentsEnabled())
-        <li>
+        <li class="articleItem--meta-comments">
             @if($article->hasComments())
-                <i class="icon-comment"></i> {!! link_to_route('front.article.comments', $article->count_comments, $article->id) !!}
+                {!! link_to_route('front.article.comments', $article->count_comments, $article->id, ['data-icon' => 'comment']) !!}
             @else
                 <i class="icon-comment-o"></i> 0
             @endif

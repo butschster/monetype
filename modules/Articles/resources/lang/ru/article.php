@@ -32,7 +32,7 @@ return [
         'view'      => 'Просмотр',
         'preview'   => 'Редактировать',
         'buy'       => 'Оплатить',
-        'purchases' => 'Платежи'
+        'purchases' => 'Платежи',
     ],
     'status'  => [
         Article::STATUS_DRAFT     => '<span class="label label-default">Черновик</span>',
