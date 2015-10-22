@@ -581,12 +581,10 @@ span.CodeMirror-selectedtext {
   position: relative;
   opacity: .6;
   user-select: none;
-  padding: 0 10px;
+  padding: 10px;
   border-top: 1px solid #bbb;
   border-left: 1px solid #bbb;
   border-right: 1px solid #bbb;
-
-
 
   a {
     display: inline-block;
@@ -621,55 +619,11 @@ span.CodeMirror-selectedtext {
     margin: 0 6px;
   }
 
-  a {
-    &.icon-header-x:after {
-      font-size: 65%;
-      vertical-align: text-bottom;
-      position: relative;
-      top: 2px;
-    }
-
-    &.icon-header-1:after {
-      content: "1";
-    }
-
-    &.icon-header-2:after {
-      content: "2";
-    }
-
-    &.icon-header-3:after {
-      content: "3";
-    }
-
-    &.icon-header-bigger:after {
-      content: "▲";
-    }
-
-    &.icon-header-smaller:after {
-      content: "▼";
-    }
-  }
-
   &.disabled-for-preview a:not(.no-disable) {
     pointer-events: none;
     background: #fff;
     border-color: transparent;
     text-shadow: inherit;
-  }
-
-  &:after,
-  &:before {
-    display: block;
-    content: ' ';
-    height: 1px;
-  }
-
-  &:before {
-    //margin-bottom: 8px
-  }
-
-  &:after {
-    margin-top: 8px
   }
 
   &:hover,

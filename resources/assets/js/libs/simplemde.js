@@ -13541,7 +13541,7 @@ var toolbarBuiltInButtons = {
 	"guide": {
 		name: "guide",
 		action: "http://nextstepwebs.github.io/simplemde-markdown-editor/markdown-guide",
-		className: "icon-question-circle",
+		className: "icon-help",
 		title: "Markdown Guide"
 	}
 };
