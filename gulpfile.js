@@ -56,6 +56,7 @@ elixir(function (mix) {
         ], 'public/js/lib.js')
         .scripts([
             'core/app.js',
+            'core/user.js',
             'core/form.js',
             'core/form.fields.js',
             'core/api.js',

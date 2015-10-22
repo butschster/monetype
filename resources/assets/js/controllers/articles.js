@@ -18,7 +18,7 @@ App.Controllers.add(['article.create', 'article.edit'], function(action) {
 });
 
 App.Controllers.add(['article.index', 'article.show'], function () {
-	if(USER_ID) $('body').on('click', '.addToFavorite', addToFavorite);
+	$('body').on('click', '.addToFavorite', addToFavorite);
 });
 
 App.Controllers.add('article.show', function () {
@@ -52,8 +52,11 @@ function showCommentForm($container, parentId) {
 }
 
 function addToFavorite(e) {
-    var $self = $(this);
-    Api.post('/api.article.favorite', {id: $(this).data('id')}, function (response) {
-		$self.parent().html(response.content);
-    });
+	var $self = $(this);
+
+	App.User.runIfAuth(function() {
+		Api.post('/api.article.favorite', {id: $self.data('id')}, function (response) {
+			$self.parent().html(response.content);
+		});
+	}, 'Вы должны авторизоваться');
 }
