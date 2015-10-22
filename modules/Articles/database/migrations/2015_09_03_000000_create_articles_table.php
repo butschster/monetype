@@ -27,7 +27,7 @@ class CreateArticlesTable extends Migration {
 			$table->boolean('disable_stat_views')->default(0);
 			$table->boolean('disable_stat_pays')->default(0);
 
-			$table->text('tags')->comment('tags separated by a comma');
+			$table->text('tags_list')->comment('tags separated by a comma');
 
 			$table->unsignedInteger('author_id')->index();
 			$table->unsignedInteger('approver_id')->index()->nullable();

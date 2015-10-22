@@ -26,7 +26,7 @@ trait TaggableTrait
             }
         }
 
-        $this->tags = $this->tags->lists('name')->all();
+        $this->tags_list = $this->tags->lists('name')->all();
         $this->save();
 
         return $attachedTags;
@@ -43,7 +43,7 @@ trait TaggableTrait
     public function detachTags(array $tags = null)
     {
         $detachedTags = [];
-        if ($tags === null) {
+        if (is_null($tags)) {
             $tags = $this->tags->lists('name')->all();
         }
 
@@ -54,7 +54,7 @@ trait TaggableTrait
             }
         }
 
-        $this->tags = $this->tags->lists('name')->all();
+        $this->tags_list = $this->tags->lists('name')->all();
         $this->save();
 
         return $detachedTags;
@@ -87,7 +87,7 @@ trait TaggableTrait
             }
         }
 
-        $this->tags = $tags;
+        $this->tags_list = $tags;
         $this->save();
 
         return $replacedTags;
@@ -113,7 +113,7 @@ trait TaggableTrait
             ->where('tag_id', $tag->id)
             ->first();
 
-        if ($query !== null) {
+        if (!is_null($query)) {
             return false;
         }
 
@@ -135,7 +135,7 @@ trait TaggableTrait
 
         $tag = Tag::where('name', $name)->first();
 
-        if ($tag === null) {
+        if (is_null($tag)) {
             return false;
         }
 
@@ -145,7 +145,7 @@ trait TaggableTrait
             ->where('tag_id', $tag->id)
             ->first();
 
-        if ($query === null) {
+        if (is_null($query)) {
             return false;
         }
 
@@ -192,21 +192,12 @@ trait TaggableTrait
      **********************************************************************/
 
     /**
-     * @return array
-     */
-    public function getTagsListAttribute()
-    {
-        return $this->tags->lists('name', 'id')->all();
-    }
-
-
-    /**
      * @param array $tags
      */
-    public function setTagsAttribute(array $tags)
+    public function setTagsListAttribute(array $tags)
     {
-        $tags                     = $this->_filterTags($tags);
-        $this->attributes['tags'] = implode(',', $tags);
+        $tags                          = $this->_filterTags($tags);
+        $this->attributes['tags_list'] = implode(',', $tags);
     }
 
 
@@ -215,7 +206,7 @@ trait TaggableTrait
      */
     public function getTagsArrayAttribute()
     {
-        return explode(',', $this->attributes['tags']);
+        return explode(',', $this->attributes['tags_list']);
     }
 
 
@@ -224,16 +215,7 @@ trait TaggableTrait
      */
     public function getTagsStringAttribute()
     {
-        return array_get($this->attributes, 'tags');
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getTagsAttribute()
-    {
-        return $this->tags()->get();
+        return array_get($this->attributes, 'tags_list');
     }
 
     /**********************************************************************
@@ -247,5 +229,4 @@ trait TaggableTrait
     {
         return $this->belongsToMany(Tag::class);
     }
-
 }

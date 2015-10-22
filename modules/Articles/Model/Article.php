@@ -88,7 +88,7 @@ class Article extends Model implements Buyable
     protected $fillable = [
         'title',
         'text_source',
-        'tags',
+        'tags_list',
         'image',
         'cost',
         'disable_comments',
