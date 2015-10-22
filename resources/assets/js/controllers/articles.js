@@ -5,7 +5,8 @@ App.Form.extend('articles', {
 		disable_comments: 'checkbox',
 		disable_stat_views: 'checkbox',
 		disable_stat_pays: 'checkbox',
-		tags: 'tags'
+		tags: 'tags',
+		cost: 'rangeslider'
 	},
 	messages: {
 		saved: 'Article saved'
