@@ -13421,127 +13421,127 @@ var toolbarBuiltInButtons = {
 	"bold": {
 		name: "bold",
 		action: toggleBold,
-		className: "fa fa-bold",
+		className: "icon-bold",
 		title: "Bold (Ctrl+B)"
 	},
 	"italic": {
 		name: "italic",
 		action: toggleItalic,
-		className: "fa fa-italic",
+		className: "icon-italic",
 		title: "Italic (Ctrl+I)"
 	},
 	"strikethrough": {
 		name: "strikethrough",
 		action: toggleStrikethrough,
-		className: "fa fa-strikethrough",
+		className: "icon-strikethrough",
 		title: "Strikethrough"
 	},
 	"heading": {
 		name: "heading",
 		action: toggleHeadingSmaller,
-		className: "fa fa-header",
+		className: "icon-header",
 		title: "Heading (Ctrl+H)"
 	},
 	"heading-smaller": {
 		name: "heading-smaller",
 		action: toggleHeadingSmaller,
-		className: "fa fa-header fa-header-x fa-header-smaller",
+		className: "icon-header fa-header-x fa-header-smaller",
 		title: "Smaller Heading (Ctrl+H)"
 	},
 	"heading-bigger": {
 		name: "heading-bigger",
 		action: toggleHeadingBigger,
-		className: "fa fa-header fa-header-x fa-header-bigger",
+		className: "icon-header fa-header-x fa-header-bigger",
 		title: "Bigger Heading (Shift+Ctrl+H)"
 	},
 	"heading-1": {
 		name: "heading-1",
 		action: toggleHeading1,
-		className: "fa fa-header fa-header-x fa-header-1",
+		className: "icon-header fa-header-x fa-header-1",
 		title: "Big Heading"
 	},
 	"heading-2": {
 		name: "heading-2",
 		action: toggleHeading2,
-		className: "fa fa-header fa-header-x fa-header-2",
+		className: "icon-header fa-header-x fa-header-2",
 		title: "Medium Heading"
 	},
 	"heading-3": {
 		name: "heading-3",
 		action: toggleHeading3,
-		className: "fa fa-header fa-header-x fa-header-3",
+		className: "icon-header fa-header-x fa-header-3",
 		title: "Small Heading"
 	},
 	"code": {
 		name: "code",
 		action: toggleCodeBlock,
-		className: "fa fa-code",
+		className: "icon-code",
 		title: "Code (Ctrl+Alt+C)"
 	},
 	"quote": {
 		name: "quote",
 		action: toggleBlockquote,
-		className: "fa fa-quote-left",
+		className: "icon-quote-left",
 		title: "Quote (Ctrl+')"
 	},
 	"unordered-list": {
 		name: "unordered-list",
 		action: toggleUnorderedList,
-		className: "fa fa-list-ul",
+		className: "icon-list-bullet",
 		title: "Generic List (Ctrl+L)"
 	},
 	"ordered-list": {
 		name: "ordered-list",
 		action: toggleOrderedList,
-		className: "fa fa-list-ol",
+		className: "icon-list-numbered",
 		title: "Numbered List (Ctrl+Alt+L)"
 	},
 	"link": {
 		name: "link",
 		action: drawLink,
-		className: "fa fa-link",
+		className: "icon-link",
 		title: "Create Link (Ctrl+K)"
 	},
 	"image": {
 		name: "image",
 		action: drawImage,
-		className: "fa fa-picture-o",
+		className: "icon-picture",
 		title: "Insert Image (Ctrl+Alt+I)"
 	},
 	"horizontal-rule": {
 		name: "horizontal-rule",
 		action: drawHorizontalRule,
-		className: "fa fa-minus",
+		className: "icon-minus",
 		title: "Insert Horizontal Line"
 	},
 	"preview": {
 		name: "preview",
 		action: togglePreview,
-		className: "fa fa-eye no-disable",
+		className: "icon-eye no-disable",
 		title: "Toggle Preview (Ctrl+P)"
 	},
 	"side-by-side": {
 		name: "side-by-side",
 		action: toggleSideBySide,
-		className: "fa fa-columns no-disable no-mobile",
+		className: "icon-columns no-disable no-mobile",
 		title: "Toggle Side by Side (F9)"
 	},
 	"fullscreen": {
 		name: "fullscreen",
 		action: toggleFullScreen,
-		className: "fa fa-arrows-alt no-disable no-mobile",
+		className: "icon-resize-full-alt no-disable no-mobile",
 		title: "Toggle Fullscreen (F11)"
 	},
 	"dropbox": {
 		name: "dropbox",
 		action: showDropboxChooser,
-		className: "fa fa-dropbox",
+		className: "icon-dropbox",
 		title: "Show Dropbox chooser"
 	},
 	"guide": {
 		name: "guide",
 		action: "http://nextstepwebs.github.io/simplemde-markdown-editor/markdown-guide",
-		className: "fa fa-question-circle",
+		className: "icon-question-circle",
 		title: "Markdown Guide"
 	}
 };

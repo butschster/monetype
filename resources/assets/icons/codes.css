@@ -26,6 +26,9 @@
 .icon-quote-right:before { content: '\e818'; } /* '' */
 .icon-code:before { content: '\e819'; } /* '' */
 .icon-briefcase:before { content: '\e81a'; } /* '' */
+.icon-list-bullet:before { content: '\e81b'; } /* '' */
+.icon-list-numbered:before { content: '\e81c'; } /* '' */
+.icon-picture:before { content: '\e81d'; } /* '' */
 .icon-trash:before { content: '\e81e'; } /* '' */
 .icon-trash-empty:before { content: '\e81f'; } /* '' */
 .icon-doc:before { content: '\e820'; } /* '' */
