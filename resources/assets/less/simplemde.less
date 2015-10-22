@@ -479,23 +479,6 @@ span.CodeMirror-selectedtext {
   overflow: hidden;
   background: white;
 
-  pre {
-    border-width: 0;
-    background: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    margin: 0;
-    white-space: pre;
-    word-wrap: normal;
-    line-height: inherit;
-    color: inherit;
-    z-index: 2;
-    position: relative;
-    overflow: visible;
-    -webkit-tap-highlight-color: transparent;
-    padding: 0;
-  }
-
   .CodeMirror-selected {
     background: #d9d9d9;
   }
@@ -503,6 +486,23 @@ span.CodeMirror-selectedtext {
   .CodeMirror-code {
     font-size: 16px;
     line-height: 30px;
+
+    pre {
+      border-width: 0;
+      background: transparent;
+      font-family: inherit;
+      font-size: inherit;
+      margin: 0;
+      white-space: pre;
+      word-wrap: normal;
+      line-height: inherit;
+      color: inherit;
+      z-index: 2;
+      position: relative;
+      overflow: visible;
+      -webkit-tap-highlight-color: transparent;
+      padding: 0;
+    }
 
     .cm-header-1,
     .cm-header-2,
@@ -795,7 +795,6 @@ span.CodeMirror-selectedtext {
 
 .editor-preview pre,
 .editor-preview-side pre {
-  background: #eee;
   margin-bottom: 10px;
 }
 

@@ -1,12 +1,12 @@
-/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript */
+/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+php */
 /**
  * prism.js default theme for JavaScript, CSS and HTML
  * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
  */
 
-code[class*="lang-"],
-pre[class*="lang-"] {
+code,
+pre {
   color: black;
   text-shadow: 0 1px white;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
@@ -17,6 +17,7 @@ pre[class*="lang-"] {
   word-break: normal;
   word-wrap: normal;
   line-height: 1.5;
+  border-radius: @border-radius-base;
 
   -moz-tab-size: 4;
   -o-tab-size: 4;
@@ -28,39 +29,39 @@ pre[class*="lang-"] {
   hyphens: none;
 }
 
-pre[class*="lang-"]::-moz-selection, pre[class*="lang-"] ::-moz-selection,
-code[class*="lang-"]::-moz-selection, code[class*="lang-"] ::-moz-selection {
+pre::-moz-selection, pre ::-moz-selection,
+code::-moz-selection, code ::-moz-selection {
   text-shadow: none;
   background: #b3d4fc;
 }
 
-pre[class*="lang-"]::selection, pre[class*="lang-"] ::selection,
-code[class*="lang-"]::selection, code[class*="lang-"] ::selection {
+pre::selection, pre ::selection,
+code::selection, code ::selection {
   text-shadow: none;
   background: #b3d4fc;
 }
 
 @media print {
-  code[class*="lang-"],
-  pre[class*="lang-"] {
+  code,
+  pre {
     text-shadow: none;
   }
 }
 
 /* Code blocks */
-pre[class*="lang-"] {
+pre {
   padding: 1em;
   margin: .5em 0;
   overflow: auto;
 }
 
-:not(pre) > code[class*="lang-"],
-pre[class*="lang-"] {
+:not(pre) > code,
+pre {
   background: #f5f2f0;
 }
 
 /* Inline code */
-:not(pre) > code[class*="lang-"] {
+:not(pre) > code {
   padding: .1em;
   border-radius: .3em;
 }
@@ -102,7 +103,7 @@ pre[class*="lang-"] {
 .token.operator,
 .token.entity,
 .token.url,
-.lang-css .token.string,
+.language-css .token.string,
 .style .token.string {
   color: #a67f59;
   background: hsla(0, 0%, 100%, .5);
@@ -128,7 +129,6 @@ pre[class*="lang-"] {
 .token.bold {
   font-weight: bold;
 }
-
 .token.italic {
   font-style: italic;
 }

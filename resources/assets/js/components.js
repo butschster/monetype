@@ -12,7 +12,8 @@ App.Components
         });
     })
     .add('validator.default', function () {
-        if($.validator == undefined) return;
+
+        if(typeof jQuery.fn.validator !== "function") return;
 
         $.validator.setDefaults({
             highlight: function (element) {
@@ -74,7 +75,7 @@ App.Components
         });
     })
     .add('datepicker', function () {
-        if(jQuery.fn.datetimepicker == undefined) return;
+        if(typeof jQuery.fn.datetimepicker !== "function") return;
 
         var options = {
             format: 'Y-m-d H:i:00',
