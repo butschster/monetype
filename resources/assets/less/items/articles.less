@@ -43,7 +43,7 @@
 
   .articleItem--meta-payments,
   .articleItem--meta-comments a {
-      color: rgba(0,0,0,0.4);
+    color: rgba(0, 0, 0, 0.4);
   }
 
   .articleItem--title {
@@ -124,11 +124,11 @@
       line-height: 10px;
       font-size: 11px;
       background: whitesmoke;
-      color: #666;
+      color: @text-color;
 
       &:hover {
-        border-color: #d6941e;
-        color: #d6941e;
+        border-color: @brand-warning;
+        color: @brand-warning;
       }
     }
 
@@ -136,5 +136,60 @@
       display: inline-block;
       margin-bottom: 3px;
     }
+  }
+}
+
+.tagsCloud {
+  li {
+    padding: 0;
+  }
+  .tagsCloud--tag {
+    background: rgba(255, 255, 255, 0.97);
+    color: @text-color;
+    font-size: 14px;
+    line-height: 35px;
+    border: 1px solid #f0f0f0;
+    padding: 5px 10px;
+    white-space: nowrap;
+    vertical-align: baseline;
+
+    &.tag-size-smallest {
+      font-size: 10px;
+    }
+
+    &.tag-size-small {
+      font-size: 12px;
+    }
+
+    &.tag-size-medium {
+      font-size: 14px;
+    }
+
+    &.tag-size-large {
+      font-size: 16px;
+    }
+
+    &.tag-size-largest {
+      font-size: 18px;
+    }
+  }
+}
+
+hr.pageBrake {
+  margin-top: 60px;
+  margin-bottom: 50px;
+  border: 0;
+  text-align: center;
+
+  &:before {
+    content: '...';
+    display: inline-block;
+    margin-left: 0.6em;
+    color: @text-color;
+    position: relative;
+    top: -30px;
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: 0.6em;
   }
 }

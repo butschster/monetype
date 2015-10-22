@@ -16,6 +16,44 @@ class TagRepository extends Repository
         return Tag::class;
     }
 
+
+    /**
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getTagsCloud($limit = 20)
+    {
+        $terms = $this->getModel()->take($limit)->orderBy('count', 'desc')->get();
+
+        $maximum = $terms->first()->count;
+
+        $cloud = [];
+
+        // start looping through the tags
+        foreach ($terms as $term) {
+            // determine the popularity of this term as a percentage
+            $percent = floor(( $term->count / $maximum ) * 100);
+
+            // determine the class for this term based on the percentage
+            if ($percent < 20):
+                $class = 'smallest';
+            elseif ($percent >= 20 and $percent < 40):
+                $class = 'small';
+            elseif ($percent >= 40 and $percent < 60):
+                $class = 'medium';
+            elseif ($percent >= 60 and $percent < 80):
+                $class = 'large';
+            else:
+                $class = 'largest';
+            endif;
+
+            $cloud[] = link_to_route('front.articles.byTag', $term->name, $term->name, ['class' => 'tagsCloud--tag tag-size-' . $class]);
+        }
+
+        return $cloud;
+    }
+
     /**
      * @param string $string
      *

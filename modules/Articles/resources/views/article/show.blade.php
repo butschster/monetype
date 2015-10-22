@@ -19,7 +19,7 @@
             @endif
         </div>
 
-        @include('articles::article.partials.tags', ['tags' => $tags])
+        @include('articles::tag.partials.tags', ['tags' => $tags])
 
         <div class="articleItem--meta">
             @include('articles::article.partials.meta', ['inner' => true])

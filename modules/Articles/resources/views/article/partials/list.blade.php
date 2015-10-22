@@ -13,7 +13,7 @@
             {!! $article->text_intro !!}
         </div>
 
-        @include('articles::article.partials.tags', ['tags' => $article->tags])
+        @include('articles::tag.partials.tags', ['tags' => $article->tags])
 
         <div class="articleItem--meta">
             @include('articles::article.partials.meta')

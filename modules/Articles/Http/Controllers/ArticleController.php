@@ -9,6 +9,7 @@ use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
 use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
+use Modules\Articles\Repositories\TagRepository;
 use Modules\Articles\Exceptions\PlagiarismException;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Core\Http\Controllers\System\FrontController;
@@ -20,28 +21,32 @@ class ArticleController extends FrontController
 
     /**
      * @param ArticleRepository $articleRepository
+     * @param TagRepository     $tagRepository
      *
      * @return \View
      */
-    public function index(ArticleRepository $articleRepository)
+    public function index(ArticleRepository $articleRepository, TagRepository $tagRepository)
     {
         $articles = $articleRepository->paginate();
+        $tagsCloud = $tagRepository->getTagsCloud();
 
-        return $this->setLayout('article.index', compact('articles'));
+        return $this->setLayout('article.index', compact('articles', 'tagsCloud'));
     }
 
 
     /**
      * @param ArticleRepository $articleRepository
+     * @param TagRepository     $tagRepository
      * @param string            $tag
      *
      * @return \View
      */
-    public function indexByTag(ArticleRepository $articleRepository, $tag)
+    public function indexByTag(ArticleRepository $articleRepository, TagRepository $tagRepository, $tag)
     {
         $articles = $articleRepository->paginateByTag($tag);
+        $tagsCloud = $tagRepository->getTagsCloud();
 
-        return $this->setLayout('article.byTag', compact('articles', 'tag'));
+        return $this->setLayout('article.byTag', compact('articles', 'tagsCloud', 'tag'));
     }
 
 
@@ -125,7 +130,7 @@ class ArticleController extends FrontController
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => ['front.article.update', $articleId],
-            'tags'    => array_combine($article->tagsList, $article->tagsList)
+            'tags'    => array_combine($article->tagsArray, $article->tagsArray)
         ]);
     }
 
