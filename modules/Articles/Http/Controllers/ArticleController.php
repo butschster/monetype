@@ -59,6 +59,8 @@ class ArticleController extends FrontController
             $this->checkPermissions('preview', $article);
         }
 
+        Assets::package('validation');
+
         return $this->setLayout('article.show', [
             'article'     => $article,
             'isPurchased' => $article->checkPurchaseStatus($this->user),
