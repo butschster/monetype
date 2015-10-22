@@ -35,5 +35,13 @@ Package::add('datepicker')
        ->css(null, url('libs/datetimepicker/jquery.datetimepicker.css'))
        ->js(null, url('libs/datetimepicker/js/jquery.datetimepicker.js'), 'libraries');
 
+Package::add('rangeslider')
+       ->css(null, url('libs/nouislider/nouislider.min.css'))
+       ->js(null, url('libs/nouislider/nouislider.min.js'), 'libraries');
+
+Package::add('tagsinput')
+       ->js('typeahead', url('libs/bootstrap3-typeahead/bootstrap3-typeahead.min.js'), 'libraries')
+       ->js(null, url('libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js'), 'libraries');
+
 Package::add('validation')
        ->js(null, url('libs/validation/jquery.validate.min.js'), 'libraries');

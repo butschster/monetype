@@ -10,16 +10,17 @@ var paths = {
     'jquery': './bower_components/jquery/',
     'underscore': './bower_components/underscore/',
     'datetimepicker': './bower_components/datetimepicker/',
-    'fontawesome': './bower_components/fontawesome/',
     'jqueryvalidation': './bower_components/jquery-validation/',
-    'jquerytagsinput': './bower_components/jquery.tagsinput/',
+    'bootstraptagsinput': './bower_components/bootstrap-tagsinput/',
+    'bootstraptypeahead': './bower_components/bootstrap3-typeahead/',
     'noty': './bower_components/noty/',
     'select2': './bower_components/select2/',
     'i18next': './bower_components/i18next/',
     'jStorage': './bower_components/jStorage/',
     'charts': './bower_components/Chart.js/',
     'dropzone': './bower_components/dropzone/',
-    'icons': './resources/assets/icons/',
+    'nouislider': './bower_components/nouislider/',
+    'icons': './resources/assets/icons/'
 };
 
 elixir.config.sourcemaps = false;
@@ -56,6 +57,7 @@ elixir(function (mix) {
         .scripts([
             'core/app.js',
             'core/form.js',
+            'core/form.fields.js',
             'core/api.js',
             'components.js',
             'controllers/articles.js',
@@ -76,5 +78,8 @@ elixir(function (mix) {
         .copy(paths.charts + 'Chart.min.js', 'public/libs/chart')
         .copy(paths.dropzone + 'dist/min/**', 'public/libs/dropzone')
         .copy(paths.select2 + 'dist/**', 'public/libs/select2')
-        .copy(paths.jqueryvalidation + 'dist/**', 'public/libs/validation');
+        .copy(paths.jqueryvalidation + 'dist/**', 'public/libs/validation')
+        .copy(paths.nouislider + 'distribute/**', 'public/libs/nouislider')
+        .copy(paths.bootstraptagsinput + 'dist/**', 'public/libs/bootstrap-tagsinput')
+        .copy(paths.bootstraptypeahead + 'bootstrap3-typeahead.min.js', 'public/libs/bootstrap3-typeahead/bootstrap3-typeahead.min.js');
 });

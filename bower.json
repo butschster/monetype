@@ -5,15 +5,16 @@
     "bootstrap": "latest",
     "i18next": "latest",
     "datetimepicker": "latest",
-    "fontawesome": "latest",
     "jquery": "latest",
     "jquery-validation": "latest",
-    "jquery.tagsinput": "latest",
     "noty": "latest",
     "select2": "latest",
     "underscore": "latest",
     "jStorage": "latest",
     "Chart.js": "latest",
-    "dropzone": "latest"
+    "dropzone": "latest",
+    "bootstrap-tagsinput": "latest",
+    "bootstrap3-typeahead": "latest",
+    "nouislider": "latest"
   }
 }
