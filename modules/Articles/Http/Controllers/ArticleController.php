@@ -97,7 +97,7 @@ class ArticleController extends FrontController
      */
     public function create(ArticleRepository $articleRepository)
     {
-        Assets::package('simplemde');
+        Assets::package(['simplemde', 'rangeslider', 'tagsinput']);
         $article = $articleRepository->getModel();
 
         $this->checkPermissions('create', $article);
@@ -105,7 +105,7 @@ class ArticleController extends FrontController
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => 'front.article.store',
-            'tags'    => ''
+            'tags'    => []
         ]);
     }
 
@@ -117,7 +117,7 @@ class ArticleController extends FrontController
      */
     public function edit(ArticleRepository $articleRepository, $articleId)
     {
-        Assets::package('simplemde');
+        Assets::package(['simplemde', 'rangeslider', 'tagsinput']);
         $article = $articleRepository->findOrFail($articleId);
 
         $this->checkPermissions('update', $article);
@@ -125,7 +125,7 @@ class ArticleController extends FrontController
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => ['front.article.update', $articleId],
-            'tags'    => $article->tagsString
+            'tags'    => array_combine($article->tagsList, $article->tagsList)
         ]);
     }
 

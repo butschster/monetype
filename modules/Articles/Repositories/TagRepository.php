@@ -1,0 +1,93 @@
+<?php
+
+namespace Modules\Articles\Repositories;
+
+use Modules\Articles\Model\Tag;
+use Modules\Support\Helpers\Repository;
+
+class TagRepository extends Repository
+{
+
+    /**
+     * @return string
+     */
+    public function model()
+    {
+        return Tag::class;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return array
+     */
+    public function finAllByString($string)
+    {
+        return $this->getModel()
+            ->where('name', 'like', "$string%")
+            ->take(10)
+            ->orderBy('count', 'desc')
+            ->lists('name');
+    }
+
+
+    /**
+     * @param array   $data
+     * @param integer $id
+     * @param string  $attribute
+     *
+     * @return Article
+     */
+    public function update(array $data, $id, $attribute = "id")
+    {
+        $tags = array_pull($data, 'tags', '');
+
+        $article = parent::update($data, $id, $attribute);
+
+        if (is_string($tags)) {
+            $tags = explode(',', $tags);
+        }
+
+        $article->updateTags($tags);
+
+        return $article;
+    }
+
+
+    /**
+     * @param int   $perPage
+     * @param array $columns
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginate($perPage = 15, $columns = ['*'])
+    {
+        return $this->getModel()
+            ->with('author', 'tags')
+            ->orderByDate()
+            ->published()
+            ->withFavorites()
+            ->paginate($perPage, $columns);
+    }
+
+
+    /**
+     * @param array|string $tag
+     * @param int          $perPage
+     * @param array        $columns
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginateByTag($tag, $perPage = 15, $columns = ['*'])
+    {
+        $tag = explode(',', $tag);
+
+        return $this->getModel()
+            ->with('author', 'tags')
+            ->filterByTag($tag)
+            ->orderByDate()
+            ->published()
+            ->withFavorites()
+            ->paginate($perPage, $columns);
+    }
+}

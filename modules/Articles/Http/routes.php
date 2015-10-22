@@ -33,6 +33,8 @@ Route::group(['as' => 'front.'], function () {
         RouteAPI::post('article.store', ['as' => 'article.store', 'uses' => 'Api\ArticleController@store']);
         RouteAPI::put('article.update/{article}', ['as' => 'article.update', 'uses' => 'Api\ArticleController@update']);
 
+        RouteAPI::get('tags.search', ['uses' => 'Api\TagsController@search']);
+
         Route::resource('article', 'ArticleController', [
             'except' => [
                 'index', 'destroy', 'store', 'update', 'show', 'create'
