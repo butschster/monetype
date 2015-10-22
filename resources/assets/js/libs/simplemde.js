@@ -13145,7 +13145,10 @@ function toggleSideBySide(editor) {
 	// Updates preview
 	cm.on("update", function() {
 		preview.innerHTML = editor.options.previewRender(editor.value(), preview);
+		Prism.highlightAll();
 	});
+
+	Prism.highlightAll();
 }
 
 
@@ -13180,6 +13183,10 @@ function togglePreview(editor) {
 		toolbar_div.className += " disabled-for-preview";
 	}
 	preview.innerHTML = editor.options.previewRender(editor.value(), preview);
+
+
+	Prism.highlightAll();
+
 
 	// Turn off side by side if needed
 	var sidebyside = cm.getWrapperElement().nextSibling;
