@@ -3,7 +3,11 @@
         {!! $article->author->getAvatar(35) !!}
     </div>
     <div class="media-body">
-        <div class="pull-right articleItem--favorites">
+        <div class="pull-right">
+            <span class="articleItem--readTime">
+                {!! $article->reading_time !!}
+            </span>
+
             @include('articles::article.partials.favorites')
         </div>
 

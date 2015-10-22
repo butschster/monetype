@@ -42,6 +42,7 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property string         $statusTitle
  * @property boolean        $need_check
  * @property string         $user_ip
+ * @property integer        $reading_time
  *
  * @property User           $author
  * @property User           $approvedBy
@@ -455,6 +456,21 @@ class Article extends Model implements Buyable
     public function getAmountAttribute()
     {
         return String::formatAmount(array_get($this->attributes, 'amount'));
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getReadingTimeAttribute()
+    {
+        $minutes = (int) array_get($this->attributes, 'reading_time');
+
+        if ($minutes == 0) {
+            $minutes = 1;
+        }
+
+        return trans('articles::article.label.reading_time', ['minutes' => $minutes]);
     }
 
     /**

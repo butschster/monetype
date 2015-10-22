@@ -44,6 +44,11 @@ class ArticleObserver
         }
 
         $article->text = $parser->text($text);
+
+        $words = str_word_count(strip_tags($article->text));
+        $min = floor($words / (int) config('article.words_per_minute_readimg', 200));
+
+        $article->reading_time = $min;
     }
 
 
