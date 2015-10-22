@@ -13,7 +13,7 @@
             <label class="control-label">@lang('articles::article.field.text')</label>
             {!! $article->text !!}
             <hr class="panel-wide" />
-            @include('articles::article.partials.tags', ['tags' => $tags, 'showTagsTitle' => true])
+            @include('articles::tag.partials.tags', ['tags' => $tags, 'showTagsTitle' => true])
         </div>
         <div class="well well-border m-b-none">
             <div class="form-group">
