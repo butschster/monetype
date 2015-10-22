@@ -35,7 +35,7 @@ class ArticleController extends ApiController
         $this->checkPermissions('create', $articleRepository->getModel());
 
         $articleRepository->create($request->only(
-            'title', 'text_source', 'disable_comments', 'disable_stat_views', 'disable_stat_pays', 'tags'
+            'title', 'text_source', 'disable_comments', 'disable_stat_views', 'disable_stat_pays', 'tags', 'cost'
         ));
 
 
@@ -57,7 +57,7 @@ class ArticleController extends ApiController
         $this->checkPermissions('update', $article);
 
         $article = $articleRepository->update($request->only(
-            'title', 'text_source', 'disable_comments', 'disable_stat_views', 'disable_stat_pays', 'tags'
+            'title', 'text_source', 'disable_comments', 'disable_stat_views', 'disable_stat_pays', 'tags', 'cost'
         ), $articleId);
 
         $this->setMessage(trans('articles::article.message.updated'));

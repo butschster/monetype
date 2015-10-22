@@ -28,7 +28,8 @@ class UpdateArticleRequest extends ApiRequest
         return [
             'title'       => 'required|max:255',
             'text_source' => 'required|min:500',
-            'tags'        => 'required|mintags:3'
+            'tags'        => 'required|mintags:3',
+            'cost'        => 'numeric|min:0|max:100'
         ];
     }
 

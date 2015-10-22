@@ -41,6 +41,20 @@
             <hr class="panel-wide" />
 
             <div class="form-group">
+                <label class="control-label">
+                    @lang('articles::article.field.cost')
+
+                    <span id="slider-cost">
+                        <span class="slider-value"></span>
+                        <span data-icon="rouble"></span>
+                    </span>
+                </label>
+                {!! Form::hidden('cost') !!}
+            </div>
+
+            <hr class="panel-wide" />
+
+            <div class="form-group">
                 <div class="checkbox">
                     <label>
                         {!! Form::hidden('disable_comments', 0) !!}
