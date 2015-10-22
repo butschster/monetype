@@ -1,29 +1,31 @@
 <ul class="articleItem--meta-items list-unstyled list-inline">
     <li>
         <div class="articleItem--meta-coost">
-            @lang('articles::article.label.cost', ['amount' => $article->cost])
+        @if(!$article->isFree())
+            @lang('articles::article.label.cost', ['amount' => $article->getFormatedCost()])
 
-            @if($article->amount > 0)
+            @if($article->isPaysStatisticsEnabled())
             &nbsp;&nbsp;
-            {!! trans('articles::article.label.balance', ['amount' => link_to_route('front.article.money', $article->amount, $article->id)]) !!}
+            {!! trans('articles::article.label.balance', ['amount' => $article->amount]) !!}
             @endif
+        @else
+            @lang('articles::article.label.free')
+        @endif
         </div>
     </li>
 
+    @if($article->isViewsStatisticsEnabled())
     <li>
-        @include('articles::article.partials.favorites')
+        <i class="icon-eye"></i> {{ $article->count_payments }}
     </li>
+    @endif
 
-    <li>
-        <i class="fa fa-fw fa-eye"></i> {{ $article->count_payments }}
-    </li>
-
-    @if(empty($inner) and !$article->forbid_comment)
+    @if(empty($inner) and $article->isCommentsEnabled())
         <li>
             @if($article->hasComments())
-                <i class="fa fa-fw fa-comment"></i> {!! link_to_route('front.article.comments', $article->count_comments, $article->id) !!}
+                <i class="icon-comment"></i> {!! link_to_route('front.article.comments', $article->count_comments, $article->id) !!}
             @else
-                <i class="fa fa-fw fa-comment-o"></i> 0
+                <i class="icon-comment-o"></i> 0
             @endif
         </li>
     @endif

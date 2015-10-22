@@ -1,8 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="nf6y1tj9krdxzkr"></script>
 
     <h2>@lang('articles::article.title.create')</h2>
 
@@ -20,20 +19,10 @@
         </ul>
         @endif
 
-        <div class="panel-heading">
+        <div class="well well-border m-b-none">
             <div class="form-group form-group-lg">
                 <label class="control-label">@lang('articles::article.field.title')</label>
                 {!! Form::text('title', null, ['class' => 'form-control', 'id' => 'inputTitle']) !!}
-            </div>
-
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        {!! Form::hidden('forbid_comment', 0) !!}
-                        {!! Form::checkbox('forbid_comment') !!}
-                        @lang('articles::article.field.forbid_comment')
-                    </label>
-                </div>
             </div>
         </div>
 
@@ -41,8 +30,39 @@
             <div class="form-group">
                 {!! Form::textarea('text_source', null, ['class' => 'form-control', 'rows' => 30, 'id' => 'inputText']) !!}
             </div>
+
             <hr class="panel-wide" />
-            @include('articles::article.partials.inputTags')
+
+            <div class="form-group">
+                <label class="control-label">@lang('articles::article.field.tags')</label>
+                {!! Form::textarea('tags', $tags, ['class' => 'form-control', 'id' => 'inputTags', 'rows' => 1]) !!}
+            </div>
+
+            <hr class="panel-wide" />
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        {!! Form::hidden('disable_comments', 0) !!}
+                        {!! Form::checkbox('disable_comments') !!}
+                        @lang('articles::article.field.disable_comments')
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        {!! Form::hidden('disable_stat_views', 0) !!}
+                        {!! Form::checkbox('disable_stat_views') !!}
+                        @lang('articles::article.field.disable_stat_views')
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        {!! Form::hidden('disable_stat_pays', 0) !!}
+                        {!! Form::checkbox('disable_stat_pays') !!}
+                        @lang('articles::article.field.disable_stat_pays')
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class="panel-footer">

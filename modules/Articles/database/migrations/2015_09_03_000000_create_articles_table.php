@@ -23,7 +23,9 @@ class CreateArticlesTable extends Migration {
 			$table->text('text');
 			$table->text('text_source');
 
-			$table->boolean('forbid_comment')->default(0);
+			$table->boolean('disable_comments')->default(0);
+			$table->boolean('disable_stat_views')->default(0);
+			$table->boolean('disable_stat_pays')->default(0);
 
 			$table->text('tags')->comment('tags separated by a comma');
 
@@ -31,6 +33,7 @@ class CreateArticlesTable extends Migration {
 			$table->unsignedInteger('approver_id')->index()->nullable();
 			$table->unsignedInteger('bocked_by_id')->index()->nullable();
 
+			$table->decimal('cost', 10, 2)->default(0)->index();
 			$table->decimal('amount', 10, 2)->default(0)->index();
 
 			$table->unsignedInteger('count_payments')->default(0);

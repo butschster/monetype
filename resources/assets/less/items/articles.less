@@ -21,6 +21,7 @@
   .articleItem--meta {
     .clearfix();
     margin: 20px 0 0;
+    border-radius: @border-radius-large;
 
     .articleItem--meta-items {
       float: left;
@@ -44,7 +45,7 @@
     font-weight: 500;
 
     a {
-      color: #003970;
+      color: @brand-primary;
     }
   }
 
@@ -53,8 +54,13 @@
     line-height: 30px;
   }
 
-  .addToFavorite.fa-bookmark {
-    color: #0BBA54;
+  .articleItem--favorites {
+    font-size: 18px;
+    line-height: 18px;
+  }
+
+  .addToFavorite.icon-bookmark {
+    color: @brand-success;
   }
 }
 
@@ -70,7 +76,7 @@
       padding: 2px 5px;
       line-height: 10px;
       font-size: 11px;
-      background: #fff;
+      background: whitesmoke;
       color: #666;
 
       &:hover {

@@ -8,32 +8,23 @@
     </div>
 @endif
 <div class="panel-body">
-    {{--
     <div class="form-group">
         <div class="input-icon-append">
-            <i class="icon-append fa fa-user"></i>
-            {!! Form::text('username', null, ['class' => 'form-control', 'placeholder' => trans('users::user.field.username')]) !!}
-        </div>
-    </div>
-    --}}
-
-    <div class="form-group">
-        <div class="input-icon-append">
-            <i class="icon-append fa fa-envelope-o"></i>
+            <i class="icon-append icon-envelope-o"></i>
             {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => trans('users::user.field.email')]) !!}
         </div>
     </div>
 
     <div class="form-group">
         <div class="input-icon-append">
-            <i class="icon-append fa fa-lock"></i>
+            <i class="icon-append icon-lock"></i>
             {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => trans('users::user.field.password')]) !!}
         </div>
     </div>
 
     <div class="form-group">
         <div class="input-icon-append">
-            <i class="icon-append fa fa-lock"></i>
+            <i class="icon-append icon-lock"></i>
             {!! Form::password('password_confirmation', ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => trans('users::user.field.password_confirm')]) !!}
         </div>
     </div>
@@ -45,10 +36,10 @@
     <hr class="panel-wide" />
 
     @if($couponsCount > 0)
-        <button type="submit" class="btn btn-info btn-lg" data-icon="gift fa-lg fa-fw">@lang('users::user.button.giveMoney')</button>
+        <button type="submit" class="btn btn-info btn-lg" data-icon="gift icon-lg">@lang('users::user.button.giveMoney')</button>
     @else
         {!! Form::button(trans('users::user.button.register'), [
-            'class' => 'btn btn-info btn-lg', 'type' => 'submit', 'data-icon' => 'thumbs-o-up fa-lg fa-fw'
+            'class' => 'btn btn-info btn-lg', 'type' => 'submit', 'data-icon' => 'thumbs-o-up icon-lg'
         ]) !!}
     @endif
 </div>

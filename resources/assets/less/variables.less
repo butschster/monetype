@@ -1,5 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700&subset=cyrillic,latin);
-
 @btn-font-weight:               300;
 @font-family-sans-serif:        "Open Sans", Helvetica, Arial, sans-serif;
 
@@ -38,17 +36,31 @@
 @alert-danger-border:           darken(@brand-danger,  15%);
 
 
-@headings-font-weight:          300;
+@headings-font-weight:          600;
 
-@border-radius-base:            0;
-@border-radius-large:           0;
-@border-radius-small:           0;
+@border-radius-base:            3px;
+@border-radius-large:           4px;
+@border-radius-small:           2px;
+
+// Allows for customizing button radius independently from global border radius
+@btn-border-radius-base:        0;
+@btn-border-radius-large:       0;
+@btn-border-radius-small:       0;
+
+//** Default `.form-control` border radius
+// This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
+@input-border-radius:           0;
+//** Large `.form-control` border radius
+@input-border-radius-large:     0;
+//** Small `.form-control` border radius
+@input-border-radius-small:     0;
 
 // Panel content padding
 @panel-content-padding:         20px;
 @panel-content-padding-sm:      15px;
 @panels-border-color:           @table-border-color;
 @panel-heading-bg:              #fafafa;
+@panel-border-radius:           0;
 
 
 // Breadcrumbs

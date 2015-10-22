@@ -21,13 +21,13 @@
 			<div class="panel-body">
 				<div class="form-group">
 					<div class="input-icon-append">
-						<i class="icon-append fa fa-envelope-o"></i>
+						<i class="icon-append icon-envelope-o"></i>
 						{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => trans('users::user.field.email')]) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="input-icon-append">
-						<i class="icon-append fa fa-lock"></i>
+						<i class="icon-append icon-lock"></i>
 						{!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => trans('users::user.field.password')]) !!}
 					</div>
 				</div>

@@ -44,13 +44,13 @@ class PurchaseArticle implements SelfHandling
             return true;
         }
 
-        if ( ! $this->user->hasMoney($this->article->getCost())) {
+        if ( ! $this->user->hasMoney($this->article->cost)) {
             throw new NotEnoughMoneyException(trans('articles::article.message.not_enough_money'));
         }
 
         return DB::transaction(function () {
             $transaction         = new Transaction;
-            $transaction->amount = $this->article->getCost();
+            $transaction->amount = $this->article->cost;
 
             $transaction->assignPurchaser($this->user);
             $transaction->assignRecipient($this->article->author);

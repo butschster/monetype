@@ -10,19 +10,12 @@ use Modules\Core\Http\Controllers\System\FrontController;
 class CommentController extends FrontController
 {
 
-    /**
-     * @param CommentPostRequest $request
-     * @param ArticleRepository  $repository
-     * @param integer            $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function post(CommentPostRequest $request, ArticleRepository $repository, $articleId)
     {
         $article = $repository->findOrFail($articleId);
 
-        if ($article->forbid_comment) {
-            abort(403);
+        if ($article->isCommentsDisabled()) {
+            abort(403, trans('comments::comment.message.comments_disabled'));
         }
 
         $comment = $article->comments()->create($request->only('title', 'text'));
