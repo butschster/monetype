@@ -13036,6 +13036,19 @@ function toggleOrderedList(editor) {
 }
 
 
+function showDropboxChooser(editor) {
+	var cm = editor.codemirror;
+
+	Dropbox.choose({
+		success: function(files) {
+			cm.replaceSelection("![](" + files[0].link + ")")
+		},
+		linkType: "direct",
+		extensions: ['images'],
+	});
+}
+
+
 /**
  * Action for drawing a link.
  */
@@ -13512,6 +13525,12 @@ var toolbarBuiltInButtons = {
 		className: "fa fa-arrows-alt no-disable no-mobile",
 		title: "Toggle Fullscreen (F11)"
 	},
+	"dropbox": {
+		name: "dropbox",
+		action: showDropboxChooser,
+		className: "fa fa-dropbox",
+		title: "Show Dropbox chooser"
+	},
 	"guide": {
 		name: "guide",
 		action: "http://nextstepwebs.github.io/simplemde-markdown-editor/markdown-guide",
@@ -13611,7 +13630,13 @@ function SimpleMDE(options) {
 /**
  * Default toolbar elements.
  */
-SimpleMDE.toolbar = ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "side-by-side", "fullscreen", "guide"];
+SimpleMDE.toolbar = [
+	"bold", "italic", "heading", "|",
+	"quote", "unordered-list", "ordered-list", "horizontal-rule", "|",
+	"link", "image", "dropbox", "code", "|",
+	"preview", "side-by-side", "fullscreen",
+	"guide"
+];
 
 /**
  * Default markdown render.

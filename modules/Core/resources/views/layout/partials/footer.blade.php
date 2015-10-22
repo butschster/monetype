@@ -59,10 +59,10 @@
                 </div>
                 <div class="col-xs-6">
                     <div class="socials text-right">
-                        <a href="#" class="rounded-icon social fa fa-vk"><!-- vkontakte --></a>
-                        <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
-                        <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
-                        <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
+                        <a href="#" class="rounded-icon social icon-vkontakte"><!-- vkontakte --></a>
+                        <a href="#" class="rounded-icon social icon-facebook"><!-- facebook --></a>
+                        <a href="#" class="rounded-icon social icon-twitter"><!-- twitter --></a>
+                        <a href="#" class="rounded-icon social icon-gplus"><!-- google plus --></a>
                     </div>
                 </div>
             </div>

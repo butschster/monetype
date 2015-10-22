@@ -22,7 +22,7 @@ class SoonController extends FrontController
             'MESSAGE_SUCCESS' => (array) $this->session->get('success', [])
         ];
 
-        Assets::package(['libraries', 'coming_soon', 'backstretch', 'countdown']);
+        Assets::package(['libraries', 'coming_soon', 'backstretch', 'countdown', 'validation']);
     }
 
 
