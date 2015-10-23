@@ -20,14 +20,12 @@ class CreateCouponsTable extends Migration
 
             $table->string('type_id');
 
-            $table->string('code');
+            $table->string('code')->unique();
             $table->decimal('amount', 10, 2);
 
             $table->timestamps();
             $table->date('expired_at')->nullable();
             $table->softDeletes();
-
-            $table->unique('id');
 
             $table->foreign('type_id')
                 ->references('name')
