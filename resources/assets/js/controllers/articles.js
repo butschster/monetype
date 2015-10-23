@@ -76,7 +76,9 @@ function addToFavorite(e) {
 
 	App.User.runIfAuth(function() {
 		Api.post('/api.article.favorite', {id: $self.data('id')}, function (response) {
-			$self.parent().html(response.content);
+			$self.closest('.articleItem--favorites').replaceWith(
+				$(response.content).find('.icon-bookmark').addClass('animated bounceIn').end()
+			);
 		});
 	}, 'Вы должны авторизоваться');
 }
