@@ -27,9 +27,7 @@
 </div>
 {!! $articles->render() !!}
 @else
-<div class="panel">
-    <div class="panel-body">
-        <h2 class="m-t-none">@lang('articles::article.message.empty_list')</h2>
-    </div>
+<div class="alert alert-info m-t-lg">
+    <h4 class="m-b-none m-t-none">@lang('articles::article.message.empty_list')</h4>
 </div>
 @endif

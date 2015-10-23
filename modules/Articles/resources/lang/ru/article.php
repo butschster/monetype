@@ -58,7 +58,7 @@ return [
         'not_enough_money'          => '<i class="icon-emo-unhappy"></i> У вас недостаточно денег для прочтения данной статьи',
         'can_publish_only_draft'    => 'Опубликовать можно только черновик',
         'can_approve_ony_published' => 'Проверить можно только опубликованную статью',
-        'empty_list'                => 'На данный момент не написано ни одной статьи',
+        'empty_list'                => '<i class="icon-emo-unhappy"></i> На данный момент не написано ни одной статьи',
         'bought'                    => '',
         'created'                   => 'Статья добавлена',
         'updated'                   => '<i class="icon-emo-happy"></i> Статья сохранена',
