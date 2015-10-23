@@ -51,6 +51,7 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property Collection     $subscribers
  * @property Collection     $checks
  * @property Collection     $comments
+ * @property Collection     $revisions
  *
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -313,6 +314,10 @@ class Article extends Model implements Buyable
         $this->status       = static::STATUS_PUBLISHED;
         $this->published_at = Carbon::now();
         $this->save();
+
+        $this->revisions()->create([
+            'text_source' => $this->text_source
+        ]);
     }
 
 
@@ -475,6 +480,15 @@ class Article extends Model implements Buyable
     public function setIsFavoritedAttribute($status)
     {
         $this->attributes['is_favorited'] = (bool) $status;
+    }
+
+
+    /**
+     * @param $text
+     */
+    public function setTextSourceAttribute($text)
+    {
+        $this->attributes['text_source'] = trim($text);
     }
 
     /**********************************************************************
@@ -641,5 +655,14 @@ class Article extends Model implements Buyable
     public function comments()
     {
         return $this->hasMany(Comment::class, 'article_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function revisions()
+    {
+        return $this->hasMany(ArticleRevision::class, 'article_id');
     }
 }

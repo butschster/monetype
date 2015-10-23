@@ -4,16 +4,6 @@ App.Components
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         });
     })
-    .add('i18nSetup', function () {
-        i18n.init({
-            lng: 'ru',
-            fallbackLng: [],
-            resGetPath: '/js/lang/__lng__.json',
-        });
-    })
-    .add('select', function () {
-        $("select").select2();
-    })
     .add('notySetup', function () {
         $.noty.defaults = $.extend($.noty.defaults, {
             layout: 'topRight',
@@ -22,6 +12,8 @@ App.Components
         });
     })
     .add('validator.default', function () {
+        if($.validator == undefined) return;
+
         $.validator.setDefaults({
             highlight: function (element) {
                 var elem = $(element);
@@ -81,48 +73,9 @@ App.Components
             }
         });
     })
-    .add('tags', function () {
-        $('textarea.input-tags').select2({
-            tags: [],
-            minimumInputLength: 0,
-            tokenSeparators: [',', ' ', ';'],
-            createSearchChoice: function (term, data) {
-                if ($(data).filter(function () {
-                        return this.text.localeCompare(term) === 0;
-                    }).length === 0) {
-                    return {
-                        id: term,
-                        text: term
-                    };
-                }
-            },
-            multiple: true,
-            ajax: {
-                url: '/api.tags',
-                dataType: "json",
-                data: function (term, page) {
-                    return {tag: term};
-                },
-                results: function (data, page) {
-                    if (!data.content) return {results: []};
-                    return {results: data.content};
-                }
-            },
-            initSelection: function (element, callback) {
-                var data = [];
-
-                var tags = element.val().split(",");
-                for (i in tags) {
-                    data.push({
-                        id: tags[i],
-                        text: tags[i]
-                    });
-                };
-                callback(data);
-            }
-        });
-    })
     .add('datepicker', function () {
+        if(jQuery.fn.datetimepicker == undefined) return;
+
         var options = {
             format: 'Y-m-d H:i:00',
             lang: LOCALE,
@@ -186,12 +139,12 @@ App.Components
             var cls = $(this).data('icon');
             if ($(this).hasClass('btn-labeled')) cls += ' btn-label icon';
 
-            $(this).html('<i class="fa fa-' + cls + '"></i> ' + $(this).html());
+            $(this).html('<i class="icon-' + cls + '"></i> ' + $(this).html());
             $(this).removeAttr('data-icon-prepend').removeAttr('data-icon');
         });
 
         $('*[data-icon-append]').each(function () {
-            $(this).html($(this).html() + '&nbsp&nbsp<i class="fa fa-' + $(this).data('icon-append') + '"></i>');
+            $(this).html($(this).html() + '&nbsp&nbsp<i class="icon-' + $(this).data('icon-append') + '"></i>');
             $(this).removeAttr('data-icon-append');
         });
     });

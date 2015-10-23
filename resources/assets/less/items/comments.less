@@ -19,21 +19,27 @@
     background: #fff;
     padding: 15px;
     position: relative;
+    border-radius: @border-radius-large;
+  }
 
-    &:after {
-      bottom: 100%;
-      left: 45px;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(255, 255, 255, 0);
-      border-bottom-color: #ffffff;
-      border-width: 10px;
-      margin-left: -10px;
-    }
+  .commentForm {
+    margin-top: 10px;
+  }
+
+  .commentForm:after,
+  .commentItem--body:after {
+    bottom: 100%;
+    left: 45px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #ffffff;
+    border-width: 10px;
+    margin-left: -10px;
   }
 
   .commentItem--content {
@@ -63,6 +69,8 @@
 .commentForm {
   padding: 15px;
   background: #fff;
+  position: relative;
+  border-radius: @border-radius-large;
 }
 
 .commentForm--title {

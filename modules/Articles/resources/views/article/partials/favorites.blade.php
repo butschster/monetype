@@ -1,2 +1,2 @@
-<i class="fa addToFavorite @if($article->is_favorited) fa-bookmark @else fa-bookmark-o @endif" data-id="{{ $article->id }}"></i>
+<i class="addToFavorite @if($article->is_favorited) icon-bookmark @else icon-bookmark-o @endif" data-id="{{ $article->id }}"></i>
 <span class="articleItem--favorites-count" title="@lang('articles::article.label.favorites')">{{ $article->count_favorites }}</span>

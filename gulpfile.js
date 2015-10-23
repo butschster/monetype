@@ -6,7 +6,7 @@ var paths = {
     'assetsCss': elixir.config.assetsPath + '/css/',
     'assetsSass': elixir.config.assetsPath + '/sass/',
     'assetsJs': elixir.config.assetsPath + '/js/',
-    'bootstrap': './node_modules/bootstrap-sass/assets/',
+    'bootstrap': './bower_components/bootstrap/',
     'jquery': './bower_components/jquery/',
     'underscore': './bower_components/underscore/',
     'datetimepicker': './bower_components/datetimepicker/',
@@ -18,53 +18,39 @@ var paths = {
     'i18next': './bower_components/i18next/',
     'jStorage': './bower_components/jStorage/',
     'charts': './bower_components/Chart.js/',
-    'dropzone': './bower_components/dropzone/'
+    'dropzone': './bower_components/dropzone/',
+    'icons': './resources/assets/icons/',
 };
 
+elixir.config.sourcemaps = false;
 
 elixir(function (mix) {
     mix
-        // SaSS
-        .sass('bootstrap.scss', paths.assetsCss)
-        .sass('app.scss', paths.assetsCss)
+    // SaSS
+    .sass('bootstrap.scss', paths.assetsCss)
+    .sass('app.scss', paths.assetsCss)
 
-        // Less
-//        .less('app.less', paths.assetsCss)
-//        .less('coming_soon.less', paths.assetsCss)
-//        .less('simplemde.less', 'public/libs/simplemde')
-
+    // Less
+    //    .less('app.less', 'public/css/')
+    //    .less('coming_soon.less', 'public/css/')
+    //    .less('simplemde.less', 'public/libs/simplemde')
 
         // CSS
         .styles([
-            paths.assetsCss + 'bootstrap.css',
-            paths.select2 + "dist/css/select2.css",
-            paths.datetimepicker + "jquery.datetimepicker.css",
-            paths.jquerytagsinput + "src/jquery.tagsinput.css",
-            paths.assetsCss + 'app.css'
-        ], 'public/css/app_new.css')
-
-
-        .styles([
-            paths.assetsCss + 'coming_soon.css'
-        ], 'public/css/coming_soon.css')
+            paths.datetimepicker + 'jquery.datetimepicker.css'
+        ], 'public/libs/datetimepicker/jquery.datetimepicker.css')
 
         // Fonts
-        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts')
-        .copy(paths.fontawesome + 'fonts/**', 'public/fonts')
+        .copy(paths.icons + 'font/**', 'public/fonts')
 
         // JavaScript
         .scripts([
             paths.jquery + 'dist/jquery.js',
-            paths.bootstrap + "javascripts/bootstrap.js",
+            paths.bootstrap + "js/dropdown.js",
+            paths.bootstrap + "js/collapse.js",
             paths.underscore + "underscore.js",
-            paths.select2 + "dist/js/select2.full.js",
             paths.noty + "js/noty/packaged/jquery.noty.packaged.js",
-            paths.jqueryvalidation + "dist/jquery.validate.js",
-            paths.jqueryvalidation + "dist/additional-methods.js",
-            paths.jqueryvalidation + "dist/additional-methods.js",
-            paths.jStorage + "jstorage.js",
-            paths.datetimepicker + "jquery.datetimepicker.js",
-            paths.i18next + "i18next.js"
+            paths.jStorage + "jstorage.js"
         ], 'public/js/lib.js')
         .scripts([
             'core/app.js',
@@ -83,9 +69,11 @@ elixir(function (mix) {
         .scripts([
             'libs/simplemde.js'
         ], 'public/libs/simplemde/simplemde.js')
+        .scripts([
+            paths.datetimepicker + 'jquery.datetimepicker.js'
+        ], 'public/libs/datetimepicker/jquery.datetimepicker.js')
         .copy(paths.charts + 'Chart.min.js', 'public/libs/chart')
         .copy(paths.dropzone + 'dist/min/**', 'public/libs/dropzone')
-
-        // Versioning
-        //.version(['public/css/app.css', 'public/js/app.js']);
+        .copy(paths.select2 + 'dist/**', 'public/libs/select2')
+        .copy(paths.jqueryvalidation + 'dist/**', 'public/libs/validation');
 });

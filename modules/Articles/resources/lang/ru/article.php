@@ -36,18 +36,18 @@ return [
     'status'  => [
         Article::STATUS_DRAFT     => '<span class="label label-default">Черновик</span>',
         Article::STATUS_PUBLISHED => '<span class="label label-success">Опубликована</span>',
-        Article::STATUS_APPROVED  => '<span class="label label-success"><i class="fa fa-check"></i> Опубликована</span>',
-        Article::STATUS_BLOCKED   => '<span class="label label-danger"><i class="fa fa-ban"></i> Заблокирована</span>',
+        Article::STATUS_APPROVED  => '<span class="label label-success"><i class="icon-check"></i> Опубликована</span>',
+        Article::STATUS_BLOCKED   => '<span class="label label-danger"><i class="icon-ban"></i> Заблокирована</span>',
     ],
     'label'   => [
-        'cost'           => ':amount <i class="fa fa-rub"></i>',
-        'balance'        => '<i class="fa fa-fw fa-briefcase"></i> :amount <i class="fa fa-rub"></i>',
+        'cost'           => ':amount <i class="icon-rouble"></i>',
+        'balance'        => '<i class="icon-briefcase"></i> :amount <i class="icon-rouble"></i>',
         'total_amount'   => 'Собрано денег',
         'count_payments' => 'Всего платежей',
         'free'           => 'Бесплатно'
     ],
     'message' => [
-        'need_to_buy'               => 'Вам необходимо заплатить :amount <i class="fa fa-rub"></i> для прочтения статьи.',
+        'need_to_buy'               => 'Вам необходимо заплатить :amount <i class="icon-rouble"></i> для прочтения статьи.',
         'need_to_register'          => 'Для прочтения статьи вы должны быть авторизованы, если у вас нет аккаунта, вам необходимо зарегистрироваться',
         'not_enough_money'          => 'У вас недостаточно денег для прочтения данной статьи',
         'can_publish_only_draft'    => 'Опубликовать можно только черновик',

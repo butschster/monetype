@@ -25,10 +25,10 @@
             @include('articles::article.partials.meta', ['inner' => true])
 
             <div class="socials pull-right">
-                <a href="#" class="rounded-icon social fa fa-vk"><!-- vkontakte --></a>
-                <a href="#" class="rounded-icon social fa fa-facebook"><!-- facebook --></a>
-                <a href="#" class="rounded-icon social fa fa-twitter"><!-- twitter --></a>
-                <a href="#" class="rounded-icon social fa fa-google-plus"><!-- google plus --></a>
+                <a href="#" class="rounded-icon social icon-vkontakte"><!-- vkontakte --></a>
+                <a href="#" class="rounded-icon social icon-facebook"><!-- facebook --></a>
+                <a href="#" class="rounded-icon social icon-twitter"><!-- twitter --></a>
+                <a href="#" class="rounded-icon social icon-gplus"><!-- google plus --></a>
             </div>
 
             <div class="clearfix"></div>
@@ -44,7 +44,7 @@
                 </li>
                 <li>
                     {!! link_to_route('front.article.money', trans('articles::article.button.purchases'), $article->id, [
-                        'class' => 'btn btn-info', 'data-icon' => 'money'
+                        'class' => 'btn btn-info', 'data-icon' => 'dollar'
                     ]) !!}
                 </li>
 
@@ -53,7 +53,7 @@
                     {!! Form::open(['route' => ['front.article.draft', $article->id], 'method' => 'put', 'class' => 'm-b-none']) !!}
                     {!! Form::button(trans('articles::article.button.draft'), [
                         'type' => 'submit',
-                        'class' => 'btn btn-danger', 'data-icon' => 'eye-slash'
+                        'class' => 'btn btn-danger', 'data-icon' => 'eye-off'
                     ]) !!}
                     {!! Form::close() !!}
                 </li>

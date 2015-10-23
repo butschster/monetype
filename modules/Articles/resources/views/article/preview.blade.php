@@ -56,7 +56,7 @@
                 ]) !!}
                 {!! Form::button(trans('articles::article.button.draft'), [
                     'type' => 'submit',
-                    'class' => 'btn btn-danger pull-right', 'data-icon' => 'eye-slash'
+                    'class' => 'btn btn-danger pull-right', 'data-icon' => 'eye-off'
                 ]) !!}
             {!! Form::close() !!}
         @endif

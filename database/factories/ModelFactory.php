@@ -20,7 +20,7 @@ $factory->defineAs(User::class, 'user', function (Faker\Generator $faker) {
         'username' => $faker->userName,
         'name' => $faker->name,
         'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+        'password' => bcrypt('password'),
         'gender' => $faker->randomElement(['male', 'female', 'other'])
     ];
 });
