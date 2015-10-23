@@ -48,6 +48,11 @@
                     ]) !!}
                 </li>
                 <li>
+                    {!! link_to_route('front.article.checks', trans('articles::article.button.checks'), $article->id, [
+                        'class' => 'btn btn-warning', 'data-icon' => 'shield'
+                    ]) !!}
+                </li>
+                <li>
                     {!! link_to_route('front.article.edit', trans('articles::article.button.edit'), $article->id, [
                         'class' => 'btn btn-default', 'data-icon' => 'pencil'
                     ]) !!}
