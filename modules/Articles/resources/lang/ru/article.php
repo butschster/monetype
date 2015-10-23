@@ -22,6 +22,9 @@ return [
         'disable_stat_pays'  => 'Не показывать статистику покупок',
         'block_reason'       => 'Причина блокировки',
     ],
+    'menu'    => [
+        'create' => '<i class="icon-pencil"></i> Написать статью'
+    ],
     'button'  => [
         'save'        => 'Сохранить',
         'edit'        => 'Редактировать',

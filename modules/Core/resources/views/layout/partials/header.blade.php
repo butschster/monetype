@@ -8,6 +8,9 @@
         <div id="navbar" class="m-r-n-md">
             <ul class="nav nav-profile navbar-nav pull-right">
                 @if(Auth::check())
+                    <li>
+                        {!! link_to_route('front.article.create', trans('articles::article.menu.create')) !!}
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @lang('users::user.label.balance', ['amount' => $currentUser->getBalance()])
