@@ -34,7 +34,7 @@ elixir(function (mix) {
         // Less
         .less('app.less', 'public/css/')
         .less('coming_soon.less', 'public/css/')
-        .less('simplemde.less', 'public/libs/simplemde')
+        .less('plugins/simplemde.less', 'public/libs/simplemde')
 
         // CSS
         .styles([
