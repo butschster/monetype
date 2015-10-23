@@ -176,19 +176,26 @@ App.Form = {
                 var time = new Date(data['timestamp']);
 
                 // TODO: добавить локализацию
-                this._form.prepend(_.template('<div class="alert alert-info m-b-none" id="notification_autosave">' +
+                this._form.prepend(_.template('<div class="alert alert-info m-b-none autoSaveNotification">' +
                     'У вас есть автосохранение от <b><%= date %> <%= time %></b>, ' +
-                    '<a href="#reset" class="reset_form_from_autosave">восстановить форму</a>?' +
+                    '<a href="#restore" class="autoSaveNotification--restore">восстановить форму</a>?' +
+                    '<span class="close autoSaveNotification--close" onclick="">x</span>' +
                     '</div>')({
                     date: _getDate(time),
                     time: _getTime(time)
                 }));
 
                 // Восстановление
-                $('.reset_form_from_autosave').on('click', $.proxy(function (e) {
+                $('.autoSaveNotification').on('click', '.autoSaveNotification--restore', $.proxy(function (e) {
                     e.preventDefault();
                     this.onRestore(data);
-                    $('#notification_autosave').remove();
+                    $(this).closest('.autoSaveNotification').remove();
+                }, this));
+
+                $('.autoSaveNotification').on('click', '.autoSaveNotification--close', $.proxy(function (e) {
+                    e.preventDefault();
+                    this.clearLocalStorage();
+                    $(this).closest('.autoSaveNotification').remove();
                 }, this));
             }
         },
