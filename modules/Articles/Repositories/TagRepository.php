@@ -26,6 +26,10 @@ class TagRepository extends Repository
     {
         $terms = $this->getModel()->take($limit)->orderBy('count', 'desc')->get();
 
+        if ( ! $terms->count()) {
+            return [];
+        }
+
         $maximum = $terms->first()->count;
 
         $cloud = [];
