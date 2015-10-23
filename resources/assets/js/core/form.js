@@ -189,13 +189,13 @@ App.Form = {
                 $('.autoSaveNotification').on('click', '.autoSaveNotification--restore', $.proxy(function (e) {
                     e.preventDefault();
                     this.onRestore(data);
-                    $(this).closest('.autoSaveNotification').remove();
+                    $(e.target).closest('.autoSaveNotification').remove();
                 }, this));
 
                 $('.autoSaveNotification').on('click', '.autoSaveNotification--close', $.proxy(function (e) {
                     e.preventDefault();
                     this.clearLocalStorage();
-                    $(this).closest('.autoSaveNotification').remove();
+                    $(e.target).closest('.autoSaveNotification').remove();
                 }, this));
             }
         },
