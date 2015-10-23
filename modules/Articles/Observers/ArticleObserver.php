@@ -20,6 +20,8 @@ class ArticleObserver
 
         $article->user_ip = Request::ip();
         $article->status  = Article::STATUS_DRAFT;
+
+        $this->parseText($article);
     }
 
 
@@ -27,6 +29,27 @@ class ArticleObserver
      * @param Article $article
      */
     public function saving(Article $article)
+    {
+
+    }
+
+
+    /**
+     * @param Article $article
+     */
+    public function updating(Article $article)
+    {
+        if ($article->isDirty('text_source')) {
+            $article->need_check = true;
+            $this->parseText($article);
+        }
+    }
+
+
+    /**
+     * @param Article $article
+     */
+    protected function parseText(Article $article)
     {
         $parser = new MarkdownParser;
 
@@ -44,16 +67,5 @@ class ArticleObserver
         }
 
         $article->text = $parser->text($text);
-    }
-
-
-    /**
-     * @param Article $article
-     */
-    public function updating(Article $article)
-    {
-        if ($article->isDirty('text_source')) {
-            $article->need_check = true;
-        }
     }
 }
