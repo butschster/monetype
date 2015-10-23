@@ -8,13 +8,33 @@ App.Form.extend('articles', {
 		tags_list: 'tags',
 		cost: 'rangeslider'
 	},
-	messages: {
-		saved: 'Article saved'
+	onSubmit: function(e) {
+		e.preventDefault();
+		this.clearErrors();
+
+		var action = this._submitButton.val();
+
+		var url = this._api_url;
+		var method = this._api_method;
+		switch (action) {
+			case 'publish':
+				url = '/api.article.publish/' + this._id;
+				method = 'post';
+				break;
+			case 'draft':
+				url = '/api.article.draft/' + this._id;
+				method = 'post';
+				break;
+		}
+
+		$(':button', this._form).prop('disabled', true);
+		Api[method](url, this.getFieldsData(), $.proxy(this.onResponse, this));
 	}
 });
 
 App.Controllers.add(['article.create', 'article.edit'], function(action) {
 	App.Form.articles.init($('form'));
+	App.Form.articles._id = ARTICLE_ID;
 });
 
 App.Controllers.add(['article.index', 'article.show'], function () {

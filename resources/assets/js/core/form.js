@@ -52,15 +52,19 @@ App.Form = {
 
             for (i in this.fieldsMeta) {
                 if(this.fieldsMeta[i] in  App.Form.Field) {
-                    this._fields[i] = Object.create(App.Form.Field[this.fieldsMeta[i]]);
+                    var field = Object.create(App.Form.Field[this.fieldsMeta[i]]);
                 } else {
-                    this._fields[i] = Object.create(App.Form.Field['default']);
+                    var field = Object.create(App.Form.Field['default']);
                 }
 
-                this._fields[i].init(this, i);
+                field.construct(this, i);
+
+                if(field.getElement().length) {
+                    field._init();
+                    this._fields[i] = field;
+                }
             }
 
-            console.log(this._fields);
             this.getFieldsData();
 
             this.onLoad();

@@ -28,6 +28,7 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property string         $text
  * @property string         $text_intro
  * @property string         $image
+ * @property string         $read_more_text
  * @property boolean        $disable_comments
  * @property boolean        $disable_stat_views
  * @property boolean        $disable_stat_pays
@@ -159,6 +160,15 @@ class Article extends Model implements Buyable
     public function isPaysStatisticsEnabled()
     {
         return $this->disable_stat_pays;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function hasReadModerButton()
+    {
+        return ! empty($this->read_more_text);
     }
 
 

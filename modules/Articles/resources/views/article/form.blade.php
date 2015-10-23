@@ -26,16 +26,31 @@
             </div>
         </div>
 
+        @if(!$article->isDrafted())
+        <div class="well well-border m-b-none">
+            <label class="control-label">@lang('articles::article.field.text_intro')</label>
+            {!! $article->text_intro !!}
+
+            @if($article->hasReadModerButton())
+            <a href="#" class="btn btn-sm btn-default">{{ $article->read_more_text }}</a>
+            @endif
+        </div>
+        @endif
+
         <div class="panel-body">
+            @if($article->isDrafted())
             <div class="form-group">
                 {!! Form::textarea('text_source', null, ['class' => 'form-control', 'rows' => 30, 'id' => 'inputText']) !!}
             </div>
-
+            @else
+                <label class="control-label">@lang('articles::article.field.text')</label>
+                {!! $article->text !!}
+            @endif
             <hr class="panel-wide" />
 
             <div class="form-group">
-                <label class="control-label">@lang('articles::article.field.tags')</label>
-                {!! Form::select('tags', $tags, $tags, ['multiple', 'data-role' => 'tagsinput']) !!}
+                <label class="control-label">@lang('articles::article.field.tags_list')</label>
+                {!! Form::select('tags_list', $tags, $tags, ['multiple', 'data-role' => 'tagsinput']) !!}
             </div>
 
             <hr class="panel-wide" />
@@ -81,9 +96,20 @@
 
         <div class="panel-footer">
             {!! Form::button(trans('articles::article.button.save'), [
-                'type' => 'submit',
-                'class' => 'btn btn-default btn-lg'
-            ]) !!}
+               'type' => 'submit', 'value' => 'save',
+               'class' => 'btn btn-default btn-lg', 'data-icon' => 'ok'
+           ]) !!}
+            @if($article->isDrafted())
+                {!! Form::button(trans('articles::article.button.publish'), [
+                    'type' => 'submit', 'value' => 'publish',
+                    'class' => 'btn btn-success pull-right', 'data-icon' => 'thumbs-up'
+                ]) !!}
+            @elseif($article->isPublished())
+                {!! Form::button(trans('articles::article.button.draft'), [
+                    'type' => 'submit', 'value' => 'draft',
+                    'class' => 'btn btn-danger pull-right', 'data-icon' => 'thumbs-down'
+                ]) !!}
+            @endif
         </div>
     {!! Form::close() !!}
 @endsection

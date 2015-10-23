@@ -107,6 +107,8 @@ class ArticleController extends FrontController
 
         $this->checkPermissions('create', $article);
 
+        $this->templateScripts['ARTICLE_ID'] = $article->id;
+
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => 'front.article.store',
@@ -127,120 +129,18 @@ class ArticleController extends FrontController
 
         $this->checkPermissions('update', $article);
 
-        return $this->setLayout('article.form', [
-            'article' => $article,
-            'action'  => ['front.article.update', $articleId],
-            'tags'    => array_combine($article->tagsArray, $article->tagsArray)
-        ]);
-    }
+        $this->templateScripts['ARTICLE_ID'] = $article->id;
 
-    /**
-     * @param ArticleRepository $articleRepository
-     * @param integer           $articleId
-     *
-     * @return \View
-     */
-    public function preview(ArticleRepository $articleRepository, $articleId)
-    {
-        $article = $articleRepository->findOrFail($articleId);
-
-        $this->checkPermissions('preview', $article);
-
-        return $this->setLayout('article.preview', [
-            'article' => $article,
-            'tags'        => $article->tags
-        ]);
-    }
-
-
-    /**
-     * @param ArticleRepository $articleRepository
-     * @param integer           $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function publish(ArticleRepository $articleRepository, $articleId)
-    {
-        $article = $articleRepository->findOrFail($articleId);
-
-        $this->checkPermissions('publish', $article);
-
-        try {
-            Bus::dispatch(new PublishArticle($this->user, $article));
-        } catch (PlagiarismException $e) {
-            return $this->errorRedirect(trans('articles::article.message.plagiarism'));
-        } catch (CheckForPlagiarismException $e) {
-            return $this->errorRedirect(trans('articles::article.message.cant_check_for_plagiarism', ['error' => $e->getMessage()]));
+        $action = ['front.article.update', $articleId];
+        if ($article->isPublished()) {
+            $action = ['front.article.correct', $articleId];
         }
 
-
-        return $this->successRedirect(
-            trans('articles::article.message.published')
-        );
-    }
-
-
-    /**
-     * @param ArticleRepository $articleRepository
-     * @param integer           $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function draft(ArticleRepository $articleRepository, $articleId)
-    {
-        $article = $articleRepository->findOrFail($articleId);
-
-        $this->checkPermissions('draft', $article);
-
-        Bus::dispatch(new DraftArticle($this->user, $article));
-
-        return $this->successRedirect(
-            trans('articles::article.message.drafted')
-        );
-    }
-
-
-    /**
-     * @param ArticleRepository $articleRepository
-     * @param integer           $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function approve(ArticleRepository $articleRepository, $articleId)
-    {
-        $article = $articleRepository->findOrFail($articleId);
-
-        $this->checkPermissions('approve', $article);
-
-        Bus::dispatch(new ApproveArticle($this->user, $article));
-
-        return $this->successRedirect(
-            trans('articles::article.message.approved')
-        );
-    }
-
-
-    /**
-     * @param ArticleRepository $articleRepository
-     * @param integer           $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function block(ArticleRepository $articleRepository, $articleId)
-    {
-        $article = $articleRepository->findOrFail($articleId);
-
-        $this->checkPermissions('block', $article);
-
-        $this->validate($this->request, [
-            'block_reason' => 'required'
-        ], [], trans('articles::article.field'));
-
-        Bus::dispatch(new BlockArticle($this->user, $article, $this->request->get('block_reason')));
-
-        return $this->successRedirect(
-            trans('articles::article.message.approved')
-        );
+        return $this->setLayout('article.form', [
+            'article' => $article,
+            'action'  => $action,
+            'tags'    => array_combine($article->tagsArray, $article->tagsArray)
+        ]);
     }
 
 

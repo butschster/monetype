@@ -38,7 +38,7 @@ $factory->defineAs(Article::class, 'article', function (Faker\Generator $faker) 
     return [
         'title' => $faker->sentence(6),
         'cost' => $faker->numberBetween(0, 5),
-        'text_source' => $faker->sentences(2, true) . '---read-more---' . $text,
+        'text_source' => $faker->sentences(2, true) . "\n<cut>" . $faker->randomElement(['Read more', 'Читать даллее', 'Продолжение под катом']) . "</cut>\n" . $text,
         'disable_comments' => $faker->boolean(),
         'disable_stat_views' => $faker->boolean(),
         'disable_stat_pays' => $faker->boolean(),

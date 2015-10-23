@@ -11,8 +11,8 @@ return [
     ],
     'field'   => [
         'author'             => 'Автор',
-        'cost'               => 'Стоимость размещения',
         'tags_list'          => 'Теги',
+        'cost'               => 'Стоимость прочтения',
         'title'              => 'Заголовок',
         'text_intro'         => 'Вводный текст',
         'text'               => 'Текст',
@@ -37,7 +37,7 @@ return [
     'status'  => [
         Article::STATUS_DRAFT     => '<span class="label label-default">Черновик</span>',
         Article::STATUS_PUBLISHED => '<span class="label label-success">Опубликована</span>',
-        Article::STATUS_APPROVED  => '<span class="label label-success"><i class="icon-check"></i> Опубликована</span>',
+        Article::STATUS_APPROVED  => '<span class="label label-success"><i class="icon-ok"></i> Опубликована</span>',
         Article::STATUS_BLOCKED   => '<span class="label label-danger"><i class="icon-ban"></i> Заблокирована</span>',
     ],
     'label'   => [

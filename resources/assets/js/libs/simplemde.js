@@ -12946,6 +12946,15 @@ function toggleBold(editor) {
 	_toggleBlock(editor, "bold", "**");
 }
 
+/**
+ * Action for cutting text.
+ */
+function insertCut(editor) {
+	var cm = editor.codemirror;
+	var stat = getState(cm);
+	_replaceSelection(cm, stat.image, "<cut>", "</cut>");
+}
+
 
 /**
  * Action for toggling italic.
@@ -13418,6 +13427,12 @@ function wordCount(data) {
 
 
 var toolbarBuiltInButtons = {
+	"cut": {
+		name: "cut",
+		action: insertCut,
+		className: "icon-scissors",
+		title: "Cut"
+	},
 	"bold": {
 		name: "bold",
 		action: toggleBold,
@@ -13639,7 +13654,7 @@ function SimpleMDE(options) {
  */
 SimpleMDE.toolbar = [
 	"bold", "italic", "heading", "|",
-	"quote", "unordered-list", "ordered-list", "horizontal-rule", "|",
+	"cut", "quote", "unordered-list", "ordered-list", "horizontal-rule", "|",
 	"link", "image", "dropbox", "code", "|",
 	"preview", "side-by-side", "fullscreen",
 	"guide"
@@ -13987,6 +14002,7 @@ SimpleMDE.prototype.value = function(val) {
 /**
  * Bind static methods for exports.
  */
+SimpleMDE.insertCut = insertCut;
 SimpleMDE.toggleBold = toggleBold;
 SimpleMDE.toggleItalic = toggleItalic;
 SimpleMDE.toggleStrikethrough = toggleStrikethrough;
@@ -14011,6 +14027,9 @@ SimpleMDE.toggleFullScreen = toggleFullScreen;
 /**
  * Bind instance methods for exports.
  */
+SimpleMDE.prototype.insertCut = function() {
+	insertCut(this);
+};
 SimpleMDE.prototype.toggleBold = function() {
 	toggleBold(this);
 };

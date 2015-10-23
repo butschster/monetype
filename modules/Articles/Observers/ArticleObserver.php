@@ -53,23 +53,27 @@ class ArticleObserver
     {
         $parser = new MarkdownParser;
 
-        // TODO: доработать
-        $cut = '<cut></cut>';
-        if (strpos($article->text_source, $cut) !== false) {
-            list( $textIntro, $text ) = explode($cut, $article->text_source, 2);
+        $pattern = "/<cut>(.*?)<\\/cut>/si";
+        preg_match($pattern, $article->text_source, $matches);
+
+        if ( ! empty($matches)) {
+            $readMoreText = strip_tags($matches[1]);
+            list($textIntro, $text) = preg_split($pattern, $article->text_source, 2);
+
         } else {
-            $textIntro = '';
-            $text      = $article->text_source;
+            $readMoreText = $textIntro = '';
+            $text         = $article->text_source;
         }
 
-        if ( ! empty( $textIntro )) {
+        if ( ! empty($textIntro)) {
             $article->text_intro = $parser->text($textIntro);
         }
 
-        $article->text = $parser->text($text);
+        $article->read_more_text = $readMoreText;
+        $article->text           = $parser->text($text);
 
         $words = str_word_count(strip_tags($article->text));
-        $min = floor($words / (int) config('article.words_per_minute_readimg', 200));
+        $min   = floor($words / (int) config('article.words_per_minute_reading', 200));
 
         $article->reading_time = $min;
     }

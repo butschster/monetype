@@ -10,13 +10,10 @@ App.Form.Field = {
         _form: null,
         _name: null,
         _element: null,
-        init: function (form, name) {
+        construct: function (form, name) {
             this._form = form;
             this._name = name;
             this._element = this.getFieldInput();
-
-            this._init();
-
             return this;
         },
         getFieldInput: function () {

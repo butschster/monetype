@@ -75,6 +75,20 @@ class ArticlePolicy
      *
      * @return bool
      */
+    public function correct(User $user, Article $article)
+    {
+        return (
+            $article->authoredBy($user)
+        );
+    }
+
+
+    /**
+     * @param User    $user
+     * @param Article $article
+     *
+     * @return bool
+     */
     public function draft(User $user, Article $article)
     {
         return (
@@ -142,22 +156,6 @@ class ArticlePolicy
             and
             $article->authoredBy($user)
         ) or $user->isModerator();
-    }
-
-
-    /**
-     * @param User    $user
-     * @param Article $article
-     *
-     * @return bool
-     */
-    public function preview(User $user, Article $article)
-    {
-        return (
-            $article->authoredBy($user)
-            or
-            $user->isModerator()
-        );
     }
 
 
