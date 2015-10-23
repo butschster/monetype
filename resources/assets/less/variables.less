@@ -76,7 +76,14 @@
 @pagination-disabled-border:    @pagination-border;
 
 // Navbar
-@navbar-default-bg:             #fff;
+@navbar-default-bg:                 #fff;
+@navbar-contrast-bg:                desaturate(@brand-primary, 15%);
+@navbar-contrast-link-hover-bg:     lighten(@navbar-contrast-bg, 15%);
+@navbar-contrast-link-active-bg:    lighten(@navbar-contrast-bg, 15%);
+@navbar-contrast-border:            lighten(@navbar-contrast-bg, 10%);
+@navbar-contrast-link-color:        rgba(255, 255, 255, 0.5);
+@navbar-contrast-link-hover-color:  #fff;
+@navbar-contrast-link-active-color: #fff;
 
 // Footer
 @footer-bg:                     desaturate(@brand-primary, 15%);

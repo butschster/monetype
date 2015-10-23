@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-contrast">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -9,7 +9,7 @@
             <ul class="nav nav-profile navbar-nav pull-right">
                 @if(Auth::check())
                     <li>
-                        {!! link_to_route('front.article.create', trans('articles::article.menu.create')) !!}
+                        {!! link_to_route('front.article.create', trans('articles::article.menu.create'), [], ['class' => 'nav-circle-li']) !!}
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">

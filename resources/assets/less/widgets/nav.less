@@ -1,16 +1,71 @@
-.navbar-nav > li {
-  border-right: 1px solid #f1f1f1;
-  border-left: 1px solid #f1f1f1;
-}
+.navbar-contrast {
+  .navbar-brand {
+    padding-top: 5px;
+  }
 
-.navbar-brand {
-  padding-top: 5px;
-}
+  background-color: @navbar-contrast-bg;
+  border-color: @navbar-contrast-border;
 
-.nav-profile {
+  .navbar-nav {
+    > li {
+      padding-left: 3px;
+      padding-right: 3px;
 
-  .nav-profile-avatar {
-	border-radius: 25px;
-	margin: -5px 5px -5px 0;
+      > a {
+        color: @navbar-contrast-link-color;
+
+        &:hover,
+        &:focus {
+          color: @navbar-contrast-link-hover-color;
+          background-color: @navbar-contrast-link-hover-bg;
+        }
+      }
+      > .active > a {
+        &,
+        &:hover,
+        &:focus {
+          color: @navbar-contrast-link-active-color;
+          background-color: @navbar-contrast-link-active-bg;
+        }
+      }
+    }
+
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: @navbar-contrast-link-active-bg;
+        color: @navbar-contrast-link-active-color;
+      }
+    }
+
+    .open .dropdown-menu {
+      &:after {
+        bottom: 100%;
+        left: 33px;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(255,255,255,0);
+        border-bottom-color: #fff;
+        border-width: 5px;
+      }
+    }
+  }
+
+  .nav-circle-li {
+    border-radius: 20px;
+    background-color: @navbar-contrast-link-hover-bg !important;
+    border: 1px solid @navbar-contrast-border;
+    margin-top: 6px;
+    padding: 8px 10px !important;
+
+    &:hover {
+      background-color: lighten(@navbar-contrast-link-hover-bg, 5%) !important;
+      color: @navbar-contrast-link-hover-color !important;
+    }
   }
 }
