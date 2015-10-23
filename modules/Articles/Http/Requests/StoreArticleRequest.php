@@ -25,10 +25,12 @@ class StoreArticleRequest extends ApiRequest
      */
     public function rules()
     {
+        $minTags = config('article.min_tags', 3);
+
         return [
             'title'       => 'required|max:255',
             'text_source' => 'required|min:500',
-            'tags'        => 'required|mintags:3',
+            'tags_list'   => "required|mintags:$minTags",
             'cost'        => 'numeric|min:0|max:100'
         ];
     }

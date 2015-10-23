@@ -1,7 +1,7 @@
 @if($tags)
     @if(isset($showTagsTitle))
     <div class="headline headline-sm">
-        <h5>@lang('articles::article.field.tags')</h5>
+        <h5>@lang('articles::article.field.tags_list')</h5>
     </div>
     @endif
     <ul class="blogTags list-inline m-l-none">

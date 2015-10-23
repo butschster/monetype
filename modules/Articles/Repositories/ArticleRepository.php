@@ -23,7 +23,7 @@ class ArticleRepository extends Repository
      */
     public function create(array $data)
     {
-        $tags = array_pull($data, 'tags', '');
+        $tags = array_pull($data, 'tags_list', '');
 
         $article = parent::create($data);
 
@@ -48,7 +48,7 @@ class ArticleRepository extends Repository
      */
     public function update(array $data, $id, $attribute = "id")
     {
-        $tags = array_pull($data, 'tags', '');
+        $tags = array_pull($data, 'tags_list', '');
 
         $article = parent::update($data, $id, $attribute);
 
