@@ -1,7 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-    <h2>@lang('articles::check.title.article', ['article' => $article->title])</h2>
+    <h2 class="page-header">@lang('articles::check.title.article', ['article' => $article->title])</h2>
 
     <div class="panel">
         <table class="table table-striped">

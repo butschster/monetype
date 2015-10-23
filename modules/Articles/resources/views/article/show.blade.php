@@ -6,7 +6,7 @@
             @include('articles::article.partials.heading')
         </div>
 
-        <h2 class="articleItem--title">{{ $article->title }}</h2>
+        <h2 class="articleItem--title page-header">{{ $article->title }}</h2>
 
         <div class="articleItem--content">
             @include('articles::article.partials.categories')
