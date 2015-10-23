@@ -68,7 +68,7 @@ class CheckForPlagiarism implements SelfHandling
         $check->article()->associate($this->article);
         $check->user()->associate($this->user);
 
-        $check->percent = array_get($response, 'percent');
+        $check->percent = (float) array_get($response, 'percent');
         $check->text    = array_get($response, 'text');
         $check->error   = array_get($response, 'error');
 

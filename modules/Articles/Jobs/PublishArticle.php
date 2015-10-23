@@ -47,14 +47,16 @@ class PublishArticle implements SelfHandling
      */
     public function handle()
     {
-        if ( ! $this->article->isChecked()) {
-            $checkResult = Bus::dispatch(new CheckForPlagiarism($this->user, $this->article));
-        } else {
-            $checkResult = $this->article->getLastCheckResult();
-        }
+        if (config('article.check.max_percent_plagiarism', 20) < 100) {
+            if ( ! $this->article->isChecked()) {
+                $checkResult = Bus::dispatch(new CheckForPlagiarism($this->user, $this->article));
+            } else {
+                $checkResult = $this->article->getLastCheckResult();
+            }
 
-        if ($checkResult->isPlagiarism()) {
-            throw new PlagiarismException($checkResult);
+            if ($checkResult->isPlagiarism()) {
+                throw new PlagiarismException($checkResult);
+            }
         }
 
         $this->article->setPublished();
