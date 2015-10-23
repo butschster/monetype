@@ -6,9 +6,7 @@
 <footer id="footer">
     <div class="container">
         <div class="links-col">
-
             <div class="row">
-                <!-- Col -->
                 <div class="col-xs-4">
                     <h5>guest</h5>
                     <ul class="v-links">
@@ -18,9 +16,6 @@
                         <li><a href="#">information</a></li>
                     </ul>
                 </div>
-                <!-- Col -->
-
-                <!-- Col -->
                 <div class="col-xs-4">
                     <h5>information</h5>
                     <ul class="v-links">
@@ -32,9 +27,6 @@
                         <li><a href="#">Enquiries</a></li>
                     </ul>
                 </div>
-                <!-- /Col -->
-
-                <!-- Col -->
                 <div class="col-xs-4">
                     <h5>member</h5>
                     <ul class="v-links">
@@ -44,14 +36,11 @@
                         <li><a href="#">View Cart</a></li>
                     </ul>
                 </div>
-                <!-- /Col -->
             </div>
-            <!-- /Row -->
         </div>
     </div>
 
     <div class="bottom">
-        <!-- Container -->
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
@@ -59,7 +48,7 @@
                 </div>
                 <div class="col-xs-6">
                     <div class="socials text-right">
-                        <a href="#" class="rounded-icon social icon-vkontakte"><!-- vkontakte --></a>
+                        <a href="http://vk.com/monetype" class="rounded-icon social icon-vkontakte"><!-- vkontakte --></a>
                         <a href="#" class="rounded-icon social icon-facebook"><!-- facebook --></a>
                         <a href="#" class="rounded-icon social icon-twitter"><!-- twitter --></a>
                         <a href="#" class="rounded-icon social icon-gplus"><!-- google plus --></a>
@@ -67,7 +56,6 @@
                 </div>
             </div>
         </div>
-        <!-- /Container -->
     </div>
 </footer>
 @if(config('app.debug'))
