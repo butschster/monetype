@@ -25,7 +25,7 @@
             @if($article->hasComments())
                 {!! link_to_route('front.article.comments', $article->count_comments, $article->id, ['data-icon' => 'comment']) !!}
             @else
-                <i class="icon-comment-o"></i> 0
+                {!! link_to_route('front.article.comments', trans('articles::article.button.new_comment'), $article->id) !!}
             @endif
         </li>
     @endif
