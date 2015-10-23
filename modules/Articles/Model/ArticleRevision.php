@@ -33,11 +33,13 @@ class ArticleRevision extends Model
 
         static::creating(function (ArticleRevision $revision) {
             $revision->id = String::uniqueId();
-
             $lastRevision = static::getLastByArticle($revision->article_id)->first();
             if ( ! is_null($lastRevision)) {
                 $diff              = new Diff;
-                $revision->opcodes = $diff->getOpcodes(trim($lastRevision->text_source), trim($revision->text_source))->getOpcodes();
+                $revision->opcodes = $diff->getOpcodes(
+                    $lastRevision->text_source,
+                    $revision->text_source
+                )->generate();
             }
         });
     }
@@ -67,15 +69,6 @@ class ArticleRevision extends Model
     ];
 
     /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'opcodes' => 'array'
-    ];
-
-    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -84,11 +77,21 @@ class ArticleRevision extends Model
 
 
     /**
-     * @param $revisionId
+     * @param string $revisionId
+     *
+     * @return null|string
      */
     public function getDiff($revisionId)
     {
+        if ($this->id == $revisionId) {
+            return null;
+        }
 
+        $revision = static::where('article_id', $this->article_id)
+            ->where('id', $revisionId)
+            ->firstOrFail();
+
+        return (new Diff)->render($this->text_source, $revision->text_source);
     }
 
     /**********************************************************************

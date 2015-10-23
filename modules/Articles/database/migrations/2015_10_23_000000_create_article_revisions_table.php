@@ -19,7 +19,7 @@ class CreateArticleRevisionsTable extends Migration {
 			$table->unsignedInteger('article_id')->index();
 
 			$table->longText('text_source');
-			$table->json('opcodes');
+			$table->longText('opcodes');
 			$table->timestamps();
 			$table->softDeletes();
 
