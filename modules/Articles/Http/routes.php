@@ -9,6 +9,7 @@ Route::group(['as' => 'front.'], function () {
     Route::get('article/create', ['middleware' => 'auth', 'as' => 'article.create', 'uses' => 'ArticleController@create']);
 
     Route::get('article/{article}#comments', ['as' => 'article.comments', 'uses' => 'ArticleController@show']);
+    Route::get('article/{article}#cut', ['as' => 'article.showCut', 'uses' => 'ArticleController@show']);
     Route::get('article/{article}', ['as' => 'article.show', 'uses' => 'ArticleController@show']);
 
     Route::get('category/{slug}', ['as' => 'category.show', 'uses' => 'CategoryController@show']);

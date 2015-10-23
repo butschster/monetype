@@ -15,6 +15,11 @@
 
                 @include('articles::article.partials.buy')
             @else
+                @if(!empty($article->text_intro))
+                {!! $article->text_intro !!}
+                <hr id="cut" class="pageBrake" />
+                @endif
+
                 {!! $article->text !!}
             @endif
         </div>
