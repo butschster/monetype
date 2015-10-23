@@ -132,7 +132,7 @@ class ArticleController extends FrontController
         $this->templateScripts['ARTICLE_ID'] = $article->id;
 
         $action = ['front.article.update', $articleId];
-        if ($article->isPublished()) {
+        if ( ! $this->user->can('update', $article)) {
             $action = ['front.article.correct', $articleId];
         }
 

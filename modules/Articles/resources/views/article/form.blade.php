@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        @if(!$article->isDrafted())
+        @if(!$currentUser->can('update', $article))
         <div class="well well-border m-b-none">
             <label class="control-label">@lang('articles::article.field.text_intro')</label>
             {!! $article->text_intro !!}
@@ -38,7 +38,7 @@
         @endif
 
         <div class="panel-body">
-            @if($article->isDrafted())
+            @if($currentUser->can('update', $article))
             <div class="form-group">
                 {!! Form::textarea('text_source', null, ['class' => 'form-control', 'rows' => 30, 'id' => 'inputText']) !!}
             </div>
@@ -98,17 +98,18 @@
             {!! Form::button(trans('articles::article.button.save'), [
                'type' => 'submit', 'value' => 'save',
                'class' => 'btn btn-default btn-lg', 'data-icon' => 'ok'
-           ]) !!}
+            ]) !!}
+
             @if($article->isDrafted())
-                {!! Form::button(trans('articles::article.button.publish'), [
-                    'type' => 'submit', 'value' => 'publish',
-                    'class' => 'btn btn-success pull-right', 'data-icon' => 'thumbs-up'
-                ]) !!}
+            {!! Form::button(trans('articles::article.button.publish'), [
+                'type' => 'submit', 'value' => 'publish',
+                'class' => 'btn btn-success pull-right', 'data-icon' => 'thumbs-up'
+            ]) !!}
             @elseif($article->isPublished())
-                {!! Form::button(trans('articles::article.button.draft'), [
-                    'type' => 'submit', 'value' => 'draft',
-                    'class' => 'btn btn-danger pull-right', 'data-icon' => 'thumbs-down'
-                ]) !!}
+            {!! Form::button(trans('articles::article.button.draft'), [
+                'type' => 'submit', 'value' => 'draft',
+                'class' => 'btn btn-danger pull-right', 'data-icon' => 'thumbs-down'
+            ]) !!}
             @endif
         </div>
     {!! Form::close() !!}
