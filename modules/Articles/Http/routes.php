@@ -37,6 +37,9 @@ Route::group(['as' => 'front.'], function () {
 
         RouteAPI::get('tags.search', ['uses' => 'Api\TagsController@search']);
 
+        RouteAPI::get('article.search.bookmarked', ['uses' => 'Api\ArticleSearchController@searchBookmarked']);
+        RouteAPI::get('article.search', ['uses' => 'Api\ArticleSearchController@searchAll']);
+
         Route::resource('article', 'ArticleController', [
             'except' => [
                 'index', 'destroy', 'store', 'update', 'show', 'create'

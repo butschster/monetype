@@ -2,6 +2,8 @@
 
 namespace Modules\Articles\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
+use Modules\Users\Model\User;
 use Modules\Articles\Model\Article;
 use Modules\Support\Helpers\Repository;
 
@@ -14,6 +16,63 @@ class ArticleRepository extends Repository
     public function model()
     {
         return Article::class;
+    }
+
+
+    /**
+     * TODO: переделать поиск статей
+     * @param string    $keyword
+     * @param User|null $user
+     * @param int       $limit
+     *
+     * @return Collection
+     */
+    public function searchByKeyword($keyword, User $user = null, $limit = 100)
+    {
+        $query = $this->getModel()
+            ->with('author', 'tags')
+            ->where('text_source', 'like', "$keyword%");
+
+        if ( ! is_null($user)) {
+            $query->where('author_id', $user->id);
+        }
+
+        return $query
+            ->published()
+            ->orWhereHas('tags', function ($query) use($keyword) {
+                $query->where('name', 'like', "$keyword%")->orderBy('count', 'desc');
+            })
+            ->orderBy('count_payments', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * @param string    $tag
+     * @param User|null $user
+     * @param int       $limit
+     *
+     * @return Collection
+     */
+    public function searchByTag($tag, User $user = null, $limit = 100)
+    {
+        $query = $this->getModel()
+                      ->with('author', 'tags');
+
+        if ( ! is_null($user)) {
+            $query->where('author_id', $user->id);
+        }
+
+        return $query
+            ->published()
+            ->orWhereHas('tags', function ($query) use($tag) {
+                $query->where('name', 'like', "$tag%")->orderBy('count', 'desc');
+            })
+            ->orderBy('count_payments', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->take($limit)
+            ->get();
     }
 
     /**

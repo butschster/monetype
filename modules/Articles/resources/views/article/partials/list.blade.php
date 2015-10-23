@@ -25,7 +25,9 @@
     </div>
     @endforeach
 </div>
+@if($article instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator)
 {!! $articles->render() !!}
+@endif
 @else
 <div class="alert alert-info m-t-lg">
     <?php if(empty($emptyMessage)) $emptyMessage = trans('articles::article.message.empty_list'); ?>
