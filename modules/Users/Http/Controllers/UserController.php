@@ -16,4 +16,14 @@ class UserController extends FrontController
 
         return $this->setLayout('user.articles', compact('articles'));
     }
+
+    /**
+     * @return \View
+     */
+    public function bookmarks()
+    {
+        $articles = $this->user->favorites()->paginate();
+
+        return $this->setLayout('user.bookmarks', compact('articles'));
+    }
 }

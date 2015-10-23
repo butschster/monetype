@@ -7,6 +7,7 @@ return [
         'profile'         => ':user <small>Профиль пользователя</small>',
         'articles'        => 'Мои статьи',
         'activate_coupon' => 'Активация купона',
+        'bookmarks'       => 'Избранные статьи'
     ],
     'field'   => [
         'username'         => 'Username',
@@ -20,12 +21,13 @@ return [
         'balance' => 'Ваш баланс: :amount <i class="icon-rouble"></i>',
     ],
     'menu'    => [
-        'profile'  => 'Профиль',
-        'login'    => 'Войти',
-        'logout'   => 'Выйти',
-        'cashin'   => 'Пополнить счет',
-        'coupons'  => 'Купоны',
-        'articles' => 'Мои статьи',
+        'profile'   => 'Профиль',
+        'login'     => 'Войти',
+        'logout'    => 'Выйти',
+        'cashin'    => 'Пополнить счет',
+        'coupons'   => 'Купоны',
+        'articles'  => 'Мои статьи',
+        'bookmarks' => 'Избранное',
     ],
     'button'  => [
         'forget_password' => 'Забыли пароль?',
@@ -36,6 +38,7 @@ return [
         'giveMoney'       => 'Получить деньги'
     ],
     'message' => [
-        'not_found' => 'Пользователь не найден',
+        'not_found'       => 'Пользователь не найден',
+        'empty_bookmarks' => 'У вас нет избранных статей'
     ],
 ];

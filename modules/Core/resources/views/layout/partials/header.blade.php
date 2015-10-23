@@ -28,6 +28,7 @@
                         <ul class="dropdown-menu">
                             <li>{!! $currentUser->getProfileLink(trans('users::user.menu.profile')) !!}</li>
                             <li>{!! link_to_route('front.user.articles', trans('users::user.menu.articles')) !!}</li>
+                            <li>{!! link_to_route('front.user.bookmarks', trans('users::user.menu.bookmarks')) !!}</li>
                             <li role="separator" class="divider"></li>
                             <li>{!! link_to('auth/logout', trans('users::user.menu.logout')) !!}</li>
                         </ul>

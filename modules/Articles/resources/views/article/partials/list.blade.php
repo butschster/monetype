@@ -28,6 +28,7 @@
 {!! $articles->render() !!}
 @else
 <div class="alert alert-info m-t-lg">
-    <h4 class="m-b-none m-t-none">@lang('articles::article.message.empty_list')</h4>
+    <?php if(empty($emptyMessage)) $emptyMessage = trans('articles::article.message.empty_list'); ?>
+    <h4 class="m-b-none m-t-none">{!! $emptyMessage !!}</h4>
 </div>
 @endif

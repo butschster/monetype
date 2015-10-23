@@ -37,7 +37,7 @@ App.Controllers.add(['article.create', 'article.edit'], function(action) {
 	App.Form.articles._id = ARTICLE_ID;
 });
 
-App.Controllers.add(['article.index', 'article.show'], function () {
+$(function() {
 	$('body').on('click', '.addToFavorite', addToFavorite);
 });
 
