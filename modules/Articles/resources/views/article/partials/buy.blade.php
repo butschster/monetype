@@ -3,7 +3,7 @@
 <div class="well well-sm">
     {!! Form::open(['route' => ['front.article.buy', $article->id]]) !!}
     {!! Form::button(trans('articles::article.button.buy'), [
-        'type' => 'submit', 'class' => 'btn btn-success', 'data-icon' => 'check'
+        'type' => 'submit', 'class' => 'btn btn-success', 'data-icon' => 'rouble'
     ]) !!}
     {!! Form::close() !!}
 </div>

@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<div class="panel-footer">
-				{!! Form::button(trans('users::user.button.login'), ['class' => 'btn btn-success', 'type' => 'submit', 'data-icon' => 'check']) !!}
+				{!! Form::button(trans('users::user.button.login'), ['class' => 'btn btn-success', 'type' => 'submit', 'data-icon' => 'ok']) !!}
 
 				{!! link_to('password/email', trans('users::user.button.forget_password'), ['class' => 'btn btn-link']) !!}
 			</div>

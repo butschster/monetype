@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="panel-footer">
-			{!! Form::button(trans('users::user.button.reset_password'), ['class' => 'btn btn-info', 'type' => 'submit', 'data-icon' => 'check']) !!}
+			{!! Form::button(trans('users::user.button.reset_password'), ['class' => 'btn btn-info', 'type' => 'submit', 'data-icon' => 'ok']) !!}
 		</div>
 		{!! Form::close() !!}
 	</div>
