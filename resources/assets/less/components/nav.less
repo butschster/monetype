@@ -71,3 +71,24 @@
     }
   }
 }
+.nav-profile {
+  .open .dropdown-menu:after {
+    left: 117px !important;
+  }
+
+  .nav-profile--balance {
+    padding: 10px 20px;
+    margin-bottom: 5px;
+    color: @color-white;
+    background: @brand-danger;
+    font-size: 18px;
+    box-shadow: inset 0px -12px 25px -15px rgba(0,0,0,0.75);
+
+    &.positive {
+      background: @brand-success;
+    }
+    .icon-rouble {
+      font-size: 14px;
+    }
+  }
+}

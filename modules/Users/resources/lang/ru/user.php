@@ -18,7 +18,7 @@ return [
         'remember'         => 'Запомнить меня',
     ],
     'label'   => [
-        'balance' => 'Ваш баланс: :amount <i class="icon-rouble"></i>',
+        'balance' => '<i class="icon-rouble"></i>:amount',
     ],
     'menu'    => [
         'profile'   => 'Профиль',

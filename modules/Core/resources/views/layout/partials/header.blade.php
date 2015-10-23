@@ -5,28 +5,24 @@
                 {!! HTML::image('img/logo.gif', trans('app.title'), ['style' => 'height: 40px']) !!}
             </a>
         </div>
-        <div id="navbar" class="m-r-n-md">
+        <div id="navbar">
             <ul class="nav nav-profile navbar-nav pull-right">
                 @if(Auth::check())
                     <li>
                         {!! link_to_route('front.article.create', trans('articles::article.menu.create'), [], ['class' => 'nav-circle-li']) !!}
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            @lang('users::user.label.balance', ['amount' => $currentUser->getBalance()])
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                {!! link_to_route('front.coupon.index', trans('users::user.menu.coupons')) !!}
-                            </li>
-                        </ul>
-                    </li>
                     <li class="dropdown @if(Request::is('profile')) active @endif">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 5px 15px;">
                             {!! $currentUser->getAvatar(40) !!}
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="nav-profile--balance @if($currentUser->balance > 0) positive @endif">
+                                @lang('users::user.label.balance', ['amount' => $currentUser->getBalance()])
+                            </li>
+                            <li>{!! link_to_route('front.coupon.index', trans('users::user.menu.coupons')) !!} </li>
+                            <li role="separator" class="divider"></li>
                             <li>{!! $currentUser->getProfileLink(trans('users::user.menu.profile')) !!}</li>
+                            <li role="separator" class="divider"></li>
                             <li>{!! link_to_route('front.user.articles', trans('users::user.menu.articles')) !!}</li>
                             <li>{!! link_to_route('front.user.bookmarks', trans('users::user.menu.bookmarks')) !!}</li>
                             <li role="separator" class="divider"></li>
