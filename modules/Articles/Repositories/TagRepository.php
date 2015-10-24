@@ -18,39 +18,52 @@ class TagRepository extends Repository
 
 
     /**
-     * @param int $limit
+     * @param int        $limit
+     * @param array|null $articlesIds
      *
      * @return array
      */
-    public function getTagsCloud($limit = 20)
+    public function getTagsCloud($limit = 20, array $articlesIds = null)
     {
-        $terms = $this->getModel()->take($limit)->orderBy('count', 'desc')->get();
+        $query = $this->getModel()->take($limit)->orderBy('count', 'desc');
 
-        if ( ! $terms->count()) {
+        if ( ! is_null($articlesIds)) {
+            $query->whereHas('articles', function ($q) use ($articlesIds) {
+                $q->whereIn('id', $articlesIds);
+            });
+        }
+
+        $tags = $query->get();
+        if ( ! $tags->count()) {
             return [];
         }
 
-        $maximum = $terms->first()->count;
+        $maximum = $tags->first()->count;
 
         $cloud = [];
 
         // start looping through the tags
-        foreach ($terms as $term) {
-            // determine the popularity of this term as a percentage
-            $percent = floor(( $term->count / $maximum ) * 100);
+        foreach ($tags as $term) {
 
-            // determine the class for this term based on the percentage
-            if ($percent < 20):
-                $class = 'smallest';
-            elseif ($percent >= 20 and $percent < 40):
-                $class = 'small';
-            elseif ($percent >= 40 and $percent < 60):
+            if ($maximum > 0) {
+                // determine the popularity of this term as a percentage
+                $percent = floor(( $term->count / $maximum ) * 100);
+
+                // determine the class for this term based on the percentage
+                if ($percent < 20):
+                    $class = 'smallest';
+                elseif ($percent >= 20 and $percent < 40):
+                    $class = 'small';
+                elseif ($percent >= 40 and $percent < 60):
+                    $class = 'medium';
+                elseif ($percent >= 60 and $percent < 80):
+                    $class = 'large';
+                else:
+                    $class = 'largest';
+                endif;
+            } else {
                 $class = 'medium';
-            elseif ($percent >= 60 and $percent < 80):
-                $class = 'large';
-            else:
-                $class = 'largest';
-            endif;
+            }
 
             $cloud[] = link_to_route('front.articles.byTag', $term->name, $term->name, ['class' => 'tagsCloud--tag tag-size-' . $class]);
         }

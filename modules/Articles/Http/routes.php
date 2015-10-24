@@ -2,9 +2,7 @@
 Route::group(['as' => 'front.'], function () {
 
     //Route::get('/', ['as' => 'main', 'uses' => 'ArticleController@index']);
-
     Route::get('articles', ['as' => 'articles.index', 'uses' => 'ArticleController@index']);
-    Route::get('articles/tag/{tag}', ['as' => 'articles.byTag', 'uses' => 'ArticleController@indexByTag']);
 
     Route::get('article/create', ['middleware' => 'auth', 'as' => 'article.create', 'uses' => 'ArticleController@create']);
 

@@ -18,7 +18,6 @@ class SearchController extends FrontController
     public function search(ElasticSearchArticleRepository $repository, TagRepository $tagRepository)
     {
         $query = $this->request->get('query');
-        $tag   = $this->request->get('tag');
 
         $articles  = null;
         $tagsCloud = null;
@@ -26,16 +25,32 @@ class SearchController extends FrontController
         if ( ! empty( $query )) {
             $articles = $repository->searchByKeyword($query);
             $articles->addQuery('query', $query);
-        } elseif ( ! empty( $tag )) {
-            $query    = $tag;
-            $articles = $repository->searchByTag($query);
-            $articles->addQuery('tag', $query);
         }
 
-        if ( ! is_null($articles)) {
+        if ( ! is_null($articles) and $articles->count() > 0) {
             $tagsCloud = $tagRepository->getTagsCloud(20, $articles->keyBy('id')->keys()->all());
         }
 
         return $this->setLayout('articles::article.search', compact('articles', 'tagsCloud', 'query'));
+    }
+
+
+    /**
+     * @param ElasticSearchArticleRepository $repository
+     * @param TagRepository                  $tagRepository
+     * @param string                         $tag
+     *
+     * @return \View
+     */
+    public function searchByTag(ElasticSearchArticleRepository $repository, TagRepository $tagRepository, $tag)
+    {
+        $tagsCloud = null;
+        $articles = $repository->searchByTag($tag);
+
+        if ( ! is_null($articles) and $articles->count() > 0) {
+            $tagsCloud = $tagRepository->getTagsCloud(20, $articles->keyBy('id')->keys()->all());
+        }
+
+        return $this->setLayout('articles::article.byTag', compact('articles', 'tagsCloud', 'tag'));
     }
 }

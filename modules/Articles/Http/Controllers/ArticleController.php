@@ -4,17 +4,11 @@ namespace Modules\Articles\Http\Controllers;
 
 use Bus;
 use Assets;
-use Modules\Articles\Jobs\BlockArticle;
-use Modules\Articles\Jobs\DraftArticle;
-use Modules\Articles\Jobs\PublishArticle;
-use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Articles\Repositories\TagRepository;
-use Modules\Articles\Exceptions\PlagiarismException;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Core\Http\Controllers\System\FrontController;
 use Modules\Transactions\Exceptions\NotEnoughMoneyException;
-use Modules\Articles\Exceptions\CheckForPlagiarismException;
 
 class ArticleController extends FrontController
 {
@@ -31,22 +25,6 @@ class ArticleController extends FrontController
         $tagsCloud = $tagRepository->getTagsCloud();
 
         return $this->setLayout('article.index', compact('articles', 'tagsCloud'));
-    }
-
-
-    /**
-     * @param ArticleRepository $articleRepository
-     * @param TagRepository     $tagRepository
-     * @param string            $tag
-     *
-     * @return \View
-     */
-    public function indexByTag(ArticleRepository $articleRepository, TagRepository $tagRepository, $tag)
-    {
-        $articles = $articleRepository->paginateByTag($tag);
-        $tagsCloud = $tagRepository->getTagsCloud();
-
-        return $this->setLayout('article.byTag', compact('articles', 'tagsCloud', 'tag'));
     }
 
 
