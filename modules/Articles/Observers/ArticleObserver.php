@@ -24,13 +24,20 @@ class ArticleObserver
         $this->parseText($article);
     }
 
+    /**
+     * @param Article $article
+     */
+    public function saved(Article $article)
+    {
+        $article->addToIndex();
+    }
 
     /**
      * @param Article $article
      */
-    public function saving(Article $article)
+    public function deleted(Article $article)
     {
-
+        $article->deleteIndex();
     }
 
 

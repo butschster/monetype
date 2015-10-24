@@ -9,6 +9,7 @@ use Modules\Support\Helpers\Date;
 use Modules\Support\Helpers\String;
 use Modules\Comments\Model\Comment;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Support\Traits\Elasticquent;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Articles\Traits\TaggableTrait;
 use Modules\Transactions\Contracts\Buyable;
@@ -63,7 +64,7 @@ use Modules\Articles\Exceptions\ArticleException;
 class Article extends Model implements Buyable
 {
 
-    use TaggableTrait, CategoryableTrait, SoftDeletes;
+    use TaggableTrait, CategoryableTrait, SoftDeletes, Elasticquent;
 
     const STATUS_PUBLISHED = 'published';
     const STATUS_DRAFT = 'draft';
@@ -690,5 +691,62 @@ class Article extends Model implements Buyable
     public function revisions()
     {
         return $this->hasMany(ArticleRevision::class, 'article_id');
+    }
+
+
+    /**********************************************************************
+     * Search Index
+     **********************************************************************/
+
+    /**
+     * @var array
+     */
+    protected $mappingProperties = [
+        'title' => [
+            'type'     => 'string',
+            'analyzer' => 'standard',
+            'copy_to' => [
+                'text_source'
+            ]
+        ],
+        'is_free'   => [
+            'type'       => 'boolean'
+        ],
+        'tags' => [
+            'type'       => 'string'
+        ],
+    ];
+
+    /**
+     * Get Index Document Data.
+     *
+     * Get the data that Elasticsearch will
+     * index for this particular document.
+     *
+     * @return array
+     */
+    public function getElasticSearchDocumentData()
+    {
+        return [
+            'title'       => $this->title,
+            'text_source' => $this->text_source,
+            'tags'        => $this->tagsArray,
+            'author_id'   => $this->author_id,
+            'created_at'  => $this->created_at,
+            'is_free'     => $this->isFree(),
+        ];
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return Builder
+     */
+    protected function getQueryForFoundDocuments(array $ids)
+    {
+        return static::whereIn('id', array_keys($ids))
+             ->with('author', 'tags')
+             ->published()
+             ->withFavorites();
     }
 }

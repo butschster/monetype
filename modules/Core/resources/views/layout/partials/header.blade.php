@@ -6,6 +6,12 @@
             </a>
         </div>
         <div id="navbar">
+            {!! Form::open(['route' => 'front.search', 'class' => 'navbar-form navbar-search navbar-left', 'method' => 'get']) !!}
+                <div class="form-group">
+                    {!! Form::text('query', null, ['class' => 'form-control', 'placeholder' => trans('articles::article.label.search')]) !!}
+                </div>
+            {!! Form::close() !!}
+
             <ul class="nav nav-profile navbar-nav pull-right">
                 @if(Auth::check())
                     <li>

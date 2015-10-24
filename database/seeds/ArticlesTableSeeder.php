@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Database\Seeder;
 use Modules\Articles\Model\Tag;
 use Modules\Articles\Model\Article;
@@ -15,6 +16,10 @@ class ArticlesTableSeeder extends Seeder
         Article::truncate();
         ArticleCheck::truncate();
         ArticleRevision::truncate();
+
+        Article::deleteIndex();
+        Article::createIndex();
+        Article::putMapping();
 
         if ( ! App::environment('local')) {
             return;

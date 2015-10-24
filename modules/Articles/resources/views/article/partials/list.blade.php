@@ -25,7 +25,7 @@
     </div>
     @endforeach
 </div>
-@if($article instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator)
+@if($articles instanceof \Illuminate\Contracts\Pagination\Paginator)
 {!! $articles->render() !!}
 @endif
 @else

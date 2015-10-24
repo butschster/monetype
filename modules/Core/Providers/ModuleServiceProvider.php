@@ -7,6 +7,7 @@ use Event;
 use Carbon\Carbon;
 use Modules\Support\Helpers\Profiler;
 use Modules\Core\Console\Commands\DropDatabaseCommand;
+use Modules\Core\Console\Commands\ElasticSearchIndexer;
 use Modules\Core\Console\Commands\GenerateJavaScriptLang;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -21,6 +22,7 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->registerConsoleCommand(DropDatabaseCommand::class);
         $this->registerConsoleCommand(GenerateJavaScriptLang::class);
+        $this->registerConsoleCommand(ElasticSearchIndexer::class);
 
         Event::listen('illuminate.query', function($sql, $bindings, $time) {
             $sql = str_replace(array('%', '?'), array('%%', '%s'), $sql);

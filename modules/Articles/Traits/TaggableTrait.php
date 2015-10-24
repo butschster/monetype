@@ -206,7 +206,7 @@ trait TaggableTrait
      */
     public function getTagsArrayAttribute()
     {
-        return explode(',', $this->attributes['tags_list']);
+        return explode(',', $this->getTagsStringAttribute());
     }
 
 

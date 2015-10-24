@@ -70,6 +70,15 @@
       color: @navbar-contrast-link-hover-color !important;
     }
   }
+
+  .form-control {
+    border-radius: 20px;
+    background-color: @navbar-contrast-link-hover-bg !important;
+    border: 1px solid @navbar-contrast-border;
+    color: rgba(255,255,255,.8);
+
+    .form-control-focus(lighten(@navbar-contrast-link-hover-bg, 5%))
+  }
 }
 .nav-profile {
   .open .dropdown-menu:after {

@@ -8,6 +8,7 @@ return [
         'create' => 'Новая статья',
         'by_tag' => ':tag<br /><small>Статьи с тегом</small>',
         'money'  => ':article<br /><small>Собраные деньги</small>',
+        'search' => 'Результаты поиска'
     ],
     'field'   => [
         'author'             => 'Автор',
@@ -52,6 +53,7 @@ return [
         'count_payments' => 'Всего платежей',
         'free'           => 'Бесплатно',
         'reading_time'   => ':minutes мин',
+        'search'         => 'Поиск'
     ],
     'message' => [
         'need_to_buy'               => 'Вам необходимо заплатить :amount <i class="icon-rouble"></i> для прочтения статьи.',
@@ -67,6 +69,7 @@ return [
         'drafted'                   => 'Статья сохранена в черновики',
         'approved'                  => 'Статья помещена как проверенная',
         'blocked'                   => 'Статья заблокирована',
+        'no_search_results'         => '<i class="icon-emo-unhappy"></i> По вашему запросу ничего не найдено',
         'plagiarism'                => '<i class="icon-emo-unhappy"></i> Статья не может быть опубликована, т.к. не прошла проверку на плагиат',
         'cant_check_for_plagiarism' => '<i class="icon-emo-unhappy"></i> В данный момент не получается проверить статью на плагиант, попробуйте опубликовать позже',
     ],
