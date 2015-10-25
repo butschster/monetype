@@ -2,6 +2,7 @@
 
 namespace Modules\Users\Http\Controllers\Auth;
 
+use Mail;
 use Validator;
 use Modules\Users\Model\User;
 use Illuminate\Contracts\Auth\Guard;
@@ -121,11 +122,20 @@ class AuthController extends FrontController
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'username' => array_get($data, 'username'),
             'name'     => array_get($data, 'name'),
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        // TODO доработать отправку почты при регистрации
+        if ( ! is_null($user)) {
+            Mail::send('emails.user.register', ['user' => $user], function ($mail) use($user) {
+                $mail->to($user->email, $user->name)->subject('Thank you for registration!');
+            });
+        }
+
+        return $user;
     }
 }
