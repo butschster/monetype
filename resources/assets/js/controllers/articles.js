@@ -33,7 +33,7 @@ App.Form.extend('articles', {
 });
 
 App.Controllers.add(['article.create', 'article.edit'], function(action) {
-	App.Form.articles.init($('form'));
+	App.Form.articles.init($('#articleForm'));
 	App.Form.articles._id = ARTICLE_ID;
 });
 

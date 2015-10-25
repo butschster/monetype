@@ -8,7 +8,8 @@
     {!! Form::model($article , [
 		'route' => $action,
 		'class' => 'panel',
-		'method' => $article->exists ? 'PUT' : 'POST'
+		'method' => $article->exists ? 'PUT' : 'POST',
+		'id' => 'articleForm'
     ]) !!}
 
         @if (count($errors) > 0)
