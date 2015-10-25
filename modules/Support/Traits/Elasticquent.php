@@ -2,8 +2,11 @@
 
 namespace Modules\Support\Traits;
 
+
 use Elasticsearch\ClientBuilder;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Modules\Support\Elasticquent\DocumentMissingException;
 
 trait Elasticquent
@@ -123,18 +126,28 @@ trait Elasticquent
     /**
      * Get Basic Elasticsearch Params.
      *
-     * Most Elasticsearch API calls need the index and
-     * type passed in a parameter array.
+     * @param null $perPage
+     * @param int  $offset
      *
      * @return array
      */
-    public function getElasticSearchDocumentParams()
+    public function getElasticSearchDocumentParams($perPage = null, $offset = 0)
     {
-        return [
+        $params = [
             'index' => $this->getIndexName(),
             'type'  => $this->getTypeName(),
             'id'    => $this->getKey(),
         ];
+
+        if (is_integer($perPage)) {
+            $params['body']['size'] = (int) $perPage;
+        }
+
+        if (is_integer($offset)) {
+            $params['body']['from'] = (int) $offset;
+        }
+
+        return $params;
     }
 
 
@@ -164,20 +177,22 @@ trait Elasticquent
     /**
      * Build your own search.
      *
-     * @param  array $params
+     * @param array $params
+     * @param int   $perPage
+     * @param int   $offset
      *
      * @return ElasticSearchResultCollection
      */
-    public static function searchCustom(array $params = [])
+    public static function searchCustom(array $params = [], $perPage = null, $offset = 0)
     {
         $instance    = new static();
-        $basicParams = $instance->getElasticSearchDocumentParams();
+        $basicParams = $instance->getElasticSearchDocumentParams($perPage, $offset);
         unset($basicParams['id']);
 
         $params      = array_merge($basicParams, $params);
         $result      = $instance->getElasticSearchClient()->search($params);
 
-        return $instance->hitsToItems($result);
+        return $instance->hitsToItems($result, $perPage);
     }
 
 
@@ -186,14 +201,16 @@ trait Elasticquent
      *
      * Search with a query array
      *
-     * @param  array $query
+     * @param array $query
+     * @param int   $perPage
+     * @param int   $offset
      *
      * @return ElasticSearchResultCollection
      */
-    public static function searchByQuery($query = null)
+    public static function searchByQuery($query = null, $perPage = null, $offset = 0)
     {
         $instance = new static();
-        $params   = $instance->getElasticSearchDocumentParams();
+        $params   = $instance->getElasticSearchDocumentParams($perPage, $offset);
 
         unset($params['id']);
 
@@ -202,7 +219,7 @@ trait Elasticquent
         }
         $result = $instance->getElasticSearchClient()->search($params);
 
-        return $instance->hitsToItems($result);
+        return $instance->hitsToItems($result, $perPage);
     }
 
 
@@ -211,21 +228,23 @@ trait Elasticquent
      *
      * Simple search using a match _all query
      *
-     * @param  string $term
+     * @param string $term
+     * @param int    $perPage
+     * @param int    $offset
      *
      * @return ElasticSearchResultCollection
      */
-    public static function search($term = null)
+    public static function search($term = null, $perPage = null, $offset = 0)
     {
         $instance                                 = new static();
-        $params                                   = $instance->getElasticSearchDocumentParams();
+        $params                                   = $instance->getElasticSearchDocumentParams($perPage, $offset);
 
         unset($params['id']);
 
         $params['body']['query']['match']['_all'] = $term;
         $result                                   = $instance->getElasticSearchClient()->search($params);
 
-        return $instance->hitsToItems($result);
+        return $instance->hitsToItems($result, $perPage);
     }
 
 
@@ -444,11 +463,12 @@ trait Elasticquent
     /**
      * Hits To Items.
      *
-     * @param  array $results
+     * @param array $results
+     * @param int   $perPage
      *
      * @return array
      */
-    protected function hitsToItems(array $results)
+    protected function hitsToItems(array $results, $perPage = null)
     {
         $ids = [];
 
@@ -458,8 +478,11 @@ trait Elasticquent
             $ids[array_get($hit, '_id')] = $hit;
         }
 
-        $items = $this->getQueryForFoundDocuments($ids)->paginate();
+        $page = Paginator::resolveCurrentPage('page');
 
+        $total = array_get($results, 'hits.total', 0);
+
+        $items = $this->getQueryForFoundDocuments($ids)->get();
         $items->each(function($item) use($items) {
             // In addition to setting the attributes
             // from the index, we will set the score as well.
@@ -469,9 +492,11 @@ trait Elasticquent
             $item->documentVersion = array_get($items, $item->id . '._version');
         });
 
-        return $items;
+        return new LengthAwarePaginator($items, $total, $perPage, $page, [
+            'path' => Paginator::resolveCurrentPath(),
+            'pageName' => 'page',
+        ]);
     }
-
 
     /**
      * @param array $ids

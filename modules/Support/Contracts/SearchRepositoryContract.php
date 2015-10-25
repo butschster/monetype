@@ -13,4 +13,22 @@ interface SearchRepositoryContract
      * @return Collection
      */
     public function search($query = "");
+
+
+    /**
+     * @return int
+     */
+    public function getCurrentPage();
+
+
+    /**
+     * @return int
+     */
+    public function perPage();
+
+
+    /**
+     * @return int
+     */
+    public function getOffset();
 }

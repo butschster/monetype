@@ -16,7 +16,7 @@ class ElasticSearchArticleRepository implements SearchRepositoryContract
      */
     public function search($query = "")
     {
-        return Article::search($query);
+        return Article::search($query, $this->perPage(), $this->getOffset());
     }
 
 
@@ -30,17 +30,13 @@ class ElasticSearchArticleRepository implements SearchRepositoryContract
     {
         if (is_null($user)) {
             $query = [
-                'match' => [
-                    'text_source' => $keyword,
-                ],
+                'match_all' => [],
             ];
         } else {
             $query = [
                 'filtered' => [
                     'query'  => [
-                        'match' => [
-                            'text_source' => $keyword,
-                        ],
+                        'match_all' => [],
                     ],
                     'filter' => [
                         'author_id' => $user->id,
@@ -49,7 +45,7 @@ class ElasticSearchArticleRepository implements SearchRepositoryContract
             ];
         }
 
-        return Article::searchByQuery($query);
+        return Article::searchByQuery($query, $this->perPage(), $this->getOffset());
     }
 
 
@@ -61,18 +57,20 @@ class ElasticSearchArticleRepository implements SearchRepositoryContract
      */
     public function searchByTag($tag, User $user = null)
     {
+        $tags = array_unique(array_map('trim', explode(',', $tag)));
+
         if (is_null($user)) {
             $query = [
-                'match' => [
-                    'tags' => $tag,
+                'terms' => [
+                    'tags' => $tags,
                 ],
             ];
         } else {
             $query = [
                 'filtered' => [
                     'query'  => [
-                        'match' => [
-                            'tags' => $tag,
+                        'terms' => [
+                            'tags' => $tags,
                         ],
                     ],
                     'filter' => [
@@ -82,6 +80,28 @@ class ElasticSearchArticleRepository implements SearchRepositoryContract
             ];
         }
 
-        return Article::searchByQuery($query);
+        return Article::searchByQuery($query, $this->perPage(), $this->getOffset());
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrentPage()
+    {
+        return (int) \Request::query('page', 1);
+    }
+
+
+    /**
+     * @return int
+     */
+    public function perPage()
+    {
+        return 15;
+    }
+
+    public function getOffset()
+    {
+        return $this->perPage() * ($this->getCurrentPage() - 1);
     }
 }
