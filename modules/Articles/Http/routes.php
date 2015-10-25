@@ -32,6 +32,7 @@ Route::group(['as' => 'front.'], function () {
         RouteAPI::post('article.draft/{article}', ['as' => 'article.draft', 'uses' => 'Api\ArticleController@draft']);
         RouteAPI::post('article.approve/{article}', ['as' => 'article.approve', 'uses' => 'Api\ArticleController@approve']);
         RouteAPI::post('article.block/{article}', ['as' => 'article.block', 'uses' => 'Api\ArticleController@block']);
+        RouteAPI::post('article.preview', ['uses' => 'Api\ArticleController@previewText']);
 
         RouteAPI::get('tags.search', ['uses' => 'Api\TagsController@search']);
 

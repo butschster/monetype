@@ -58,28 +58,13 @@ class ArticleObserver
      */
     protected function parseText(Article $article)
     {
-        $parser = new MarkdownParser;
+        list( $text, $textIntro, $readMoreText ) = MarkdownParser::parseText($article->text_source);
 
-        $pattern = "/<cut>(.*?)<\\/cut>/si";
-        preg_match($pattern, $article->text_source, $matches);
-
-        if ( ! empty($matches)) {
-            $readMoreText = strip_tags($matches[1]);
-            list($textIntro, $text) = preg_split($pattern, $article->text_source, 2);
-
-        } else {
-            $readMoreText = $textIntro = '';
-            $text         = $article->text_source;
-        }
-
-        if ( ! empty($textIntro)) {
-            $article->text_intro = $parser->text($textIntro);
-        }
-
+        $article->text_intro     = $textIntro;
         $article->read_more_text = $readMoreText;
-        $article->text           = $parser->text($text);
+        $article->text           = $text;
 
-        $words = str_word_count(strip_tags($article->text));
+        $words = str_word_count(strip_tags($text));
         $min   = floor($words / (int) config('article.words_per_minute_reading', 200));
 
         $article->reading_time = $min;

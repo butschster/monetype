@@ -7,6 +7,7 @@ use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Articles\Jobs\BlockArticle;
 use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
+use Modules\Support\Helpers\MarkdownParser;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Articles\Exceptions\PlagiarismException;
 use Modules\Core\Http\Controllers\System\ApiController;
@@ -169,5 +170,13 @@ class ArticleController extends ApiController
         Bus::dispatch(new BlockArticle(auth()->user(), $article, $this->getParameter('block_reason')));
 
         $this->setMessage(trans('articles::article.message.blocked'));
+    }
+
+    public function previewText()
+    {
+        $text = $this->getParameter('text');
+        list( $text, $textIntro, $readMoreText ) = MarkdownParser::parseText($text);
+
+        return view('articles::article.partials.preview', compact('text', 'textIntro', 'readMoreText'));
     }
 }
