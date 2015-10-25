@@ -1,6 +1,9 @@
 @extends('core::layout.empty')
 
 @section('content')
+
+    @include('core::layout.partials.header', ['disableLogo' => true])
+
     <div class="comingSoon">
         <div class="container comingSoon--header">
             {!! HTML::image('img/logo.gif', null, ['class' => 'header-logo']) !!}

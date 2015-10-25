@@ -1,10 +1,12 @@
 <nav class="navbar navbar-contrast">
     <div class="container">
+        @if(empty($disableLogo))
         <div class="navbar-header">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {!! HTML::image('img/logo.gif', trans('app.title'), ['style' => 'height: 40px']) !!}
             </a>
         </div>
+        @endif
         <div id="navbar">
             {!! Form::open(['route' => 'front.search', 'class' => 'navbar-form navbar-search navbar-left', 'method' => 'get']) !!}
                 <div class="form-group">

@@ -1,10 +1,15 @@
 @import "bootstrap";
 @import "../icons/icons";
 @import "variables";
+@import "mixins/margins";
+@import "components/nav";
 @import "components/form";
 @import "components/alert";
 @import "components/panels";
-@import "mixins/margins";
+
+.navbar {
+  margin-bottom: 0 !important;
+}
 
 .comingSoon--border {
   border-top: solid 5px @brand-primary;
