@@ -7,13 +7,13 @@
         </div>
 
         <h3 class="articleItem--title">
-            {!! link_to_route('front.article.show', $article->title, $article->id) !!}
+            {!! link_to($article->getRouteLink(), $article->title) !!}
         </h3>
         <div class="articleItem--content">
             {!! $article->text_intro !!}
 
             @if($article->hasReadModerButton())
-            {!! link_to_route('front.article.showCut', $article->read_more_text, $article->id, ['class' => 'articleItem--readMoreButton']) !!}
+            {!! link_to($article->getRouteLink(), $article->read_more_text, ['class' => 'articleItem--readMoreButton']) !!}
             @endif
         </div>
 

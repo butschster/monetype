@@ -7,6 +7,7 @@ use Assets;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Articles\Repositories\TagRepository;
 use Modules\Articles\Repositories\ArticleRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Modules\Core\Http\Controllers\System\FrontController;
 use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 
@@ -37,6 +38,37 @@ class ArticleController extends FrontController
     public function show(ArticleRepository $articleRepository, $articleId)
     {
         $article = $articleRepository->findOrFail($articleId);
+
+        if ($article->isDrafted()) {
+            $this->checkPermissions('preview', $article);
+        }
+
+        Assets::package('validation');
+
+        return $this->setLayout('article.show', [
+            'article'     => $article,
+            'isPurchased' => $article->checkPurchaseStatus($this->user),
+            'author'      => $article->author,
+            'tags'        => $article->tags,
+        ]);
+    }
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param integer           $articleId
+     *
+     * @return \View
+     */
+    public function showByUsername(ArticleRepository $articleRepository, $username, $articleId)
+    {
+        $article = $articleRepository->getModel($articleId)->with('author')->whereHas('author', function($q) use($username) {
+            $q->where('username', $username);
+        })->where('id', $articleId)->first();
+
+        if(is_null($article)) {
+            abort(404);
+        }
 
         if ($article->isDrafted()) {
             $this->checkPermissions('preview', $article);

@@ -174,6 +174,30 @@ class Article extends Model implements Buyable
 
 
     /**
+     * @param bool|false $cut
+     *
+     * @return string
+     */
+    public function getRouteLink($cut = false)
+    {
+        if (empty( $this->author->username )) {
+            $link = route('front.article.show', $this->id);
+        } else {
+            $link = route('front.article.showByUsername', [
+                $this->author->username,
+                $this->id,
+            ]);
+        }
+
+        if ($cut) {
+            $link .= '#cut';
+        }
+
+        return $link;
+    }
+
+
+    /**
      * @return int
      */
     public function getCost()
