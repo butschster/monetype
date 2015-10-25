@@ -23,5 +23,6 @@ Route::controllers([
 ]);
 
 Route::group(['middleware' => 'auth'], function () {
-   RouteAPI::any('profile.background', ['uses' => 'Api\ProfileController@uploadBackground']);
+    RouteAPI::any('profile.background', ['uses' => 'Api\ProfileController@uploadBackground']);
+    RouteAPI::get('filter.bookmarks', ['uses' => 'Api\UserController@filterBookmarks']);
 });
