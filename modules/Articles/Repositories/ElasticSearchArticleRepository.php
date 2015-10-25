@@ -26,23 +26,28 @@ class ElasticSearchArticleRepository implements SearchRepositoryContract
      *
      * @return Collection
      */
-    public function searchByKeyword($keyword, User $user = null)
+    public function searchByKeyword($keyword, User $user = null, array $customQuery = null)
     {
-        if (is_null($user)) {
-            $query = [
-                'match_all' => [],
-            ];
-        } else {
-            $query = [
-                'filtered' => [
-                    'query'  => [
-                        'match_all' => [],
+        $query = [
+            'filtered' => [
+                'query'  => [
+                    'multi_match' => [
+                        'query' => $keyword,
+                        'type' => 'phrase',
+                        'fields' => ['title', 'text_source'],
                     ],
-                    'filter' => [
-                        'author_id' => $user->id,
-                    ],
-                ],
-            ];
+                ]
+            ],
+        ];
+
+        if ( ! is_null($user)) {
+            array_set($query, 'filtered.filter', [
+                'author_id' => $user->id,
+            ]);
+        }
+
+        if (is_array($customQuery)) {
+            $query = array_merge_recursive($query, $customQuery);
         }
 
         return Article::searchByQuery($query, $this->perPage(), $this->getOffset());
@@ -55,29 +60,28 @@ class ElasticSearchArticleRepository implements SearchRepositoryContract
      *
      * @return Collection
      */
-    public function searchByTag($tag, User $user = null)
+    public function searchByTag($tag, User $user = null, array $customQuery = null)
     {
         $tags = array_unique(array_map('trim', explode(',', $tag)));
 
-        if (is_null($user)) {
-            $query = [
-                'terms' => [
-                    'tags' => $tags,
-                ],
-            ];
-        } else {
-            $query = [
-                'filtered' => [
-                    'query'  => [
-                        'terms' => [
-                            'tags' => $tags,
-                        ],
+        $query = [
+            'filtered' => [
+                'query'  => [
+                    'terms' => [
+                        'tags' => $tags
                     ],
-                    'filter' => [
-                        'author_id' => $user->id,
-                    ],
-                ],
-            ];
+                ]
+            ],
+        ];
+
+        if ( ! is_null($user)) {
+            array_set($query, 'filtered.filter', [
+                'author_id' => $user->id,
+            ]);
+        }
+
+        if (is_array($customQuery)) {
+            $query = array_merge_recursive($query, $customQuery);
         }
 
         return Article::searchByQuery($query, $this->perPage(), $this->getOffset());

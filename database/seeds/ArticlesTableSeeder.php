@@ -19,7 +19,7 @@ class ArticlesTableSeeder extends Seeder
 
         Article::deleteIndex();
         Article::createIndex();
-        Article::putMapping();
+        //Article::putMapping();
 
         if ( ! App::environment('local')) {
             return;
@@ -30,7 +30,7 @@ class ArticlesTableSeeder extends Seeder
             Config::set('article.check.max_percent_plagiarism', 80);
         }
 
-        factory(Article::class, 'article', 50)->create()->each(function (Article $article) {
+        factory(Article::class, 'article', 20)->create()->each(function (Article $article) {
             $tags = Tag::take(rand(1, 6))->orderByRaw('RAND()')->get()->lists('name', 'id')->all();
 
             $article->attachTags($tags);
