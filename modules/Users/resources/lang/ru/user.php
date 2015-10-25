@@ -19,6 +19,7 @@ return [
     ],
     'label'   => [
         'balance' => '<i class="icon-rouble"></i>:amount',
+        'bookmark_search' => 'Поиск в избранных...'
     ],
     'menu'    => [
         'profile'   => 'Профиль',
