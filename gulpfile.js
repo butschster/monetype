@@ -62,6 +62,7 @@ elixir(function (mix) {
             'core/api.js',
             'components.js',
             'controllers/articles.js',
+            'controllers/users.js',
             'run.js'
         ], 'public/js/app.js')
         .scripts([
