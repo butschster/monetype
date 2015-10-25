@@ -3,13 +3,12 @@
 @section('content')
     <h2 class="page-header">@lang('articles::article.title.search')</h2>
 
-    @if(empty($query))
+    @if(!$articles->count())
         <div class="alert alert-info m-t-lg">
             <?php if(empty($emptyMessage)) $emptyMessage = trans('articles::article.message.no_search_results'); ?>
             <h4 class="m-b-none m-t-none">{!! $emptyMessage !!}</h4>
         </div>
     @else
-
     <div class="row">
         <div class="col-sm-7">
             @include('articles::article.partials.list')

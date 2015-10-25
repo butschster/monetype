@@ -20,7 +20,7 @@ class SearchController extends FrontController
         $query = $this->request->get('query');
 
         $articles  = null;
-        $tagsCloud = null;
+        $tagsCloud = [];
 
         if ( ! empty( $query )) {
             $articles = $repository->searchByKeyword($query);
