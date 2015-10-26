@@ -242,7 +242,7 @@ $factory->defineAs(Article::class, 'article', function (Faker\Generator $faker) 
     $text = explode("\n\n", $texts[$title]);
 
     foreach($text as &$paragraph) {
-        $paragraph .= "![](" . $faker->imageUrl(800, 200) . ")";
+        $paragraph .= "\n\n![](" . $faker->imageUrl(800, 200) . ")";
     }
 
     return [
