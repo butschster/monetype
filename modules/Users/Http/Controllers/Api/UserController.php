@@ -15,7 +15,7 @@ class UserController extends ApiController
      */
     public function filterBookmarks(ElasticSearchArticleRepository $repository)
     {
-        $ids      = auth()->user()->favorites()->lists('id')->all();
+        $ids      = $this->user->favorites()->lists('id')->all();
         $query    = $this->getParameter('query');
         $articles = null;
         if ( ! empty( $ids ) and ! empty( $query )) {
@@ -29,7 +29,7 @@ class UserController extends ApiController
                 ],
             ]);
         } else {
-            $articles = auth()->user()->favorites()->paginate();
+            $articles = $this->user->favorites()->paginate();
         }
 
         $this->setContent(view('articles::article.partials.list', compact('articles')));

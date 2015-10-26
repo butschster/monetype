@@ -12,9 +12,8 @@ class ProfileController extends ApiController
             'required', 'image'
         ]);
 
-        $user = auth()->user();
-        $user->attachBackground($file);
+        $this->user->attachBackground($file);
 
-        $this->setContent($user->getBackground());
+        $this->setContent($this->user->getBackground());
     }
 }

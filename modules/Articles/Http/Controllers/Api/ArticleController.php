@@ -27,7 +27,7 @@ class ArticleController extends ApiController
         $articleId = $this->getRequiredParameter('id');
         $article   = $articleRepository->findOrFail($articleId);
 
-        $article->is_favorited = $article->toggleFavorite(auth()->user()) > 0;
+        $article->is_favorited = $article->toggleFavorite($this->user) > 0;
         $this->setContent(view('articles::article.partials.favorites', compact('article')));
     }
 
@@ -37,9 +37,7 @@ class ArticleController extends ApiController
      */
     public function thematic(ArticleRepository $articleRepository)
     {
-        $user = auth()->user();
-
-        $articles = $articleRepository->paginateByTagIds($user->tags()->lists('id')->all());
+        $articles = $articleRepository->paginateByTagIds($this->user->tags()->lists('id')->all());
         $this->setContent(view('articles::article.partials.list', [
             'articles' => $articles,
             'emptyMessage' => trans('articles::article.message.empty_thematic_list')
@@ -62,7 +60,7 @@ class ArticleController extends ApiController
 
         $this->setMessage(trans('articles::article.message.created'));
 
-        return redirect(route('front.article.edit', $article->id));
+        return redirect()->route('front.article.edit', $article->id);
     }
 
 
@@ -115,17 +113,17 @@ class ArticleController extends ApiController
         $this->checkPermissions('publish', $article);
 
         try {
-            Bus::dispatch(new PublishArticle(auth()->user(), $article));
+            Bus::dispatch(new PublishArticle($this->user, $article));
         } catch (PlagiarismException $e) {
-            $this->setMessage(trans('articles::article.message.plagiarism'));
+            $this->setErrorMessage(trans('articles::article.message.plagiarism'));
             return;
         } catch (CheckForPlagiarismException $e) {
-            $this->setMessage(trans('articles::article.message.cant_check_for_plagiarism',
+            $this->setErrorMessage(trans('articles::article.message.cant_check_for_plagiarism',
                 ['error' => $e->getMessage()]));
             return;
         }
 
-        return redirect(route('front.article.edit', $article->id));
+        return redirect()->route('front.article.edit', $article->id);
     }
 
 
@@ -141,9 +139,9 @@ class ArticleController extends ApiController
 
         $this->checkPermissions('draft', $article);
 
-        Bus::dispatch(new DraftArticle(auth()->user(), $article));
+        Bus::dispatch(new DraftArticle($this->user, $article));
 
-        return redirect(route('front.article.edit', $article->id));
+        return redirect()->route('front.article.edit', $article->id);
     }
 
 
@@ -159,7 +157,7 @@ class ArticleController extends ApiController
 
         $this->checkPermissions('approve', $article);
 
-        Bus::dispatch(new ApproveArticle(auth()->user(), $article));
+        Bus::dispatch(new ApproveArticle($this->user, $article));
 
         $this->setMessage(trans('articles::article.message.approved'));
     }
@@ -177,11 +175,11 @@ class ArticleController extends ApiController
 
         $this->checkPermissions('block', $article);
 
-        $this->validate(\Request::all(), [
+        $this->validate($this->request->all(), [
             'block_reason' => 'required'
         ], [], trans('articles::article.field'));
 
-        Bus::dispatch(new BlockArticle(auth()->user(), $article, $this->getParameter('block_reason')));
+        Bus::dispatch(new BlockArticle($this->user, $article, $this->getParameter('block_reason')));
 
         $this->setMessage(trans('articles::article.message.blocked'));
     }

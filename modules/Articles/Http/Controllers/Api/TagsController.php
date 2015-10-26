@@ -18,7 +18,6 @@ class TagsController extends ApiController
     public function search(TagRepository $tagRepository)
     {
         $query = $this->getRequiredParameter('query');
-
         return new JsonResponse($tagRepository->finAllByString($query));
     }
 
@@ -30,12 +29,10 @@ class TagsController extends ApiController
     {
         $tag = $this->getRequiredParameter('tag');
 
-        $user = auth()->user();
-
-        $hasTag = ! is_null($user->tags()->where('name', $tag)->first());
+        $hasTag = ! is_null($this->user->tags()->where('name', $tag)->first());
 
         if ($hasTag) {
-            $this->setMessage(trans('articles::tag.message.user_has_thematic_tag'));
+            $this->setErrorMessage(trans('articles::tag.message.user_has_thematic_tag'));
 
             return;
         }
@@ -43,13 +40,12 @@ class TagsController extends ApiController
         $tag = $tagRepository->findBy('name', $tag);
 
         if (is_null($tag)) {
-            $this->setMessage(trans('articles::tag.message.tag_not_found'));
-
+            $this->setErrorMessage(trans('articles::tag.message.tag_not_found'));
             return;
         }
 
-        $user->tags()->attach($tag);
-        $tags = $user->tags;
+        $this->user->tags()->attach($tag);
+        $tags = $this->user->tags;
 
         $this->setContent(view('articles::tag.partials.thematic', compact('tags')));
     }
@@ -57,19 +53,17 @@ class TagsController extends ApiController
 
     public function deleteThematic()
     {
-        $user = auth()->user();
         $tag  = $this->getRequiredParameter('tag');
-        $tag  = $user->tags()->findOrFail($tag);
+        $tag  = $this->user->tags()->findOrFail($tag);
 
         if (is_null($tag)) {
-            $this->setMessage(trans('articles::tag.message.tag_not_found'));
-
+            $this->setErrorMessage(trans('articles::tag.message.tag_not_found'));
             return;
         }
 
-        $user->tags()->detach($tag);
+        $this->user->tags()->detach($tag);
 
-        $tags = $user->tags;
+        $tags = $this->user->tags;
         $this->setContent(view('articles::tag.partials.thematic', compact('tags')));
     }
 }

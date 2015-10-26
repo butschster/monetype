@@ -113,12 +113,12 @@ var App = {
             window.top.noty({
                 layout: 'topRight',
                 type: type,
-                icon: icon || 'fa fa-ok',
+                icon: icon || 'icon-ok',
                 text: decodeURIComponent(msg)
             });
         },
-        error: function (message) {
-            this.show(message, 'error');
+        error: function (message, icon) {
+            this.show(message, 'error', icon);
         }
     },
     Dialog: {

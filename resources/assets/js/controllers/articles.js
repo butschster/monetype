@@ -44,13 +44,11 @@ App.Controllers.add('article.list.thematic', function(action) {
 
 			addTagToThematic(val, function(response) {
 				$self.val("");
-				if(response.code == 200) {
-					$('#thematicTags').html(response.content);
+				$('#thematicTags').html(response.content);
 
-					Api.get('/api.articles.thematic', {}, function(response) {
-						$('#thematicArticles').html(response.content);
-					});
-				}
+				Api.get('/api.articles.thematic', {}, function(response) {
+					$('#thematicArticles').html(response.content);
+				});
 			});
 		},
 		source: function(query, callback) {
@@ -63,13 +61,10 @@ App.Controllers.add('article.list.thematic', function(action) {
 	$('#thematicTags').on('click', '.close', function() {
 		var id = $(this).closest('.tagsCloud--tag').data('id');
 		Api.delete('/api.tags.thematic', {tag: id}, function(response) {
-
-			if(response.code == 200) {
-				$('#thematicTags').html(response.content);
-				Api.get('/api.articles.thematic', {}, function(response) {
-					$('#thematicArticles').html(response.content);
-				});
-			}
+			$('#thematicTags').html(response.content);
+			Api.get('/api.articles.thematic', {}, function(response) {
+				$('#thematicArticles').html(response.content);
+			});
 		});
 	});
 });
@@ -119,11 +114,9 @@ function addTagToThematic(tag, callback) {
 function addToFavorite(e) {
 	var $self = $(this);
 
-	App.User.runIfAuth(function() {
-		Api.post('/api.article.favorite', {id: $self.data('id')}, function (response) {
-			$self.closest('.articleItem--favorites').replaceWith(
-				$(response.content).find('.icon-bookmark').addClass('animated bounceIn').end()
-			);
-		});
-	}, 'Вы должны авторизоваться');
+	Api.post('/api.article.favorite', {id: $self.data('id')}, function (response) {
+		$self.closest('.articleItem--favorites').replaceWith(
+			$(response.content).find('.icon-bookmark').addClass('animated bounceIn').end()
+		);
+	});
 }

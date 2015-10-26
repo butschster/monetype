@@ -12,7 +12,7 @@ var Api = {
     'delete': function (uri, data, callback, async) {
         return this.request('DELETE', uri, data, callback, async);
     },
-    request: function (method, uri, data, callback, async) {
+    request: function (method, uri, data, success_callback, error_callback, async) {
         var url = this.parseUrl(uri);
 
         $.ajaxSetup({
@@ -34,25 +34,65 @@ var Api = {
             dataType: 'json',
             async: async !== false
         })
-            .done(function (response) {
+            .done($.proxy(function (response) {
                 this._response = response;
 
-                if (response.code != 200)
-                    return Api.exception(response, callback);
-
-                window.top.$('body').trigger(Api.getEventKey(method, url), [this._response]);
-
-                if (response.message && response.code == 200)
-                    App.Messages.show(response.message, 'information');
-
-                if (response.popup && response.code == 200)
-                    Popup.openHTML(response.popup);
-
-                if (typeof(callback) == 'function') callback(this._response);
-            })
+                if (typeof response == 'object' && 'code' in response) {
+                    this.parseResponse(response, success_callback, error_callback)
+                } else {
+                    if (typeof(success_callback) == 'function') success_callback(response);
+                }
+            }, this))
             .fail(function (e) {
-                return Api.exception(e.responseJSON, callback);
+                return Api.exception(e.responseJSON, error_callback);
             });
+    },
+    parseResponse: function (response, success_callback, error_callback) {
+        if (response.code != 200)
+            return Api.exception(response, error_callback);
+
+        if (response.message && response.code == 200)
+            App.Messages.show(response.message, 'information');
+
+        if (response.error_message)
+            App.Messages.error(response.error_message);
+
+        if (response.success_message)
+            App.Messages.show(response.success_message);
+
+        if (typeof(success_callback) == 'function') success_callback(response);
+    },
+    exception: function (response, error_callback) {
+        if (typeof(error_callback) == 'function') error_callback(response);
+
+        switch (response.code) {
+            case 220: // ERROR_PERMISSIONS
+
+                break;
+            case 110: // ERROR_MISSING_PAPAM
+                App.Messages.error(response.message, 'icon-emo-unhappy');
+                break;
+            case 120: // ERROR_VALIDATION
+                for (i in response.errors) {
+                    App.Messages.error(response.errors[i], 'icon-lightbulb');
+                }
+                break;
+            case 130: // ERROR_UNKNOWN
+            case 140: // ERROR_TOKEN
+            case 150: // ERROR_MISSING_ASSIGMENT
+                break;
+            case 301: // Redirect
+            case 302: // Redirect
+                window.location.href = response.targetUrl;
+                break;
+            case 403: // ERROR_UNAUTHORIZED
+                App.Messages.error('Вы должны авторизоваться', 'icon-emo-wink');
+                break;
+            case 404: // ERROR_PAGE_NOT_FOUND
+                break;
+            default:
+                App.Messages.error(response.message);
+        }
     },
     parseUrl: function (url) {
         return url;
@@ -113,38 +153,6 @@ var Api = {
             json = $.extend(true, json, merge);
         });
         return json;
-    },
-    exception: function (response, callback) {
-        if (typeof(callback) == 'function')
-            callback(response);
-
-        switch (response.code) {
-            case 220: // ERROR_PERMISSIONS
-
-                break;
-            case 110: // ERROR_MISSING_PAPAM
-                App.Messages.show(response.message, 'error', 'fa fa-exclamation-triangle');
-                break;
-            case 120: // ERROR_VALIDATION
-                for (i in response.errors) {
-                    App.Messages.show(response.errors[i], 'error', 'fa fa-exclamation-triangle');
-                }
-                break;
-            case 130: // ERROR_UNKNOWN
-            case 140: // ERROR_TOKEN
-            case 150: // ERROR_MISSING_ASSIGMENT
-
-                break;
-            case 301: // Redirect
-            case 302: // Redirect
-                window.location.href = response.targetUrl;
-                break;
-            case 403: // ERROR_UNAUTHORIZED
-            case 404: // ERROR_PAGE_NOT_FOUND
-                break;
-            default:
-                App.Messages.show(response.message, 'error', 'fa fa-exclamation-triangle');
-        }
     },
     response: function () {
         return this._response;
