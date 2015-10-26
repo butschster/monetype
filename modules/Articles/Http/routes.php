@@ -17,6 +17,8 @@ Route::group(['as' => 'front.'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
 
+        Route::get('articles/thematic', ['as' => 'articles.thematic', 'uses' => 'ArticleController@listThematic']);
+
         Route::get('article/{article}/money', ['as' => 'article.money', 'uses' => 'ArticleController@money']);
         Route::put('article/{article}/approve', ['as' => 'article.approve', 'uses' => 'ArticleController@approve']);
         Route::post('article/{article}/buy', ['as' => 'article.buy', 'uses' => 'ArticleController@buy']);
@@ -37,6 +39,8 @@ Route::group(['as' => 'front.'], function () {
         RouteAPI::post('article.preview', ['uses' => 'Api\ArticleController@previewText']);
 
         RouteAPI::get('tags.search', ['uses' => 'Api\TagsController@search']);
+        RouteAPI::post('tags.thematic', ['uses' => 'Api\TagsController@addThematic']);
+        RouteAPI::delete('tags.thematic', ['uses' => 'Api\TagsController@deleteThematic']);
 
         RouteAPI::get('article.search.bookmarked', ['uses' => 'Api\ArticleSearchController@searchBookmarked']);
         RouteAPI::get('article.search', ['uses' => 'Api\ArticleSearchController@searchAll']);
