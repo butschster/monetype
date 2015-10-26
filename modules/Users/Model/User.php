@@ -39,6 +39,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property Collection     $followers
  * @property Collection     $favorites
  * @property Collection     $checks
+ * @property Collection     $tags
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
