@@ -14,14 +14,13 @@
         <h4 class="alert alert-info">@lang('articles::article.message.no_thematic_tags')</h4>
     @endif
 
+    {!! Form::text('tag', null, [
+        'class' => 'form-control',
+        'placeholder' => trans('articles::tag.label.input_thematic_tag'),
+        'id' => 'addTagInput',
+        'autocomplete' => 'off'
+    ]) !!}
     <div class="m-t-md well well-sm">
-        {!! Form::text('tag', null, [
-            'class' => 'form-control',
-            'placeholder' => trans('articles::tag.label.input_thematic_tag'),
-            'id' => 'addTagInput',
-            'autocomplete' => 'off'
-        ]) !!}
-
         <div class="tagsCloud" id="thematicTags">
             @include('articles::tag.partials.thematic')
         </div>
