@@ -1,7 +1,14 @@
 @extends('core::layout.main')
 
+@section('header.content')
+    <div class="container">
+        <h2 class="page-header">{!! $pageTitle !!}</h2>
+    </div>
+
+    @include('articles::article.partials.subnav')
+@endsection
+
 @section('content')
-    <h2 class="page-header">{!! $pageTitle !!}</h2>
 
     @if(!is_null($tagsCloud))
     <div class="row">

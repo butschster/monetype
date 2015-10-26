@@ -33,6 +33,21 @@ class ArticleController extends ApiController
 
 
     /**
+     * @param ArticleRepository $articleRepository
+     */
+    public function thematic(ArticleRepository $articleRepository)
+    {
+        $user = auth()->user();
+
+        $articles = $articleRepository->paginateByTagIds($user->tags()->lists('id')->all());
+        $this->setContent(view('articles::article.partials.list', [
+            'articles' => $articles,
+            'emptyMessage' => trans('articles::article.message.empty_thematic_list')
+        ]));
+    }
+
+
+    /**
      * @param StoreArticleRequest $request
      * @param ArticleRepository   $articleRepository
      *

@@ -618,9 +618,36 @@ class Article extends Model implements Buyable, SocialMediaTaggable
      *
      * @return Builder
      */
-    public function scopeOrderByDate(Builder $query, $column = 'published_at')
+    public function scopeOrderByDate(Builder $query, $column = 'created_at')
     {
         return $query->orderBy($column, 'desc');
+    }
+
+
+    /**
+     * @param Builder $query
+     * @param string  $period
+     *
+     * @return Builder
+     */
+    public function scopeOrderByAmount(Builder $query, $period = null)
+    {
+        switch($period) {
+            case 'month':
+                $query->whereRaw('date(created_at) between curdate() - interval 1 month and curdate()');
+                break;
+            case 'day':
+                $query->whereRaw('date(created_at) = curdate()');
+                break;
+            case 'week':
+                $query->whereRaw('date(created_at) between curdate() - interval 1 week and curdate()');
+                break;
+            case 'year':
+                $query->whereRaw('date(created_at) between curdate() - interval 1 year and curdate()');
+                break;
+        }
+
+        return $query->orderBy('amount', 'desc');
     }
 
 

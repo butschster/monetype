@@ -31,6 +31,23 @@ class ArticleController extends FrontController
 
     /**
      * @param ArticleRepository $articleRepository
+     * @param TagRepository     $tagRepository
+     * @param string            $period
+     *
+     * @return \View
+     */
+    public function top(ArticleRepository $articleRepository, TagRepository $tagRepository, $period = null)
+    {
+        $articles = $articleRepository->getTopList($period);
+        $tagsCloud = $tagRepository->getTagsCloud();
+
+        $this->setTitle(trans('articles::article.title.top'));
+
+        return $this->setLayout('article.index', compact('articles', 'tagsCloud'));
+    }
+
+    /**
+     * @param ArticleRepository $articleRepository
      *
      * @return \View
      */

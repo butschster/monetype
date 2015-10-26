@@ -82,6 +82,24 @@ class ArticleRepository extends Repository
 
 
     /**
+     * @param string $period
+     * @param int    $perPage
+     * @param array  $columns
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getTopList($period, $perPage = null, $columns = ['*'])
+    {
+        return $this->getModel()
+            ->with('author', 'tags')
+            ->orderByAmount($period)
+            ->published()
+            ->withFavorites()
+            ->paginate($perPage, $columns);
+    }
+
+
+    /**
      * @param array|string $tag
      * @param int          $perPage
      * @param array        $columns

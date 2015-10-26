@@ -5,6 +5,7 @@ use Modules\Articles\Model\Article;
 return [
     'title'   => [
         'list'     => 'Список статей',
+        'top'      => 'Лучшие статьи',
         'create'   => 'Новая статья',
         'by_tag'   => ':tag<br /><small>Статьи с тегом</small>',
         'money'    => ':article<br /><small>Собраные деньги</small>',
@@ -25,7 +26,10 @@ return [
         'block_reason'       => 'Причина блокировки',
     ],
     'menu'    => [
-        'create' => '<i class="icon-pencil"></i> Написать статью'
+        'create'   => '<i class="icon-pencil"></i> Написать статью',
+        'thematic' => 'Тематические',
+        'index'    => 'Все подряд',
+        'top'      => 'Лучшие'
     ],
     'button'  => [
         'save'        => 'Сохранить',

@@ -2,7 +2,10 @@
 Route::group(['as' => 'front.'], function () {
 
     //Route::get('/', ['as' => 'main', 'uses' => 'ArticleController@index']);
-    Route::get('articles', ['as' => 'articles.index', 'uses' => 'ArticleController@index']);
+    Route::get('all', ['as' => 'articles.index', 'uses' => 'ArticleController@index']);
+
+    Route::get('top/{period?}', ['as' => 'articles.top', 'uses' => 'ArticleController@top']);
+
 
     Route::get('article/create', ['middleware' => 'auth', 'as' => 'article.create', 'uses' => 'ArticleController@create']);
 
@@ -17,7 +20,7 @@ Route::group(['as' => 'front.'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
 
-        Route::get('articles/thematic', ['as' => 'articles.thematic', 'uses' => 'ArticleController@listThematic']);
+        Route::get('thematic', ['as' => 'articles.thematic', 'uses' => 'ArticleController@listThematic']);
 
         Route::get('article/{article}/money', ['as' => 'article.money', 'uses' => 'ArticleController@money']);
         Route::put('article/{article}/approve', ['as' => 'article.approve', 'uses' => 'ArticleController@approve']);
@@ -39,6 +42,8 @@ Route::group(['as' => 'front.'], function () {
         RouteAPI::post('article.preview', ['uses' => 'Api\ArticleController@previewText']);
 
         RouteAPI::get('tags.search', ['uses' => 'Api\TagsController@search']);
+
+        RouteAPI::get('articles.thematic', ['uses' => 'Api\ArticleController@thematic']);
         RouteAPI::post('tags.thematic', ['uses' => 'Api\TagsController@addThematic']);
         RouteAPI::delete('tags.thematic', ['uses' => 'Api\TagsController@deleteThematic']);
 

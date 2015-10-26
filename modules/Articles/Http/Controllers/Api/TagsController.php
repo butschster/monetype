@@ -49,8 +49,9 @@ class TagsController extends ApiController
         }
 
         $user->tags()->attach($tag);
+        $tags = $user->tags;
 
-        $this->updateThematicPage($user->tags);
+        $this->setContent(view('articles::tag.partials.thematic', compact('tags')));
     }
 
 
@@ -68,19 +69,7 @@ class TagsController extends ApiController
 
         $user->tags()->detach($tag);
 
-        $this->updateThematicPage($user->tags);
-    }
-
-    protected function updateThematicPage($tags)
-    {
-        $articleRepository = new ArticleRepository;
-
-        $articles = $articleRepository->paginateByTagIds($tags->lists('id')->all());
+        $tags = $user->tags;
         $this->setContent(view('articles::tag.partials.thematic', compact('tags')));
-
-        $this->responseArray['articles'] = view('articles::article.partials.list', [
-            'articles' => $articles,
-            'emptyMessage' => trans('articles::article.message.empty_thematic_list')
-        ])->render();
     }
 }

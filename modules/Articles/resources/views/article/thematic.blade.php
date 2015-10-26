@@ -1,7 +1,14 @@
 @extends('core::layout.main')
 
+@section('header.content')
+    <div class="container">
+        <h2 class="page-header">{!! $pageTitle !!}</h2>
+    </div>
+
+    @include('articles::article.partials.subnav')
+@endsection
+
 @section('content')
-    <h2 class="page-header">{!! $pageTitle !!}</h2>
 
     @if(empty($tags))
         <h4 class="alert alert-info">@lang('articles::article.message.no_thematic_tags')</h4>
@@ -10,7 +17,7 @@
     <div class="m-t-md well well-sm">
         {!! Form::text('tag', null, [
             'class' => 'form-control',
-            'placeholder' => 'Add thematic tag...',
+            'placeholder' => trans('articles::tag.label.input_thematic_tag'),
             'id' => 'addTagInput',
             'autocomplete' => 'off'
         ]) !!}

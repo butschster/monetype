@@ -1,5 +1,6 @@
 .navbar-contrast {
   border-radius: 0;
+  margin-bottom: 0;
 
   .navbar-brand {
     padding-top: 5px;
@@ -80,6 +81,36 @@
     .form-control-focus(lighten(@navbar-contrast-link-hover-bg, 5%))
   }
 }
+
+.navbar-subnav {
+  min-height: auto;
+
+  .navbar-nav {
+    > li {
+      padding: 3px;
+
+      > a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #fff;
+
+        &:hover,
+        &:focus {
+
+        }
+      }
+      > .active > a {
+        &,
+        &:hover,
+        &:focus {
+
+        }
+      }
+    }
+  }
+  background: whitesmoke;
+}
+
 .nav-profile {
   .open .dropdown-menu:after {
     left: 117px !important;

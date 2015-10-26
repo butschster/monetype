@@ -1,7 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-    <div class="articleItem articleItem--inner">
+        <div class="articleItem articleItem--inner m-t-lg">
         <div class="articleItem--heading">
             @include('articles::article.partials.heading')
         </div>

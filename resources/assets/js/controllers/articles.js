@@ -41,11 +41,15 @@ App.Controllers.add('article.list.thematic', function(action) {
 	$('#addTagInput').typeahead({
 		afterSelect: function (val) {
 			var $self = this.$element;
-			Api.post('/api.tags.thematic', {tag: val}, function(response) {
+
+			addTagToThematic(val, function(response) {
 				$self.val("");
-				if(response.articles) {
+				if(response.code == 200) {
 					$('#thematicTags').html(response.content);
-					$('#thematicArticles').html(response.articles);
+
+					Api.get('/api.articles.thematic', {}, function(response) {
+						$('#thematicArticles').html(response.content);
+					});
 				}
 			});
 		},
@@ -59,9 +63,12 @@ App.Controllers.add('article.list.thematic', function(action) {
 	$('#thematicTags').on('click', '.close', function() {
 		var id = $(this).closest('.tagsCloud--tag').data('id');
 		Api.delete('/api.tags.thematic', {tag: id}, function(response) {
-			if(response.articles) {
+
+			if(response.code == 200) {
 				$('#thematicTags').html(response.content);
-				$('#thematicArticles').html(response.articles);
+				Api.get('/api.articles.thematic', {}, function(response) {
+					$('#thematicArticles').html(response.content);
+				});
 			}
 		});
 	});
@@ -99,6 +106,14 @@ App.Controllers.add('article.show', function () {
 function showCommentForm($container, parentId) {
 	$('#commentParentId').val(parentId);
 	$('#commentForm').insertAfter($container);
+}
+
+function addTagToThematic(tag, callback) {
+	Api.post('/api.tags.thematic', {tag: tag}, function(response) {
+		if (typeof callback === 'function') {
+			callback(response)
+		}
+	});
 }
 
 function addToFavorite(e) {
