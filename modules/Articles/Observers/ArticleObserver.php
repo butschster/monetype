@@ -58,7 +58,7 @@ class ArticleObserver
      */
     protected function parseText(Article $article)
     {
-        list( $text, $textIntro, $readMoreText ) = MarkdownParser::parseText($article->text_source);
+        list($text, $textIntro, $readMoreText) = MarkdownParser::parseText($article->text_source);
 
         $article->text_intro     = $textIntro;
         $article->read_more_text = $readMoreText;
