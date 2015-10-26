@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use KodiCMS\API\Exceptions\AuthenticateException;
 
 class Authenticate
 {
@@ -36,7 +37,7 @@ class Authenticate
     {
         if ($this->auth->guest()) {
             if ($request->ajax()) {
-                return response('Unauthorized.', 401);
+                throw new AuthenticateException;
             } else {
                 return redirect()->guest('auth/login');
             }
