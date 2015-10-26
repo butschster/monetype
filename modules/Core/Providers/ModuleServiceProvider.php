@@ -5,6 +5,7 @@ namespace Modules\Core\Providers;
 use Lang;
 use Event;
 use Carbon\Carbon;
+use Modules\Support\Assets\Meta;
 use Modules\Support\Helpers\Profiler;
 use Modules\Core\Console\Commands\DropDatabaseCommand;
 use Modules\Core\Console\Commands\ElasticSearchIndexer;
@@ -29,6 +30,11 @@ class ModuleServiceProvider extends ServiceProvider
             $sql = vsprintf($sql, $bindings);
 
             Profiler::append('Database', $sql, $time / 1000);
+        });
+
+        $this->app->singleton('meta', function ($app)
+        {
+            return new Meta;
         });
     }
 

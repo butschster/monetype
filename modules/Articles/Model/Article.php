@@ -4,6 +4,7 @@ namespace Modules\Articles\Model;
 
 use DB;
 use Carbon\Carbon;
+use Modules\Support\Contracts\SocialMediaTaggable;
 use Modules\Users\Model\User;
 use Modules\Support\Helpers\Date;
 use Modules\Support\Helpers\String;
@@ -61,7 +62,7 @@ use Modules\Articles\Exceptions\ArticleException;
  * @property \Carbon\Carbon $published_at
  * @property \Carbon\Carbon $deleted_at
  */
-class Article extends Model implements Buyable
+class Article extends Model implements Buyable, SocialMediaTaggable
 {
 
     use TaggableTrait, CategoryableTrait, SoftDeletes, Elasticquent;
@@ -772,5 +773,79 @@ class Article extends Model implements Buyable
              ->with('author', 'tags')
              ->published()
              ->withFavorites();
+    }
+
+    /**********************************************************************
+     * Social Open Graph data
+     **********************************************************************/
+    /**
+     * @return string
+     */
+    public function getOgTitle()
+    {
+        return $this->title;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOgDescription()
+    {
+        return strip_tags($this->text_intro);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOgImage()
+    {
+        return url('img/logo.png');
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOgUrl()
+    {
+        return $this->getRouteLink();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOgType()
+    {
+        return 'article';
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOgPublishedTime()
+    {
+        return $this->published_at->toAtomString();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOgModifiedTime()
+    {
+        return $this->updated_at->toAtomString();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getOgTags()
+    {
+        return $this->tags_list;
     }
 }

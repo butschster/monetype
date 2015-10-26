@@ -4,7 +4,7 @@ namespace Modules\Core\Http\Controllers;
 
 use Auth;
 use Lang;
-use Assets;
+use Meta;
 use Modules\Users\Model\Coupon;
 use Modules\Core\Http\Controllers\System\FrontController;
 
@@ -22,7 +22,7 @@ class SoonController extends FrontController
             'MESSAGE_SUCCESS' => (array) $this->session->get('success', [])
         ];
 
-        Assets::package(['libraries', 'coming_soon', 'backstretch', 'countdown', 'validation']);
+        Meta::addPackage(['libraries', 'coming_soon', 'backstretch', 'countdown', 'validation']);
     }
 
 

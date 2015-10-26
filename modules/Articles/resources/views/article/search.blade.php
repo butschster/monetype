@@ -1,7 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-    <h2 class="page-header">@lang('articles::article.title.search')</h2>
+    <h2 class="page-header">{!! $pageTitle !!}</h2>
 
     @if(!$articles->count())
         <div class="alert alert-info m-t-lg">

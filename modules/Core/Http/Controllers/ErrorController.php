@@ -15,6 +15,8 @@ class ErrorController extends FrontController
      */
     public function error500($exception = null)
     {
+        $this->setTitle(trans('core::core.message.something_went_wrong'));
+
         return $this->setLayout('errors.code', [
             'error'   => $exception,
             'code'    => $this->getCode($exception),
@@ -30,6 +32,8 @@ class ErrorController extends FrontController
      */
     public function error403($exception = null)
     {
+        $this->setTitle(trans('core::core.message.gate_not_allowed'));
+
         return $this->setLayout('errors.code', [
             'error'   => $exception,
             'code'    => $this->getCode($exception),
@@ -45,6 +49,8 @@ class ErrorController extends FrontController
      */
     public function error404($exception = null)
     {
+        $this->setTitle(trans('core::core.message.page_not_found'));
+
         return $this->setLayout('errors.code', [
             'error'   => $exception,
             'code'    => $this->getCode($exception),
@@ -60,6 +66,8 @@ class ErrorController extends FrontController
      */
     public function errorDefault($exception = null)
     {
+        $this->setTitle(trans('core::core.message.something_went_wrong'));
+
         return $this->setLayout('errors.code', [
             'code'    => 500,
             'error'   => $exception,

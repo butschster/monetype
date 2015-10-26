@@ -3,7 +3,7 @@
 @section('content')
     <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="nf6y1tj9krdxzkr"></script>
 
-    <h2>@lang('articles::article.title.create')</h2>
+    <h2 class="page-">{{ $pageTitle }}</h2>
 
     {!! Form::model($article , [
 		'route' => $action,

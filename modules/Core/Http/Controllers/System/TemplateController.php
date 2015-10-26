@@ -5,6 +5,7 @@ namespace Modules\Core\Http\Controllers\System;
 use Auth;
 use Lang;
 use View;
+use Meta;
 use Assets;
 
 class TemplateController extends Controller
@@ -172,7 +173,8 @@ class TemplateController extends Controller
      */
     protected function setTitle($title)
     {
-        $this->layout->with('title', $title);
+        view()->share('pageTitle', $title);
+        Meta::setTitle($title);
 
         return $this;
     }

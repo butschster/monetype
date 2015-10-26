@@ -1,7 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-    <h2 class="page-header">@lang('articles::article.title.list')</h2>
+    <h2 class="page-header">{{ $pageTitle }}</h2>
 
     <div class="row">
         <div class="col-sm-7">

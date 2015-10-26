@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Http\Controllers\System;
 
-use Assets;
+use Meta;
 
 abstract class FrontController extends TemplateController
 {
@@ -16,6 +16,6 @@ abstract class FrontController extends TemplateController
     public function registerMedia()
     {
         parent::registerMedia();
-        Assets::package(['libraries', 'app']);
+        Meta::addPackage(['libraries', 'app']);
     }
 }

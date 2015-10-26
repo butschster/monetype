@@ -213,5 +213,6 @@ return [
         'Form'          => Illuminate\Html\FormFacade::class,
         'Image'         => Intervention\Image\Facades\Image::class,
         'Akismet'       => nickurt\Akismet\Facade::class,
+        'Meta'          => Modules\Support\Facades\Meta::class
     ],
 ];

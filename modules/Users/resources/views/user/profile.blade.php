@@ -14,7 +14,7 @@
    <div class="container text-center">
       <div class="panel-body">
          {!! $user->getAvatar(70) !!}
-         <h3>@lang('users::user.title.profile', ['user' => $user->getName()])</h3>
+         <h3>{!! $pageTitle !!}</h3>
       </div>
    </div>
 </div>

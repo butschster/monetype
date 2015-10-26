@@ -3,7 +3,7 @@
 @section('header.content')
 <div class="well m-t-n-md">
     <div class="container">
-        <h2 class="page-header">@lang('articles::article.title.money', ['article' => $article->title])</h2>
+        <h2 class="page-header">{!! $pageTitle !!}</h2>
 
         <div class="panel">
             <div class="stat-panel m-b-none">

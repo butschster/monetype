@@ -31,6 +31,8 @@ class SearchController extends FrontController
             $tagsCloud = $tagRepository->getTagsCloud(20, $articles->keyBy('id')->keys()->all());
         }
 
+        $this->setTitle(trans('articles::article.title.search'));
+
         return $this->setLayout('articles::article.search', compact('articles', 'tagsCloud', 'query'));
     }
 
@@ -50,6 +52,8 @@ class SearchController extends FrontController
         if ( ! is_null($articles) and $articles->count() > 0) {
             $tagsCloud = $tagRepository->getTagsCloud(20, $articles->keyBy('id')->keys()->all());
         }
+
+        $this->setTitle(trans('articles::article.title.by_tag', ['tag' => $tag]));
 
         return $this->setLayout('articles::article.byTag', compact('articles', 'tagsCloud', 'tag'));
     }

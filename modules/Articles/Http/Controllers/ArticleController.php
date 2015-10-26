@@ -3,11 +3,10 @@
 namespace Modules\Articles\Http\Controllers;
 
 use Bus;
-use Assets;
+use Meta;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Articles\Repositories\TagRepository;
 use Modules\Articles\Repositories\ArticleRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Modules\Core\Http\Controllers\System\FrontController;
 use Modules\Transactions\Exceptions\NotEnoughMoneyException;
 
@@ -24,6 +23,8 @@ class ArticleController extends FrontController
     {
         $articles = $articleRepository->paginate();
         $tagsCloud = $tagRepository->getTagsCloud();
+
+        $this->setTitle(trans('articles::article.title.list'));
 
         return $this->setLayout('article.index', compact('articles', 'tagsCloud'));
     }
@@ -43,7 +44,7 @@ class ArticleController extends FrontController
             $this->checkPermissions('preview', $article);
         }
 
-        Assets::package('validation');
+        Meta::addPackage('validation')->addSocialTags($article);
 
         return $this->setLayout('article.show', [
             'article'     => $article,
@@ -74,7 +75,7 @@ class ArticleController extends FrontController
             $this->checkPermissions('preview', $article);
         }
 
-        Assets::package('validation');
+        Meta::addPackage('validation')->addSocialTags($article);
 
         return $this->setLayout('article.show', [
             'article'     => $article,
@@ -112,12 +113,14 @@ class ArticleController extends FrontController
      */
     public function create(ArticleRepository $articleRepository)
     {
-        Assets::package(['simplemde', 'rangeslider', 'tagsinput']);
         $article = $articleRepository->getModel();
 
         $this->checkPermissions('create', $article);
 
+        Meta::addPackage(['simplemde', 'rangeslider', 'tagsinput']);
         $this->templateScripts['ARTICLE_ID'] = $article->id;
+
+        $this->setTitle(trans('articles::article.title.create'));
 
         return $this->setLayout('article.form', [
             'article' => $article,
@@ -134,17 +137,19 @@ class ArticleController extends FrontController
      */
     public function edit(ArticleRepository $articleRepository, $articleId)
     {
-        Assets::package(['simplemde', 'rangeslider', 'tagsinput']);
         $article = $articleRepository->findOrFail($articleId);
 
         $this->checkPermissions('update', $article);
-
+		
+        Meta::addPackage(['simplemde', 'rangeslider', 'tagsinput']);
         $this->templateScripts['ARTICLE_ID'] = $article->id;
 
         $action = ['front.article.update', $articleId];
         if ( ! $this->user->can('update', $article)) {
             $action = ['front.article.correct', $articleId];
         }
+
+        $this->setTitle(trans('articles::article.title.edit'));
 
         return $this->setLayout('article.form', [
             'article' => $article,
@@ -185,6 +190,8 @@ class ArticleController extends FrontController
         $article = $articleRepository->findOrFail($articleId);
 
         $this->checkPermissions('viewPurchasers', $article);
+
+        $this->setTitle(trans('articles::article.title.money', ['article' => $article->title]));
 
         return $this->setLayout('article.money', [
             'article'      => $article,

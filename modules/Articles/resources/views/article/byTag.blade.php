@@ -1,7 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-    <h2>@lang('articles::article.title.by_tag', ['tag' => $tag])</h2>
+    <h2 class="page-header">{!! $pageTitle !!}</h2>
 
     @if(!is_null($tagsCloud))
     <div class="row">

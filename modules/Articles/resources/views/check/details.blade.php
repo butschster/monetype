@@ -1,7 +1,7 @@
 @extends('core::layout.main')
 
 @section('content')
-    <h2 class="page-header">@lang('articles::check.title.details', ['article' => $article->title, 'date' => $check->created])</h2>
+    <h2 class="page-header">{!! $pageTitle !!}</h2>
 
     <script>
         $(function() {

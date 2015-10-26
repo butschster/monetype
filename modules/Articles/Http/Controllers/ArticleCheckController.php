@@ -17,6 +17,7 @@ class ArticleCheckController extends FrontController
     public function index()
     {
         $this->checkPermissions('check.index');
+        $this->setTitle(trans('articles::check.title.index'));
 
         return $this->setLayout('check.index', [
             'checks' => ArticleCheck::with('article', 'user')->orderByCreated()->paginate()
@@ -39,6 +40,8 @@ class ArticleCheckController extends FrontController
             $this->checkPermissions('check.byUser', $user);
         }
 
+        $this->setTitle(trans('articles::check.title.user', ['user' => $user->getName()]));
+
         return $this->setLayout('check.byUser', [
             'user'   => $user,
             'checks' => $user->checks()->with('article')->orderByCreated()->paginate()
@@ -57,6 +60,8 @@ class ArticleCheckController extends FrontController
         $article = $articleRepository->findOrFail($articleId);
 
         $this->checkPermissions('check.article', $article);
+
+        $this->setTitle(trans('articles::check.title.article', ['article' => $article->title]));
 
         return $this->setLayout('check.byArticle', [
             'article' => $article,
@@ -82,6 +87,8 @@ class ArticleCheckController extends FrontController
         }
 
         $this->checkPermissions('check.article.detail', $article);
+
+        $this->setTitle(trans('articles::check.title.details', ['article' => $article->title, 'date' => $check->created]));
 
         return $this->setLayout('check.details', [
             'article' => $article,
