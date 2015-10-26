@@ -70,8 +70,6 @@ class ArticleController extends ApiController
      * @param UpdateArticleRequest $request
      * @param ArticleRepository    $articleRepository
      * @param integer              $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateArticleRequest $request, ArticleRepository $articleRepository, $articleId)
     {
@@ -90,8 +88,6 @@ class ArticleController extends ApiController
      * @param CorrectArticleRequest $request
      * @param ArticleRepository    $articleRepository
      * @param integer              $articleId
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function correct(CorrectArticleRequest $request, ArticleRepository $articleRepository, $articleId)
     {
@@ -121,10 +117,12 @@ class ArticleController extends ApiController
         try {
             Bus::dispatch(new PublishArticle(auth()->user(), $article));
         } catch (PlagiarismException $e) {
-            return $this->errorRedirect(trans('articles::article.message.plagiarism'));
+            $this->setMessage(trans('articles::article.message.plagiarism'));
+            return;
         } catch (CheckForPlagiarismException $e) {
-            return $this->errorRedirect(trans('articles::article.message.cant_check_for_plagiarism',
+            $this->setMessage(trans('articles::article.message.cant_check_for_plagiarism',
                 ['error' => $e->getMessage()]));
+            return;
         }
 
         return redirect(route('front.article.edit', $article->id));
@@ -144,7 +142,6 @@ class ArticleController extends ApiController
         $this->checkPermissions('draft', $article);
 
         Bus::dispatch(new DraftArticle(auth()->user(), $article));
-
 
         return redirect(route('front.article.edit', $article->id));
     }
