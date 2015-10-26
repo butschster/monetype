@@ -163,7 +163,8 @@ class ArticleController extends FrontController
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => 'front.article.store',
-            'tags'    => []
+            'tags'    => [],
+            'ability' => 'create'
         ]);
     }
 
@@ -192,7 +193,8 @@ class ArticleController extends FrontController
         return $this->setLayout('article.form', [
             'article' => $article,
             'action'  => $action,
-            'tags'    => array_combine($article->tagsArray, $article->tagsArray)
+            'tags'    => array_combine($article->tagsArray, $article->tagsArray),
+            'ability' => 'update'
         ]);
     }
 

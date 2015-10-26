@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        @if(!$currentUser->can('update', $article))
+        @if(!$currentUser->can($ability, $article))
         <div class="well well-border m-b-none">
             <label class="control-label">@lang('articles::article.field.text_intro')</label>
             {!! $article->text_intro !!}
@@ -39,7 +39,7 @@
         @endif
 
         <div class="panel-body">
-            @if($currentUser->can('update', $article))
+            @if($currentUser->can($ability, $article))
             <div class="form-group">
                 {!! Form::textarea('text_source', null, ['class' => 'form-control', 'rows' => 30, 'id' => 'inputText']) !!}
             </div>
