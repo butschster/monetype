@@ -37,6 +37,36 @@ App.Controllers.add(['article.create', 'article.edit'], function(action) {
 	App.Form.articles._id = ARTICLE_ID;
 });
 
+App.Controllers.add('article.list.thematic', function(action) {
+	$('#addTagInput').typeahead({
+		afterSelect: function (val) {
+			var $self = this.$element;
+			Api.post('/api.tags.thematic', {tag: val}, function(response) {
+				$self.val("");
+				if(response.articles) {
+					$('#thematicTags').html(response.content);
+					$('#thematicArticles').html(response.articles);
+				}
+			});
+		},
+		source: function(query, callback) {
+			return $.get('/api.tags.search', {query: query}, function(response) {
+				callback(response)
+			});
+		}
+	});
+
+	$('#thematicTags').on('click', '.close', function() {
+		var id = $(this).closest('.tagsCloud--tag').data('id');
+		Api.delete('/api.tags.thematic', {tag: id}, function(response) {
+			if(response.articles) {
+				$('#thematicTags').html(response.content);
+				$('#thematicArticles').html(response.articles);
+			}
+		});
+	});
+});
+
 $(function() {
 	$('body').on('click', '.addToFavorite', addToFavorite);
 });

@@ -100,4 +100,23 @@ class ArticleRepository extends Repository
             ->withFavorites()
             ->paginate($perPage, $columns);
     }
+
+
+    /**
+     * @param array $ids
+     * @param int   $perPage
+     * @param array $columns
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginateByTagIds(array $ids, $perPage = null, $columns = ['*'])
+    {
+        return $this->getModel()
+            ->with('author', 'tags')
+            ->filterByTagIds($ids)
+            ->orderByDate()
+            ->published()
+            ->withFavorites()
+            ->paginate($perPage, $columns);
+    }
 }

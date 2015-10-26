@@ -2,6 +2,7 @@
 
 namespace Modules\Articles\Model;
 
+use Modules\Users\Model\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -39,5 +40,14 @@ class Tag extends Model
     public function articles()
     {
         return $this->belongsToMany(Article::class);
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_tags');
     }
 }

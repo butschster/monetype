@@ -29,6 +29,27 @@ class ArticleController extends FrontController
         return $this->setLayout('article.index', compact('articles', 'tagsCloud'));
     }
 
+    /**
+     * @param ArticleRepository $articleRepository
+     *
+     * @return \View
+     */
+    public function listThematic(ArticleRepository $articleRepository)
+    {
+        $tags = $this->user->tags;
+
+        if ( $tags->count() > 0) {
+            $articles = $articleRepository->paginateByTagIds($tags->lists('id')->all());
+        } else {
+            $articles = [];
+        }
+
+        Meta::addPackage(['tagsinput']);
+        $this->setTitle(trans('articles::article.title.thematic'));
+
+        return $this->setLayout('article.thematic', compact('articles', 'tags'));
+    }
+
 
     /**
      * @param ArticleRepository $articleRepository

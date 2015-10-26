@@ -4,11 +4,12 @@ use Modules\Articles\Model\Article;
 
 return [
     'title'   => [
-        'list'   => 'Список статей',
-        'create' => 'Новая статья',
-        'by_tag' => ':tag<br /><small>Статьи с тегом</small>',
-        'money'  => ':article<br /><small>Собраные деньги</small>',
-        'search' => 'Результаты поиска'
+        'list'     => 'Список статей',
+        'create'   => 'Новая статья',
+        'by_tag'   => ':tag<br /><small>Статьи с тегом</small>',
+        'money'    => ':article<br /><small>Собраные деньги</small>',
+        'search'   => 'Результаты поиска',
+        'thematic' => 'Тематические'
     ],
     'field'   => [
         'author'             => 'Автор',
@@ -62,6 +63,8 @@ return [
         'can_publish_only_draft'    => 'Опубликовать можно только черновик',
         'can_approve_ony_published' => 'Проверить можно только опубликованную статью',
         'empty_list'                => '<i class="icon-emo-unhappy"></i> На данный момент не написано ни одной статьи',
+        'empty_thematic_list'       => '<i class="icon-emo-unhappy"></i> На данный момент не написано ни одной статьи по вашей тематике',
+        'no_thematic_tags'          => 'У вас не указано ни одного тематического тега',
         'bought'                    => '',
         'created'                   => 'Статья добавлена',
         'updated'                   => '<i class="icon-emo-happy"></i> Статья сохранена',

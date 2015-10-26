@@ -187,6 +187,19 @@ trait TaggableTrait
         });
     }
 
+    /**
+     * @param Builder   $query
+     * @param array     $ids
+     *
+     * @return Builder
+     */
+    public function scopeFilterByTagIds(Builder $query, array $ids)
+    {
+        return $query->whereHas('tags', function ($query) use ($ids) {
+            $query->whereIn('id', $ids);
+        });
+    }
+
     /**********************************************************************
      * Mutatotrs
      **********************************************************************/

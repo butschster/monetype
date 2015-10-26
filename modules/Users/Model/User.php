@@ -3,6 +3,7 @@
 namespace Modules\Users\Model;
 
 use Modules\Articles\Model\Article;
+use Modules\Articles\Model\Tag;
 use Modules\Support\Helpers\String;
 use Illuminate\Auth\Authenticatable;
 use Modules\Users\Traits\AvatarTrait;
@@ -204,6 +205,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function followers()
     {
         return $this->belongsToMany(User::class, 'user_followers', 'user_id', 'follower_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'user_tags');
     }
 
     /**********************************************************************
