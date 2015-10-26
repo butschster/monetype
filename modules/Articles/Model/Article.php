@@ -4,7 +4,6 @@ namespace Modules\Articles\Model;
 
 use DB;
 use Carbon\Carbon;
-use Modules\Support\Contracts\SocialMediaTaggable;
 use Modules\Users\Model\User;
 use Modules\Support\Helpers\Date;
 use Modules\Support\Helpers\String;
@@ -19,6 +18,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Articles\Traits\CategoryableTrait;
 use Modules\Articles\Exceptions\ArticleException;
+use Modules\Support\Contracts\SocialMediaTaggable;
 
 /**
  * @property integer        $id
@@ -287,7 +287,7 @@ class Article extends Model implements Buyable, SocialMediaTaggable
             return true;
         }
 
-        if (( ! $user instanceof User )) {
+        if ( ! $user instanceof User) {
             return false;
         }
 
