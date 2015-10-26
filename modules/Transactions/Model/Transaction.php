@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer        $payment_method_id
  * @property integer        $article_id
  * @property float          $amount
- * @property float          $comission
+ * @property float          $commission
  * @property string         $details
  * @property string         $created
  *
@@ -76,30 +76,77 @@ class Transaction extends Model
 
 
     /**
-     * @param Closure $callback
+     * @return bool
+     */
+    public function isCompleted()
+    {
+        return $this->status_id == 'completed';
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isCanceled()
+    {
+        return $this->status_id == 'canceled';
+    }
+
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return bool
      */
     public function complete(Closure $callback = null)
     {
-        $amount    = $this->amount;
-        $comission = $this->type->calculateComission($amount);
-
-        if ($comission > 0) {
-            $this->comission = $comission;
+        if ($this->isCanceled()) {
+            return false;
         }
 
-        $debitAccount = $this->debitAccount->account;
-        $debitAccount->balance -= $amount;
-        $debitAccount->save();
+        $amount     = $this->amount;
+        $commission = $this->type->calculateComission($amount);
 
-        $creditAccount = $this->creditAccount->account;
-        $creditAccount->balance += $amount;
-        $creditAccount->save();
+        if ($commission > 0) {
+            $this->comission = $commission;
+        }
+
+        $this->creditAccount->addMoney($this->amount);
+        $this->debitAccount->withdrawMoney($this->amount);
 
         $this->setStatus('completed')->save();
 
         if (is_callable($callback)) {
             $callback($this);
         }
+
+        return true;
+    }
+
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return bool
+     */
+    public function cancel(Closure $callback = null)
+    {
+        if ($this->isCanceled()) {
+            return false;
+        }
+
+        if ($this->isCompleted()) {
+            $this->debitAccount->addMoney($this->amount);
+            $this->creditAccount->withdrawMoney($this->amount);
+        }
+
+        $this->setStatus('canceled')->save();
+
+        if (is_callable($callback)) {
+            $callback($this);
+        }
+
+        return true;
     }
 
 
@@ -239,13 +286,24 @@ class Transaction extends Model
 
 
     /**
-     * @param Builder     $query
+     * @param Builder $query
      *
      * @return $this
      */
     public function scopeOnlyPayments(Builder $query)
     {
         return $query->where('type_id', 'payment');
+    }
+
+
+    /**
+     * @param Builder $query
+     *
+     * @return $this
+     */
+    public function scopeOnlyCompleted(Builder $query)
+    {
+        return $query->where('status_id', 'completed');
     }
 
     /**********************************************************************

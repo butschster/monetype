@@ -51,7 +51,7 @@ use Modules\Support\Contracts\SocialMediaTaggable;
  * @property User           $approvedBy
  * @property User           $blockedBy
  * @property Collection     $tags
- * @property Collection     $recipients
+ * @property Collection     $purchases
  * @property Collection     $subscribers
  * @property Collection     $checks
  * @property Collection     $comments
@@ -272,7 +272,13 @@ class Article extends Model implements Buyable, SocialMediaTaggable
             return $this->isPurchased;
         }
 
-        return $this->isPurchased = ! is_null(Transaction::byUser($user)->byArticle($this)->onlyPayments()->first());
+        $transaction = Transaction::byUser($user)
+          ->byArticle($this)
+          ->onlyPayments()
+          ->onlyCompleted()
+          ->first();
+
+        return $this->isPurchased = ! is_null($transaction);
     }
 
 
@@ -714,7 +720,7 @@ class Article extends Model implements Buyable, SocialMediaTaggable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function recipients()
+    public function purchases()
     {
         return $this->hasMany(Transaction::class, 'article_id');
     }

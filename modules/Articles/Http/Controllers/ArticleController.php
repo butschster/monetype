@@ -235,7 +235,11 @@ class ArticleController extends FrontController
 
         return $this->setLayout('article.money', [
             'article'      => $article,
-            'transactions' => $article->recipients()->with('debitAccount')->paginate(),
+            'transactions' => $article
+                ->purchases()
+                ->onlyCompleted()
+                ->with('debitAccount')
+                ->paginate(),
         ]);
     }
 }

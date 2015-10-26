@@ -109,6 +109,26 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 
     /**
+     * @param float|int $amount
+     */
+    public function addMoney($amount)
+    {
+        $this->account->balance += (float) $amount;
+        $this->account->save();
+    }
+
+
+    /**
+     * @param float|int $amount
+     */
+    public function withdrawMoney($amount)
+    {
+        $this->account->balance -= (float) $amount;
+        $this->account->save();
+    }
+
+
+    /**
      * @return float
      */
     public function getBalance()
