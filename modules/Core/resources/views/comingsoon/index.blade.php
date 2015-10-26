@@ -46,6 +46,9 @@
                         <h3>@lang('core::comingsoon.startProject')</h3>
                         <div id="countDown"></div>
                     </div>
+
+                    <br />
+                    @include('core::layout.partials.social')
                 </div>
 
                 <div class="clearfix"></div>

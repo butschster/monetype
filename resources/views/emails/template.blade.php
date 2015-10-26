@@ -25,16 +25,16 @@
                                         <table border="0" cellpadding="0" cellspacing="0" align="center">
                                             <tr>
                                                 <td valign="top" style="padding: 10px " class="center">
-                                                    <a href="#"><img width="30" height="30" src="{{ url('img/icons/icon_vk.png') }}"></a>
+                                                    <a href="http://vk.com/monetype"><img width="30" height="30" src="{{ url('img/icons/icon_vk.png') }}"></a>
                                                 </td>
                                                 <td valign="top" style="padding: 10px" class="center">
-                                                    <a href="#"><img width="30" height="30" src="{{ url('img/icons/icon_facebook.png') }}"></a>
+                                                    <a href="https://www.facebook.com/groups/monetype/"><img width="30" height="30" src="{{ url('img/icons/icon_facebook.png') }}"></a>
                                                 </td>
                                                 <td valign="top" style="padding: 10px" class="center">
-                                                    <a href="#"><img width="30" height="30" src="{{ url('img/icons/icon_twitter.png') }}"></a>
+                                                    <a href="https://twitter.com/monetyperu"><img width="30" height="30" src="{{ url('img/icons/icon_twitter.png') }}"></a>
                                                 </td>
                                                 <td valign="top" style="padding: 10px" class="center">
-                                                    <a href="#"><img width="30" height="30" src="{{ url('img/icons/icon_gplus.png') }}"></a>
+                                                    <a href="https://plus.google.com/u/0/communities/103808343606054010691/members"><img width="30" height="30" src="{{ url('img/icons/icon_gplus.png') }}"></a>
                                                 </td>
                                             </tr>
                                         </table>

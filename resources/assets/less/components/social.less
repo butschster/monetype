@@ -1,5 +1,6 @@
 /* social icons */
-a.social {
+.social,
+.ssk {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -32,14 +33,32 @@ a.social {
     background: #4e729a !important;
     color: #fff !important;
   }
-  &.default:hover {
+  &.icon-default:hover {
     background: #37353A !important;
     color: #fff !important;
   }
-  &.rounded {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.ssk-count {
+  padding-top: 20px;
+  .ssk {
+    position: relative;
+  }
+  .ssk-num {
+    border-radius: 4px;
+    color: lighten(@gray, 10%);
+    background-color: rgba(50, 50, 50, .03);
+    display: block;
+    font-size: 12px;
+    left: 0;
+    line-height: 20px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: -20px;
   }
 }
 

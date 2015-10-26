@@ -49,9 +49,9 @@
                 <div class="col-xs-6">
                     <div class="socials text-right">
                         <a href="http://vk.com/monetype" class="rounded-icon social icon-vkontakte"><!-- vkontakte --></a>
-                        <a href="#" class="rounded-icon social icon-facebook"><!-- facebook --></a>
-                        <a href="#" class="rounded-icon social icon-twitter"><!-- twitter --></a>
-                        <a href="#" class="rounded-icon social icon-gplus"><!-- google plus --></a>
+                        <a href="https://www.facebook.com/groups/monetype/" class="rounded-icon social icon-facebook"><!-- facebook --></a>
+                        <a href="https://twitter.com/monetyperu" class="rounded-icon social icon-twitter"><!-- twitter --></a>
+                        <a href="https://plus.google.com/u/0/communities/103808343606054010691/members" class="rounded-icon social icon-gplus"><!-- google plus --></a>
                     </div>
                 </div>
             </div>

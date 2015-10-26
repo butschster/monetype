@@ -29,11 +29,8 @@
         <div class="articleItem--meta">
             @include('articles::article.partials.meta', ['inner' => true])
 
-            <div class="socials pull-right">
-                <a href="#" class="rounded-icon social icon-vkontakte"><!-- vkontakte --></a>
-                <a href="#" class="rounded-icon social icon-facebook"><!-- facebook --></a>
-                <a href="#" class="rounded-icon social icon-twitter"><!-- twitter --></a>
-                <a href="#" class="rounded-icon social icon-gplus"><!-- google plus --></a>
+            <div class="pull-right">
+                @include('core::layout.partials.social')
             </div>
 
             <div class="clearfix"></div>

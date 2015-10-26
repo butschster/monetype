@@ -4,6 +4,9 @@ App.Components
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
         });
     })
+    .add('SocialShareKit', function () {
+        SocialShareKit.init();
+    })
     .add('notySetup', function () {
         $.noty.defaults = $.extend($.noty.defaults, {
             layout: 'topRight',

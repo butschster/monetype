@@ -47,6 +47,7 @@ elixir(function (mix) {
         // JavaScript
         .scripts([
             'libs/prism.js',
+            'libs/social-share-kit.js',
             paths.jquery + 'dist/jquery.js',
             paths.bootstrap + "js/dropdown.js",
             paths.bootstrap + "js/collapse.js",
