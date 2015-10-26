@@ -126,10 +126,11 @@ class Transaction extends Model
 
     /**
      * @param Closure|null $callback
+     * @param array|null   $details
      *
      * @return bool
      */
-    public function cancel(Closure $callback = null)
+    public function cancel(Closure $callback = null, array $details = null)
     {
         if ($this->isCanceled()) {
             return false;
@@ -140,6 +141,7 @@ class Transaction extends Model
             $this->creditAccount->withdrawMoney($this->amount);
         }
 
+        $this->details = $details;
         $this->setStatus('canceled')->save();
 
         if (is_callable($callback)) {
