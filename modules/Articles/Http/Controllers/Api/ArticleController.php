@@ -57,10 +57,12 @@ class ArticleController extends ApiController
     {
         $this->checkPermissions('create', $articleRepository->getModel());
 
-        $articleRepository->create($request->only('title', 'text_source', 'disable_comments', 'disable_stat_views',
+        $article = $articleRepository->create($request->only('title', 'text_source', 'disable_comments', 'disable_stat_views',
             'disable_stat_pays', 'tags_list', 'cost'));
 
         $this->setMessage(trans('articles::article.message.created'));
+
+        return redirect(route('front.article.edit', $article->id));
     }
 
 
