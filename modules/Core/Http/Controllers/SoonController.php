@@ -6,6 +6,7 @@ use Auth;
 use Lang;
 use Meta;
 use Modules\Users\Model\Coupon;
+use Modules\Core\CommingSoonSocialTags;
 use Modules\Core\Http\Controllers\System\FrontController;
 
 class SoonController extends FrontController
@@ -28,6 +29,9 @@ class SoonController extends FrontController
 
     public function index()
     {
+        Meta::addSocialTags(new CommingSoonSocialTags);
+        $this->setTitle(null);
+
         return $this->setLayout('comingsoon.index', [
             'couponsCount' => Coupon::onlyForRegister()->count()
         ]);

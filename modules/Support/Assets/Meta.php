@@ -3,8 +3,8 @@
 namespace Modules\Support\Assets;
 
 use HTML;
-use Assets;
 use Modules\Support\Contracts\SocialMediaTaggable;
+use Modules\Support\Facades\Assets as AssetsFacade;
 
 class Meta
 {
@@ -164,7 +164,7 @@ class Meta
      */
     public function addCss($handle, $src, $dependency = null, array $attrs = null)
     {
-        Assets::css($handle, $src, $dependency, $attrs);
+        AssetsFacade::css($handle, $src, $dependency, $attrs);
 
         return $this;
     }
@@ -177,7 +177,7 @@ class Meta
      */
     public function removeCss($handle = null)
     {
-        Assets::removeCss($handle);
+        AssetsFacade::removeCss($handle);
 
         return $this;
     }
@@ -206,7 +206,7 @@ class Meta
      */
     public function AddJs($handle, $src, $dependency = null, $footer = false)
     {
-        Assets::js($handle, $src, $dependency, $footer);
+        AssetsFacade::js($handle, $src, $dependency, $footer);
 
         return $this;
     }
@@ -219,7 +219,7 @@ class Meta
      */
     public function removeJs($handle = null)
     {
-        Assets::removeJs($handle);
+        AssetsFacade::removeJs($handle);
 
         return $this;
     }
@@ -252,7 +252,7 @@ class Meta
      */
     public function addToGroup($handle, $content, $params = [], $dependency = null)
     {
-        Assets::group($this->defaultGroup, $handle, strtr($content, $params), $dependency);
+        AssetsFacade::group($this->defaultGroup, $handle, strtr($content, $params), $dependency);
 
         return $this;
     }
@@ -265,7 +265,7 @@ class Meta
      */
     public function removeFromGroup($handle = null)
     {
-        Assets::removeGroup($this->defaultGroup, $handle);
+        AssetsFacade::removeGroup($this->defaultGroup, $handle);
 
         return $this;
     }
@@ -280,7 +280,7 @@ class Meta
      */
     public function addPackage($name, $loadDependencies = false, $footer = false)
     {
-        Assets::package($name, $loadDependencies, $footer);
+        AssetsFacade::package($name, $loadDependencies, $footer);
 
         return $this;
     }
@@ -297,7 +297,7 @@ class Meta
             $group = $this->defaultGroup;
         }
 
-        return Assets::group($group) . Assets::css() . Assets::js();
+        return AssetsFacade::group($group) . AssetsFacade::css() . AssetsFacade::js();
     }
 
 
