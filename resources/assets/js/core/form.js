@@ -179,7 +179,7 @@ App.Form = {
                 this._form.prepend(_.template('<div class="alert alert-info m-b-none autoSaveNotification">' +
                     'У вас есть автосохранение от <b><%= date %> <%= time %></b>, ' +
                     '<a href="#restore" class="autoSaveNotification--restore">восстановить форму</a>?' +
-                    '<span class="close autoSaveNotification--close" onclick="">x</span>' +
+                    '<span class="close autoSaveNotification--close" onclick="">&times;</span>' +
                     '</div>')({
                     date: _getDate(time),
                     time: _getTime(time)
