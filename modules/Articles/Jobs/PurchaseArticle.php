@@ -54,8 +54,7 @@ class PurchaseArticle implements SelfHandling
 
             $transaction->assignPurchaser($this->user);
             $transaction->assignRecipient($this->article->author);
-            $transaction->setType('payment');
-            $transaction->setStatus('new');
+            $transaction->setType(Transaction::TYPE_PAYMENT);
             $transaction->setPaymentMethod('account');
             $transaction->assignArticle($this->article);
 

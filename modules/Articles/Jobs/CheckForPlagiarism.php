@@ -120,13 +120,12 @@ class CheckForPlagiarism implements SelfHandling
     protected function payAndSendRequest($amount)
     {
         return DB::transaction(function () use ($amount) {
-            $transaction         = new Transaction();
+            $transaction         = new Transaction;
             $transaction->amount = $amount;
 
             $transaction->assignPurchaser($this->user);
             $transaction->assignRecipient(User::getDebitUser());
-            $transaction->setType('article_check');
-            $transaction->setStatus('new');
+            $transaction->setType(Transaction::TYPE_ARTICLE_CHECK);
             $transaction->setPaymentMethod('account');
             $transaction->assignArticle($this->article);
 

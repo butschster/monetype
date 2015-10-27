@@ -53,8 +53,7 @@ class CashIn implements SelfHandling
             $transaction->assignPurchaser(User::getCreditUser());
             $transaction->assignRecipient($this->user);
 
-            $transaction->setType('cashin');
-            $transaction->setStatus('new');
+            $transaction->setType(Transaction::TYPE_CASHIN);
             $transaction->setPaymentMethod($this->paymentMethod);
             $transaction->save();
 

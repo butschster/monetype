@@ -64,8 +64,7 @@ class ApplyCoupon implements SelfHandling
 
             $transaction->assignPurchaser($this->coupon->fromUser);
             $transaction->assignRecipient($this->user);
-            $transaction->setType('coupon');
-            $transaction->setStatus('new');
+            $transaction->setType(Transaction::TYPE_COUPON);
             $transaction->setPaymentMethod('account');
 
             $transaction->details = [

@@ -38,8 +38,30 @@ class Transaction extends Model
 
     use SoftDeletes;
 
-    const ACCOUNT_CREDIT = 2;
-    const ACCOUNT_DEBIT = 3;
+
+    const ACCOUNT_CREDIT        = 2;
+    const ACCOUNT_DEBIT         = 3;
+
+    const STATUS_NEW            = 'new';
+    const STATUS_COMPLETED      = 'completed';
+    const STATUS_CANCELED       = 'canceled';
+
+    const TYPE_PAYMENT          = 'payment';
+    const TYPE_ARTICLE_CHECK    = 'article_check';
+    const TYPE_TRANSFER         = 'transfer';
+    const TYPE_REFUND           = 'refund';
+    const TYPE_CASHIN           = 'cashin';
+    const TYPE_CASHOUT          = 'cashout';
+    const TYPE_COUPON           = 'coupon';
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Transaction $transaction) {
+            $transaction->setStatus(Transaction::STATUS_NEW);
+        });
+    }
 
     /**
      * The table associated with the model.
@@ -78,9 +100,18 @@ class Transaction extends Model
     /**
      * @return bool
      */
+    public function isNew()
+    {
+        return $this->status_id == static::STATUS_NEW;
+    }
+
+
+    /**
+     * @return bool
+     */
     public function isCompleted()
     {
-        return $this->status_id == 'completed';
+        return $this->status_id == static::STATUS_COMPLETED;
     }
 
 
@@ -89,7 +120,7 @@ class Transaction extends Model
      */
     public function isCanceled()
     {
-        return $this->status_id == 'canceled';
+        return $this->status_id == static::STATUS_CANCELED;
     }
 
 
@@ -100,7 +131,7 @@ class Transaction extends Model
      */
     public function complete(Closure $callback = null)
     {
-        if ($this->isCanceled()) {
+        if ( ! $this->isNew()) {
             return false;
         }
 
@@ -114,7 +145,7 @@ class Transaction extends Model
         $this->creditAccount->addMoney($this->amount);
         $this->debitAccount->withdrawMoney($this->amount);
 
-        $this->setStatus('completed')->save();
+        $this->setStatus(static::STATUS_COMPLETED)->save();
 
         if (is_callable($callback)) {
             $callback($this);
@@ -142,7 +173,7 @@ class Transaction extends Model
         }
 
         $this->details = $details;
-        $this->setStatus('canceled')->save();
+        $this->setStatus(static::STATUS_CANCELED)->save();
 
         if (is_callable($callback)) {
             $callback($this);
@@ -294,7 +325,7 @@ class Transaction extends Model
      */
     public function scopeOnlyPayments(Builder $query)
     {
-        return $query->where('type_id', 'payment');
+        return $query->where('type_id', static::TYPE_PAYMENT);
     }
 
 
@@ -305,7 +336,7 @@ class Transaction extends Model
      */
     public function scopeOnlyCompleted(Builder $query)
     {
-        return $query->where('status_id', 'completed');
+        return $query->where('status_id', static::STATUS_COMPLETED);
     }
 
     /**********************************************************************

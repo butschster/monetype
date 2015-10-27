@@ -18,55 +18,55 @@ class TransactionsTableSeeder extends Seeder
         Transaction::truncate();
 
         Status::create([
-            'name'  => 'new',
+            'name'  => Transaction::STATUS_NEW,
             'title' => 'Новая',
         ]);
 
         Status::create([
-            'name'  => 'canceled',
+            'name'  => Transaction::STATUS_CANCELED,
             'title' => 'Отклонено',
         ]);
 
         Status::create([
-            'name'  => 'completed',
+            'name'  => Transaction::STATUS_COMPLETED,
             'title' => 'Проведена',
         ]);
 
         Type::create([
-            'name'              => 'payment',
+            'name'              => Transaction::TYPE_PAYMENT,
             'title'             => 'Платеж',
             'comission_percent' => 1,
         ]);
 
         Type::create([
-            'name'  => 'article_check',
-            'title' => 'Проверка статьи'
+            'name'  => Transaction::TYPE_ARTICLE_CHECK,
+            'title' => 'Проверка статьи',
         ]);
 
         Type::create([
-            'name'      => 'transfer',
+            'name'      => Transaction::TYPE_TRANSFER,
             'title'     => 'Перевод',
             'comission' => 5,
         ]);
 
         Type::create([
-            'name'  => 'refund',
+            'name'  => Transaction::TYPE_REFUND,
             'title' => 'Возврат',
         ]);
 
         Type::create([
-            'name'  => 'cashin',
+            'name'  => Transaction::TYPE_CASHIN,
             'title' => 'Зачисление средств',
         ]);
 
         Type::create([
-            'name'              => 'cashout',
+            'name'              => Transaction::TYPE_CASHOUT,
             'title'             => 'Вывод средств',
             'comission_percent' => 10,
         ]);
 
         Type::create([
-            'name'      => 'coupon',
+            'name'      => Transaction::TYPE_COUPON,
             'title'     => 'Создание купона',
             'comission' => 5,
         ]);
