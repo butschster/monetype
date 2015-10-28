@@ -167,6 +167,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
 
+    /**
+     * @return string
+     */
+    public function getProfileRoute()
+    {
+        if ( ! empty( $this->username )) {
+            return route('front.profile.showByUsername', $this->username);
+        }
+
+        return route('front.profile.showById', $this->id);
+    }
 
     /**********************************************************************
      * Mutators

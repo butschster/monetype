@@ -21,6 +21,11 @@ class PaymentMethodsTableSeeder extends Seeder
         ]);
 
         PaymentMethod::create([
+            'name'  => 'paypal',
+            'title' => 'PayPal',
+        ]);
+
+        PaymentMethod::create([
             'name'  => 'account',
             'title' => 'Счет',
         ]);

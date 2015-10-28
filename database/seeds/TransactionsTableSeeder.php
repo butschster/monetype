@@ -7,6 +7,7 @@ use Modules\Transactions\Model\Type;
 use Modules\Transactions\Model\Status;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Transactions\Model\Transaction;
+use Modules\Transactions\Model\TransactionPayPal;
 
 class TransactionsTableSeeder extends Seeder
 {
@@ -16,6 +17,7 @@ class TransactionsTableSeeder extends Seeder
         Type::truncate();
         Status::truncate();
         Transaction::truncate();
+        TransactionPayPal::truncate();
 
         Status::create([
             'name'  => Transaction::STATUS_NEW,
@@ -30,7 +32,7 @@ class TransactionsTableSeeder extends Seeder
         Status::create([
             'name'  => Transaction::STATUS_FAILED,
             'title' => 'Не проведен',
-        ];
+        ]);
 
         Status::create([
             'name'  => Transaction::STATUS_REFUNDED,
