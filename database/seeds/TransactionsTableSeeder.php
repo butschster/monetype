@@ -23,6 +23,21 @@ class TransactionsTableSeeder extends Seeder
         ]);
 
         Status::create([
+            'name'  => Transaction::STATUS_PROCESSING,
+            'title' => 'В процессе',
+        ]);
+
+        Status::create([
+            'name'  => Transaction::STATUS_FAILED,
+            'title' => 'Не проведен',
+        ];
+
+        Status::create([
+            'name'  => Transaction::STATUS_REFUNDED,
+            'title' => 'Возврат',
+        ]);
+
+        Status::create([
             'name'  => Transaction::STATUS_CANCELED,
             'title' => 'Отклонено',
         ]);

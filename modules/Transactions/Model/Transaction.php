@@ -42,9 +42,12 @@ class Transaction extends Model
     const ACCOUNT_CREDIT        = 2;
     const ACCOUNT_DEBIT         = 3;
 
-    const STATUS_NEW            = 'new';
-    const STATUS_COMPLETED      = 'completed';
-    const STATUS_CANCELED       = 'canceled';
+    const STATUS_NEW            = 'new'; // Новая
+    const STATUS_COMPLETED      = 'completed'; // Проведена
+    const STATUS_CANCELED       = 'canceled'; // Отклонено
+    const STATUS_PROCESSING     = 'processing'; // В процессе
+    const STATUS_FAILED         = 'failed'; // Не проведен
+    const STATUS_REFUNDED       = 'refunded'; // Возврат
 
     const TYPE_PAYMENT          = 'payment';
     const TYPE_ARTICLE_CHECK    = 'article_check';
