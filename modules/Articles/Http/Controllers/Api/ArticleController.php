@@ -2,11 +2,12 @@
 
 namespace Modules\Articles\Http\Controllers\Api;
 
+use DB;
 use Bus;
-use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Articles\Jobs\BlockArticle;
 use Modules\Articles\Jobs\DraftArticle;
 use Modules\Articles\Jobs\PublishArticle;
+use Modules\Articles\Jobs\ApproveArticle;
 use Modules\Support\Helpers\MarkdownParser;
 use Modules\Articles\Repositories\ArticleRepository;
 use Modules\Articles\Exceptions\PlagiarismException;
@@ -55,8 +56,14 @@ class ArticleController extends ApiController
     {
         $this->checkPermissions('create', $articleRepository->getModel());
 
-        $article = $articleRepository->create($request->only('title', 'text_source', 'disable_comments', 'disable_stat_views',
-            'disable_stat_pays', 'tags_list', 'cost'));
+        $article = DB::transaction(function () use($request, $articleRepository) {
+            return $articleRepository->create(
+                $request->only(
+                    'title', 'text_source', 'disable_comments', 'disable_stat_views',
+                    'disable_stat_pays', 'tags_list', 'cost'
+                )
+            );
+        });
 
         $this->setMessage(trans('articles::article.message.created'));
 
@@ -75,8 +82,13 @@ class ArticleController extends ApiController
 
         $this->checkPermissions('update', $article);
 
-        $article = $articleRepository->update($request->only('title', 'text_source', 'disable_comments',
-            'disable_stat_views', 'disable_stat_pays', 'tags_list', 'cost'), $articleId);
+        $articleRepository->update(
+            $request->only(
+                'title', 'text_source', 'disable_comments',
+                'disable_stat_views', 'disable_stat_pays', 'tags_list', 'cost'
+            ),
+            $articleId
+        );
 
         $this->setMessage(trans('articles::article.message.updated'));
     }
@@ -93,8 +105,13 @@ class ArticleController extends ApiController
 
         $this->checkPermissions('correct', $article);
 
-        $article = $articleRepository->update($request->only('title', 'disable_comments',
-            'disable_stat_views', 'disable_stat_pays', 'tags_list', 'cost'), $articleId);
+        $article = $articleRepository->update(
+            $request->only(
+                'title', 'disable_comments',
+                'disable_stat_views', 'disable_stat_pays', 'tags_list', 'cost'
+            )
+            , $articleId
+        );
 
         $this->setMessage(trans('articles::article.message.updated'));
     }
