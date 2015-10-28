@@ -19,8 +19,7 @@ class ElasticSearchIndexer extends Command
 
     public function fire()
     {
-        foreach(Article::all() as $article)
-        {
+        foreach (Article::all() as $article) {
             $article->addToIndex();
         }
     }

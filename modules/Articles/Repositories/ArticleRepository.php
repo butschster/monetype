@@ -2,8 +2,6 @@
 
 namespace Modules\Articles\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
-use Modules\Users\Model\User;
 use Modules\Articles\Model\Article;
 use Modules\Support\Helpers\Repository;
 
