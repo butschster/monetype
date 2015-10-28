@@ -30,8 +30,12 @@ class ProfileController extends FrontController
     public function showById(UserRepository $repository, $id = null)
     {
         if (is_null($id)) {
+            if ( ! auth()->check()) {
+                abort(404);
+            }
+
             $id = $this->user->id;
-        } else if($id <= 3) {
+        } else if ($id <= 3) {
             abort(404, trans('users::user.message.not_found'));
         }
 
@@ -47,7 +51,7 @@ class ProfileController extends FrontController
 
     /**
      * @param UserRepository $repository
-     * @param string       $username
+     * @param string         $username
      *
      * @return \View
      */
@@ -55,7 +59,7 @@ class ProfileController extends FrontController
     {
         $user = $repository->findBy('username', $username);
 
-        if(is_null($user)) {
+        if (is_null($user)) {
             abort(404, trans('users::user.message.not_found'));
         }
 
@@ -74,7 +78,7 @@ class ProfileController extends FrontController
         Meta::addPackage(['dropzone', 'backstretch']);
 
         return $this->setLayout('user.edit', [
-            'user' => $this->user
+            'user' => $this->user,
         ]);
     }
 }
