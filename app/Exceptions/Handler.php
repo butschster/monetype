@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Http\Response;
-use KodiCMS\API\Http\Response as APIResponse;
+use Modules\Core\Http\ApiResponse;
 use Modules\Core\Http\Controllers\ErrorController;
 use KodiCMS\API\Exceptions\Exception as APIException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
