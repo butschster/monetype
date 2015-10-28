@@ -127,12 +127,18 @@ class PayPalController extends FrontController
         $transaction = TransactionPayPal::where('payment_id', $result->getId())->firstOrFail();
         $transaction->complete();
 
-        return redirect()->route('profile.showById');
+        return $this->successRedirect(
+            trans('transactions::transaction.message.transaction_success'),
+            route('front.profile.showById')
+        );
     }
 
 
     public function cancel()
     {
-        return redirect()->route('profile.showById');
+        return $this->errorRedirect(
+            trans('transactions::transaction.message.transaction_canceled'),
+            route('front.profile.showById')
+        );
     }
 }

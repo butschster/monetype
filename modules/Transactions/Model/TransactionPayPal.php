@@ -39,7 +39,6 @@ class TransactionPayPal extends Model
             $transaction->assignRecipient($t->user);
             $transaction->setPaymentMethod('paypal');
             $transaction->setType(Transaction::TYPE_CASHIN);
-
             $transaction->save();
 
             $t->transaction()->associate($transaction);
@@ -117,10 +116,10 @@ class TransactionPayPal extends Model
             return false;
         }
 
-        $this->status = static::STATUS_CANCELED;
-        $this->save();
-
-        $this->transaction->cancel();
+        $this->transaction->cancel(function() {
+            $this->status = static::STATUS_CANCELED;
+            $this->save();
+        });
 
         return true;
     }

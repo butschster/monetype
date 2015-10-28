@@ -1,19 +1,23 @@
 <?php
 
 return [
-    'field'  => [
+    'field'   => [
         'debit'      => 'Плательщик',
         'credit'     => 'Получатель',
         'amount'     => 'Сумма',
         'created_at' => 'Дата платежа',
     ],
-    'label'  => [
+    'label'   => [
         'total' => 'Итого:',
     ],
-    'paypal' => [
+    'paypal'  => [
         'field' => [
             'paymentId' => 'Идентификатор платежа',
             'PayerID'   => 'Идентификатор плательщика',
         ],
+    ],
+    'message' => [
+        'transaction_success'  => 'Ваш счет успешно пополнен',
+        'transaction_canceled' => 'Ваш платеж был отменен',
     ],
 ];
