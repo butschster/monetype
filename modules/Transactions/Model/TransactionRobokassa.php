@@ -2,7 +2,7 @@
 
 namespace Modules\Transactions\Model;
 
-class TransactionPayPal extends TransactionGateway
+class TransactionRobokassa extends TransactionGateway
 {
 
     /**
@@ -10,14 +10,14 @@ class TransactionPayPal extends TransactionGateway
      *
      * @var string
      */
-    protected $table = 'transactions_paypal';
-
+    protected $table = 'transactions_robokassa';
 
     /**
      * @return string
      */
     public function getPaymentMethod()
     {
-        return 'paypal';
+        return 'robokassa';
     }
+
 }

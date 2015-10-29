@@ -16,8 +16,8 @@ class PaymentMethodsTableSeeder extends Seeder
         ]);
 
         PaymentMethod::create([
-            'name'  => 'robocassa',
-            'title' => 'Robocassa',
+            'name'  => 'robokassa',
+            'title' => 'Robokassa',
         ]);
 
         PaymentMethod::create([

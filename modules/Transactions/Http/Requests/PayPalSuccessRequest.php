@@ -4,7 +4,7 @@ namespace Modules\Transactions\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PayPalRequest extends Request
+class PayPalSuccessRequest extends Request
 {
 
     /**

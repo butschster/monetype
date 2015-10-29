@@ -17,7 +17,7 @@ return [
         ],
     ],
     'message' => [
-        'transaction_success'  => 'Ваш счет успешно пополнен',
+        'transaction_success'  => 'Ваш счет успешно пополнен на сумму :amount',
         'transaction_canceled' => 'Ваш платеж был отменен',
     ],
 ];

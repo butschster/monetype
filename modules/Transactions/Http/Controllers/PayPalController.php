@@ -16,10 +16,10 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Exception\PayPalConnectionException;
 use Modules\Transactions\Model\TransactionPayPal;
-use Modules\Transactions\Http\Requests\PayPalRequest;
-use Modules\Core\Http\Controllers\System\FrontController;
+use Modules\Transactions\Http\Requests\PaymentRequest;
+use Modules\Transactions\Http\Controllers\System\PaymentController;
 
-class PayPalController extends FrontController
+class PayPalController extends PaymentController
 {
 
     /**
@@ -34,12 +34,18 @@ class PayPalController extends FrontController
         );
     }
 
-    public function send()
+
+    /**
+     * @param PaymentRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function create(PaymentRequest $request)
     {
-        return DB::transaction(function () {
+        return DB::transaction(function () use($request) {
             $payer = (new Payer)->setPaymentMethod("paypal");
 
-            $amountTotal = 100;
+            $amountTotal = $request->get('amount');
 
             $itemList = new ItemList;
             $itemList->setItems([
@@ -84,22 +90,28 @@ class PayPalController extends FrontController
             $transaction->payment_id = $response->getId();
             $transaction->save();
 
-            $approvalUrl = $response->getApprovalLink();
+            $this->session->put('transaction', $transaction);
 
-            return redirect($approvalUrl);
+            return redirect($response->getApprovalLink());
         });
     }
 
 
     /**
-     * @param PayPalRequest $payPalRequest
+     * @param PayPalSuccessRequest $payPalRequest
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function success(PayPalRequest $payPalRequest)
+    public function success(PayPalSuccessRequest $payPalRequest)
     {
         $paymentId = $payPalRequest->get('paymentId');
         $payerID = $payPalRequest->get('PayerID');
+
+        /** @var TransactionPayPal $payPalTransaction */
+        $payPalTransaction = $this->session->get('transaction');
+        if (is_null($payPalTransaction)) {
+            abort(500);
+        }
 
         $payment = Payment::get($paymentId, $this->getApiContext());
 
@@ -111,34 +123,24 @@ class PayPalController extends FrontController
         $details = new Details;
 
         $amount->setCurrency('RUB');
-        $amount->setTotal(100);
+        $amount->setTotal($payPalTransaction->amount);
         $amount->setDetails($details);
         $transaction->setAmount($amount);
 
         $execution->addTransaction($transaction);
 
         try {
-            $result = $payment->execute($execution, $this->getApiContext());
+            $payment->execute($execution, $this->getApiContext());
         } catch (PayPalConnectionException $pce) {
             abort(500);
         }
 
-        /** @var TransactionPayPal $transaction */
-        $transaction = TransactionPayPal::where('payment_id', $result->getId())->firstOrFail();
-        $transaction->complete();
+        $payPalTransaction->complete();
+        $this->session->forget('transaction');
 
         return $this->successRedirect(
-            trans('transactions::transaction.message.transaction_success'),
-            route('front.profile.showById')
-        );
-    }
-
-
-    public function cancel()
-    {
-        return $this->errorRedirect(
-            trans('transactions::transaction.message.transaction_canceled'),
-            route('front.profile.showById')
+            trans('transactions::transaction.message.transaction_success', ['amount' => $payPalTransaction->amount]),
+            route('front.profile.me')
         );
     }
 }

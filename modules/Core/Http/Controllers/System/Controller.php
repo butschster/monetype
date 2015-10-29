@@ -167,6 +167,47 @@ class Controller extends BaseController
 
 
     /**
+     * @param string| array $message
+     * @param string|null   $url
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function successRedirect($message, $url = null)
+    {
+        return $this->redirect($url)->with('success', $message);
+    }
+
+
+    /**
+     * @param string| array $message
+     * @param string|null   $url
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function errorRedirect($message, $url = null)
+    {
+        return $this->redirect($url)->withErrors($message);
+    }
+
+
+    /**
+     * @param string|null $url
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function redirect($url = null)
+    {
+        if (is_null($url)) {
+            $redirect = back();
+        } else {
+            $redirect = redirect($url);
+        }
+
+        return $redirect;
+    }
+
+
+    /**
      * @return string
      */
     protected function getModuleNamespace()

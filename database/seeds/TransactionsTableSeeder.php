@@ -8,6 +8,7 @@ use Modules\Transactions\Model\Status;
 use Modules\Articles\Jobs\PurchaseArticle;
 use Modules\Transactions\Model\Transaction;
 use Modules\Transactions\Model\TransactionPayPal;
+use Modules\Transactions\Model\TransactionRobokassa;
 
 class TransactionsTableSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class TransactionsTableSeeder extends Seeder
         Status::truncate();
         Transaction::truncate();
         TransactionPayPal::truncate();
+        TransactionRobokassa::truncate();
 
         Status::create([
             'name'  => Transaction::STATUS_NEW,
