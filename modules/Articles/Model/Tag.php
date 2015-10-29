@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string     $name
  *
  * @property Collection $articles
+ * @property Collection $users
  */
 class Tag extends Model
 {
