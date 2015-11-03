@@ -61,7 +61,7 @@ class ArticleController extends FrontController
             $articles = [];
         }
 
-        Meta::addPackage(['tagsinput']);
+        Meta::loadPackage('tagsinput');
         $this->setTitle(trans('articles::article.title.thematic'));
 
         return $this->setLayout('article.thematic', compact('articles', 'tags'));
@@ -82,7 +82,7 @@ class ArticleController extends FrontController
             $this->checkPermissions('preview', $article);
         }
 
-        Meta::addPackage('validation')->addSocialTags($article);
+        Meta::loadPackage('validation')->addSocialTags($article);
 
         return $this->setLayout('article.show', [
             'article'     => $article,
@@ -113,7 +113,7 @@ class ArticleController extends FrontController
             $this->checkPermissions('preview', $article);
         }
 
-        Meta::addPackage('validation')->addSocialTags($article);
+        Meta::loadPackage('validation')->addSocialTags($article);
 
         return $this->setLayout('article.show', [
             'article'     => $article,
@@ -151,11 +151,12 @@ class ArticleController extends FrontController
      */
     public function create(ArticleRepository $articleRepository)
     {
+        /** @var Article $article */
         $article = $articleRepository->getModel();
 
         $this->checkPermissions('create', $article);
 
-        Meta::addPackage(['simplemde', 'rangeslider', 'tagsinput']);
+        Meta::loadPackage('simplemde', 'rangeslider', 'tagsinput');
         $this->templateScripts['ARTICLE_ID'] = $article->id;
 
         $this->setTitle(trans('articles::article.title.create'));
@@ -176,11 +177,12 @@ class ArticleController extends FrontController
      */
     public function edit(ArticleRepository $articleRepository, $articleId)
     {
+        /** @var Article $article */
         $article = $articleRepository->findOrFail($articleId);
 
         $this->checkPermissions('update', $article);
-		
-        Meta::addPackage(['simplemde', 'rangeslider', 'tagsinput']);
+
+        Meta::loadPackage('simplemde', 'rangeslider', 'tagsinput');
         $this->templateScripts['ARTICLE_ID'] = $article->id;
 
         $action = ['front.article.update', $articleId];

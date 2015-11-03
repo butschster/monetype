@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Articles\Traits\CategoryableTrait;
 use Modules\Articles\Exceptions\ArticleException;
-use Modules\Support\Contracts\SocialMediaTaggable;
+use KodiCMS\Assets\Contracts\SocialMediaTagsInterface;
 
 /**
  * @property integer        $id
@@ -62,7 +62,7 @@ use Modules\Support\Contracts\SocialMediaTaggable;
  * @property \Carbon\Carbon $published_at
  * @property \Carbon\Carbon $deleted_at
  */
-class Article extends Model implements Buyable, SocialMediaTaggable
+class Article extends Model implements Buyable, SocialMediaTagsInterface
 {
 
     use TaggableTrait, CategoryableTrait, SoftDeletes, Elasticquent;

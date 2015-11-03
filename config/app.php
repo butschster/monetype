@@ -153,6 +153,7 @@ return [
          * KodiCMS Service Providers...
          */
         KodiCMS\ModulesLoader\Providers\ModuleServiceProvider::class,
+        KodiCMS\Assets\AssetsServiceProvider::class,
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Modules\Support\Html\HtmlServiceProvider::class,
@@ -207,12 +208,12 @@ return [
         'Validator'     => Illuminate\Support\Facades\Validator::class,
         'View'          => Illuminate\Support\Facades\View::class,
         'RouteAPI'      => KodiCMS\API\RouteApiFacade::class,
-        'Assets'        => Modules\Support\Facades\Assets::class,
-        'Package'       => Modules\Support\Facades\Package::class,
         'HTML'          => Illuminate\Html\HtmlFacade::class,
         'Form'          => Illuminate\Html\FormFacade::class,
         'Image'         => Intervention\Image\Facades\Image::class,
         'Akismet'       => nickurt\Akismet\Facade::class,
-        'Meta'          => Modules\Support\Facades\Meta::class
+        'Assets' => KodiCMS\Assets\Facades\Assets::class,
+        'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
+        'Meta' => KodiCMS\Assets\Facades\Meta::class,
     ],
 ];

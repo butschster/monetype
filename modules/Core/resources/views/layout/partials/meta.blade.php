@@ -7,11 +7,9 @@
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 
-	{!! Assets::group('global', 'layoutScripts') !!}
-
-	{!! Meta::build() !!}
-
-	{!! Assets::group('global', 'layoutEvents') !!}
+	{!! Assets::getGroup('global', 'layoutScripts') !!}
+	{!! Meta::render() !!}
+	{!! Assets::getGroup('global', 'layoutEvents') !!}
 
 	@yield('scripts')
 

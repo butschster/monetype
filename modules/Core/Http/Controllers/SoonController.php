@@ -23,7 +23,7 @@ class SoonController extends FrontController
             'MESSAGE_SUCCESS' => (array) $this->session->get('success', [])
         ];
 
-        Meta::addPackage(['libraries', 'coming_soon', 'backstretch', 'countdown', 'validation']);
+        Meta::loadPackage('libraries', 'coming_soon', 'backstretch', 'countdown', 'validation');
     }
 
 

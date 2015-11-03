@@ -2,9 +2,9 @@
 
 namespace Modules\Core;
 
-use Modules\Support\Contracts\SocialMediaTaggable;
+use KodiCMS\Assets\Contracts\SocialMediaTagsInterface;
 
-class CommingSoonSocialTags implements SocialMediaTaggable
+class CommingSoonSocialTags implements SocialMediaTagsInterface
 {
     /**
      * @return string

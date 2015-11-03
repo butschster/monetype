@@ -16,6 +16,6 @@ abstract class FrontController extends TemplateController
     public function registerMedia()
     {
         parent::registerMedia();
-        Meta::addPackage(['libraries', 'app']);
+        Meta::loadPackage('libraries', 'app');
     }
 }

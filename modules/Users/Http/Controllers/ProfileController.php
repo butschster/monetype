@@ -41,7 +41,7 @@ class ProfileController extends FrontController
 
         $user = $repository->findOrFail($id);
 
-        Meta::addPackage('backstretch');
+        Meta::loadPackage('backstretch');
 
         $this->setTitle(trans('users::user.title.profile', ['user' => $user->getName()]));
 
@@ -63,7 +63,7 @@ class ProfileController extends FrontController
             abort(404, trans('users::user.message.not_found'));
         }
 
-        Meta::addPackage('backstretch');
+        Meta::loadPackage('backstretch');
         $this->setTitle(trans('users::user.title.profile', ['user' => $user->getName()]));
 
         return $this->setLayout('user.profile', compact('user'));
@@ -75,7 +75,7 @@ class ProfileController extends FrontController
      */
     public function edit()
     {
-        Meta::addPackage(['dropzone', 'backstretch']);
+        Meta::loadPackage('dropzone', 'backstretch');
 
         return $this->setLayout('user.edit', [
             'user' => $this->user,
